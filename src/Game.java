@@ -1,8 +1,9 @@
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 public class Game extends JPanel{
     
-public void paint(Graphics g){ //creates game board
+	public void paint(Graphics g){ //creates game board
 		int height=45;
 		int width=45;
 		int x =105;
@@ -24,6 +25,7 @@ public void paint(Graphics g){ //creates game board
         }
         	
         }
+	
        
     public static void main(String[] args){
     	JFrame frame = new JFrame();
@@ -33,5 +35,35 @@ public void paint(Graphics g){ //creates game board
         frame.setBackground(Color.LIGHT_GRAY);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        
+        JMenuBar gameMenuBar = new JMenuBar(); //create menu bar
+        frame.setJMenuBar(gameMenuBar); //mount it onto frame
+        JMenu options = new JMenu("Options"); //create "options" option
+        gameMenuBar.add(options); //mount it onto menu bar
+        JMenuItem key = new JMenuItem("Key"); //create and name options within "options"
+        JMenuItem endturn = new JMenuItem("End Turn");
+        JMenuItem exit = new JMenuItem("Exit");
+        options.add(key); //put them into "options" within menu bar
+        options.add(endturn);
+        options.add(exit);
+        class exitAction implements ActionListener{ //allow "exit" to close program on click
+    		public void actionPerformed (ActionEvent e) {
+    			System.exit(0);
+    		}
+    	}
+        class keyAction implements ActionListener{ //placeholder for key window 
+        	public void actionPerformed (ActionEvent e) {
+        		System.out.println("Placeholder for key");
+        	}
+        }
+        class endturnAction implements ActionListener{ //placeholder for endturn
+        	public void actionPerformed (ActionEvent e) {
+        		System.out.println("Placeholder for endturn function");
+        	}
+        }
+        exit.addActionListener(new exitAction()); //add action listeners to menu bar
+        key.addActionListener(new keyAction());
+        endturn.addActionListener(new endturnAction());
+        
     }  
 }
