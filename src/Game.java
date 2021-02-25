@@ -1,7 +1,12 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 public class Game extends JPanel{
+	
 	
     public static void main(String[] args){
     	JFrame frame = new JFrame();
@@ -12,6 +17,7 @@ public class Game extends JPanel{
         	tile[i]= new JButton();
         	frame.add(tile[i]);
         	tile[i].setBackground(Color.white);
+        	
         }
         frame.setSize(600,600);
         
@@ -48,5 +54,15 @@ public class Game extends JPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         
+        try {
+        Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png"));
+        tile[22].setIcon(new ImageIcon(img));
+        }catch (IOException ex) {}
+        
+        
+        
+        
     }  
+    
+   
 }
