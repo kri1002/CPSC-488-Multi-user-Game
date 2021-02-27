@@ -6,21 +6,45 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 public class Game extends JPanel{
-	
+	private static JButton lastButtonPressed;
 	
     public static void main(String[] args){
     	JFrame frame = new JFrame();
         frame.setLayout(new GridLayout(0, 10));
-    	
-        JButton tile[] = new JButton[100];
-        for(int i=0; i<100; i++) {
-        	tile[i]= new JButton();
-        	frame.add(tile[i]);
-        	tile[i].setBackground(Color.white);
-        	
-        }
-        frame.setSize(600,600);
+        JButton tile[] = new JButton[100]; 
+       
+        class tileClicked implements ActionListener{
+        	 JButton currentButton=null;
+        	 public void actionPerformed (ActionEvent e){
+        		 JButton currentButton= (JButton)e.getSource(); //save which button pressed in variable
+        		 //System.out.println(currentButton);
+        		 
+        		 if(lastButtonPressed!=null){//if two tiles were clicked
+        			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
+        				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()==null){//if first tile had icon and second was empty
+        					 try{
+        						Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png")); //will have to change image src to variable so it can work with any token
+        						lastButtonPressed.setIcon(null); //sets the tile with the image null
+        						currentButton.setIcon(new ImageIcon(img)); //move image to tile that was clicked
+        						lastButtonPressed.revalidate(); //resets and updates button
+        						currentButton.revalidate();     //resets and updates button
+        			        	}catch (IOException ex){}
+        					currentButton=null; //resets the ActionListener
+        					}
+        				}	
+        			}
+        			lastButtonPressed=currentButton; //sets initial value for LBP
+        		}
+        	 }
         
+        for(int i=0; i<100; i++) {//add the buttons to the frame
+        	tile[i]= new JButton(); //create button
+        	frame.add(tile[i]); //add to frame
+        	tile[i].setBackground(Color.white); //set color of button
+        	tile[i].addActionListener(new tileClicked()); //add listener to button
+        }
+        
+        frame.setSize(600,600);
         JMenuBar gameMenuBar = new JMenuBar(); //create menu bar
         frame.setJMenuBar(gameMenuBar); //mount it onto frame
         JMenu options = new JMenu("Options"); //create "options" option
@@ -54,15 +78,11 @@ public class Game extends JPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         
-        try {
+        try {//set initial icon location
         Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png"));
         tile[22].setIcon(new ImageIcon(img));
         }catch (IOException ex) {}
-        
-        
-        
-        
     }  
-    
-   
-}
+  }
+
+        
