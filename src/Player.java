@@ -10,6 +10,7 @@ import javax.swing.*;
 public class Player {
 int playerNum; //for player turn order
 int teamChosen; //keep track of what team was chosen so can make the proper pieces
+Team playersTeam;
 
 public Player(int playerNum, int teamChosen){ //constructor
 	this.playerNum=playerNum;
@@ -27,12 +28,29 @@ public int getTeamChosen() {
 //takes button, color, and locations of where pieces should be generated to create them for the player
 //will need to take teamChosen as a parameter so can make those specific pieces
 public void createGamePieces(JButton tile[], String color, int loc1, int loc2, int loc3, int loc4, int loc5) {
+	
+	if(teamChosen == 1) {
+		playersTeam = new Team1();
+	}
+	else if(teamChosen == 2) {
+		playersTeam = new Team2();
+	}
+	else if(teamChosen == 3) {
+		playersTeam = new Team3();
+	}
+	else if(teamChosen == 4) {
+		playersTeam = new Team4();
+	}
+	else {
+		System.out.print("enter valid team number");
+	}
+	
 	try {
-		String imgSrc= "images/" + color + "Circle.png";
-		String imgSrc2= "images/" + color + "Triangle.png";
-		String imgSrc3= "images/" + color + "Star.png";
-		String imgSrc4= "images/" + color + "Pentagon.png";
-		String imgSrc5= "images/" + color + "Square.png";
+		String imgSrc= "images/" + color + playersTeam.teamPieces[0].token + ".png";
+		String imgSrc2= "images/" + color + playersTeam.teamPieces[1].token + ".png";
+		String imgSrc3= "images/" + color + playersTeam.teamPieces[2].token + ".png";
+		String imgSrc4= "images/" + color + playersTeam.teamPieces[3].token + ".png";
+		String imgSrc5= "images/" + color + playersTeam.teamPieces[4].token + ".png";
 		
 		Image CircleImg = ImageIO.read(Game.class.getResource(imgSrc)); 
         tile[loc1].setIcon(new ImageIcon(CircleImg));

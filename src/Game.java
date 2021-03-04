@@ -82,14 +82,14 @@ public class Game extends JPanel{
         
         //will need a method to call to create the players 
         //and decide their starting location based off of game mode
-        Player Player1 = new Player(1, 1);
-        Player1.createGamePieces(tile, "Blue", 0, 1, 2, 3, 4);
-        Player Player2 = new Player(2, 1);
-        Player2.createGamePieces(tile, "Red", 5, 6, 7, 8, 9);
-        Player Player3 =new Player(3,1);
-        Player3.createGamePieces(tile, "Green", 90, 91, 92, 93, 94);
+        Player Player1 = new Player(1, 4);
+        Player1.createGamePieces(tile, "Blue", 10, 20, 0, 1, 2);
+        Player Player2 = new Player(2, 3);
+        Player2.createGamePieces(tile, "Red", 7, 8, 9, 19, 29);
+        Player Player3 =new Player(3,2);
+        Player3.createGamePieces(tile, "Green", 70, 80, 90, 91, 92);
         Player Player4 =new Player(4,1);
-        Player4.createGamePieces(tile, "Yellow", 95, 96, 97, 98, 99);
+        Player4.createGamePieces(tile, "Yellow", 97, 98, 99, 89, 79);
        
     }  
   }
