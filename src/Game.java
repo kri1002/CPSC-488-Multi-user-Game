@@ -6,6 +6,11 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 public class Game extends JPanel{
 	private static JButton lastButtonPressed;
+	public static int timesClicked = 0;//I feel like there is a better place to put this, but I couldnt get it to work anywhere else
+	public static Player Player1 = new Player(1);//players are now generated at the start of the game class so they can be referenced anywhere
+	public static Player Player2 = new Player(2);
+	public static Player Player3 = new Player(3);
+	public static Player Player4 = new Player(4);
 	
 	//will need something outside of this GUI to keep track of game mode
 	//so can determine player order etc
@@ -20,22 +25,22 @@ public class Game extends JPanel{
 	        		 JButton currentButton= (JButton)e.getSource(); //save which button pressed in variable
 	        		 //sets how many players and the calls next GUI screen depending on button pressed
 	        		 if(currentButton==gameMode[0]) {
-	        			 System.out.println("1 Player vs 1 Player");
-	        			  numPlayers= 2;
+	        			 System.out.println("1 Player vs 1 Player game mode selected");
+	        			  numPlayers= 2; 
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        			  }
 	        		 else if(currentButton==gameMode[1]) {
-	        			 System.out.println("1 Player vs 1 Computer Player");
+	        			 System.out.println("1 Player vs 1 Computer Player game mode selected");
 	        			 numPlayers= 2;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }
 	        		 else if(currentButton==gameMode[2]) {
-	        			System.out.println("Two-Verus-Two Team Battle");
+	        			System.out.println("Two-Verus-Two Team Battle game mode selected");
 	        			numPlayers=4;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }
 	        		 else {
-	        			 System.out.println("4 Player Free-for-All Game");
+	        			 System.out.println("4 Player Free-for-All Game game mode selected");
 	        			 numPlayers=4;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }
@@ -71,19 +76,88 @@ public class Game extends JPanel{
 		  //will have to keep track of num of players after each click, after there's no more players to select team go to next screen
 		   class buttonClicked implements ActionListener{
 			   JButton currentButton=null;
+			   
 	        	 public void actionPerformed (ActionEvent e){
 	        		 JButton currentButton= (JButton)e.getSource(); //save which button pressed in variable
 	        		 if(currentButton==teams[0]) {
-	        			 System.out.println("Basic");
+	        			 timesClicked++;
+	        			 System.out.println("Player "+ timesClicked + " has chosen the Basic Team");
+	        			 if (timesClicked == 1) { //the player currently selecting is based on the number of times the button has been clicked 
+	        				 Player1.setTeamChosen(1);
+	        			 }
+	        			 if (timesClicked == 2) {
+	        				 Player2.setTeamChosen(1);
+	        			 }
+	        			 if (timesClicked == 3) {
+	        				 Player3.setTeamChosen(1);
+	        			 }
+	        			 if (timesClicked == 4) {
+	        				 Player4.setTeamChosen(1);
+	        			 }
+	        			 if (timesClicked == numPlayers) {//once all players have chosen a team
+	        				 System.out.println("Generating game board and chosen pieces");
+	        				 createGui3(frame2, frame3, numPlayers); //go to next GUI
+	        			 }
 	        		 }
 	        		 else if(currentButton==teams[1]) {
-	        			 System.out.println("Reckless");
+	        			 timesClicked++;
+	        			 System.out.println("Player "+ timesClicked + " has chosen the Reckless Team");
+	        			 if (timesClicked == 1) {
+	        				 Player1.setTeamChosen(2);
+	        			 }
+	        			 if (timesClicked == 2) {
+	        				 Player2.setTeamChosen(2);
+	        			 }
+	        			 if (timesClicked == 3) {
+	        				 Player3.setTeamChosen(2);
+	        			 }
+	        			 if (timesClicked == 4) {
+	        				 Player4.setTeamChosen(2);
+	        			 }
+	        			 if (timesClicked == numPlayers) {
+	        				 System.out.println("Generating game board and chosen pieces");
+	        				 createGui3(frame2, frame3, numPlayers);
+	        			 }
 	        		 }
 	        		 else if(currentButton==teams[2]) {
-	        			System.out.println("Fast");
+	        			timesClicked++;
+	        			System.out.println("Player "+ timesClicked + " has chosen the Fast Team");
+	        			if (timesClicked == 1) {
+	        				 Player1.setTeamChosen(3);
+	        			 }
+	        			 if (timesClicked == 2) {
+	        				 Player2.setTeamChosen(3);
+	        			 }
+	        			 if (timesClicked == 3) {
+	        				 Player3.setTeamChosen(3);
+	        			 }
+	        			 if (timesClicked == 4) {
+	        				 Player4.setTeamChosen(3);
+	        			 }
+	        			 if (timesClicked == numPlayers) {
+	        				 System.out.println("Generating game board and chosen pieces");
+	        				 createGui3(frame2, frame3, numPlayers);
+	        			 }
 	        		 }
 	        		 else {
-	        			 System.out.println("DPS");
+	        			 timesClicked++;
+	        			 System.out.println("Player "+ timesClicked + " has chosen the Damage-Focused Team");
+	        			 if (timesClicked == 1) {
+	        				 Player1.setTeamChosen(4);
+	        			 }
+	        			 if (timesClicked == 2) {
+	        				 Player2.setTeamChosen(4);
+	        			 }
+	        			 if (timesClicked == 3) {
+	        				 Player3.setTeamChosen(4);
+	        			 }
+	        			 if (timesClicked == 4) {
+	        				 Player4.setTeamChosen(4);
+	        			 }
+	        			 if (timesClicked == numPlayers) {
+	        				 System.out.println("Generating game board and chosen pieces");
+	        				 createGui3(frame2, frame3, numPlayers);
+	        			 }
 	        		 }
 	        	 	
 	        	 }
@@ -182,15 +256,12 @@ public class Game extends JPanel{
         frame3.setVisible(true);
         
         //have to finally create the game pieces based off of previous GUI selections
-        Player Player1 = new Player(1, 4);
         Player1.createGamePieces(tile, "Blue", 10, 20, 0, 1, 2);
-        Player Player2 = new Player(2, 3);
-        Player2.createGamePieces(tile, "Red", 7, 8, 9, 19, 29);
-        Player Player3 =new Player(3,2);
-        Player3.createGamePieces(tile, "Green", 70, 80, 90, 91, 92);
-        Player Player4 =new Player(4,1);
-        Player4.createGamePieces(tile, "Yellow", 97, 98, 99, 89, 79);
-        
+        Player2.createGamePieces(tile, "Red", 97, 98, 99, 89, 79); //Player 2's location has been changed so they are opposite player 1 rather than next to them
+        if(numPlayers == 4) {
+        	Player3.createGamePieces(tile, "Green", 70, 80, 90, 91, 92);
+        	Player4.createGamePieces(tile, "Yellow", 7, 8, 9, 19, 29);
+        }
 	}
 	
     public static void main(String[] args){

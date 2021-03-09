@@ -16,6 +16,9 @@ public Player(int playerNum, int teamChosen){ //constructor
 	this.playerNum=playerNum;
 	this.teamChosen=teamChosen;
 }
+public Player(int playerNum) {
+	this.playerNum=playerNum;
+}
 
 public int getPlayerNum(){
 	return playerNum;
@@ -23,6 +26,10 @@ public int getPlayerNum(){
 
 public int getTeamChosen() {
 	return teamChosen;
+}
+
+public void setTeamChosen(int teamChosen) {
+	this.teamChosen=teamChosen;
 }
 
 //takes button, color, and locations of where pieces should be generated to create them for the player
