@@ -10,7 +10,8 @@ import javax.swing.*;
 public class Player {
 int playerNum; //for player turn order
 int teamChosen; //keep track of what team was chosen so can make the proper pieces
-Team playersTeam;
+static Team playersTeam;
+
 
 public Player(int playerNum, int teamChosen){ //constructor
 	this.playerNum=playerNum;
@@ -31,6 +32,7 @@ public int getTeamChosen() {
 public void setTeamChosen(int teamChosen) {
 	this.teamChosen=teamChosen;
 }
+
 
 //takes button, color, and locations of where pieces should be generated to create them for the player
 //will need to take teamChosen as a parameter so can make those specific pieces

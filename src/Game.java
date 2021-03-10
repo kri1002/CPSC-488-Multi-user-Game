@@ -35,7 +35,7 @@ public class Game extends JPanel{
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }
 	        		 else if(currentButton==gameMode[2]) {
-	        			System.out.println("Two-Verus-Two Team Battle game mode selected");
+	        			System.out.println("Two-Versus-Two Team Battle game mode selected");
 	        			numPlayers=4;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }
@@ -199,6 +199,29 @@ public class Game extends JPanel{
         			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
         				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()==null){//if first tile had icon and second was empty
         					 //try{
+        					 
+        					//have to figure out what piece and type was pressed to be able to determine where it can move
+                			 //these if statements don't work I can't think of how to get the icon from the piece after its been set
+       
+        					 /*
+        					 System.out.println(lastButtonPressed.getIcon());
+        					 
+        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[0]) {
+        						 System.out.println("This is a circle");
+        					 }
+        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[1]) {
+        						 System.out.println("This is a triangle");
+        					 }
+        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[2]) {
+        						 System.out.println("This is a star");
+        					 }
+        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[3]) {
+        						 System.out.println("This is a pentagon");
+        					 }
+        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[4]) {
+        						 System.out.println("This is a square");
+        					 }
+        					 */
         						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
         						//Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png")); //will have to change image src to variable so it can work with any token
         						lastButtonPressed.setIcon(null); //sets the tile with the image null
