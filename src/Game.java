@@ -194,7 +194,69 @@ public class Game extends JPanel{
         	 public void actionPerformed (ActionEvent e){
         		 JButton currentButton= (JButton)e.getSource(); //save which button pressed in variable
         		 //System.out.println(currentButton);
-        		 
+        		 //This allows the system to know the type of piece that has been clicked on and its owner
+        		 if(currentButton.getIcon()==Player1.PieceImages[0]) {
+					 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[0].name);
+				 }
+        		 if(currentButton.getIcon()==Player1.PieceImages[1]) {
+        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[1].name);
+        		 }
+        		 if(currentButton.getIcon()==Player1.PieceImages[2]) {
+        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[2].name);
+        		 }
+        		 if(currentButton.getIcon()==Player1.PieceImages[3]) {
+        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[3].name);
+        		 }
+        		 if(currentButton.getIcon()==Player1.PieceImages[4]) {
+        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[4].name);
+        		 }
+        		 if(currentButton.getIcon()==Player2.PieceImages[0]) {
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[0].name);
+        		 }
+        		 if(currentButton.getIcon()==Player2.PieceImages[1]) {
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[1].name);
+        		 }
+        		 if(currentButton.getIcon()==Player2.PieceImages[2]) {
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[2].name);
+        		 }
+        		 if(currentButton.getIcon()==Player2.PieceImages[3]) {
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[3].name);
+        		 }
+        		 if(currentButton.getIcon()==Player2.PieceImages[4]) {
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[4].name);
+        		 }
+        		 if(numPlayers==4) {
+        			 if(currentButton.getIcon()==Player3.PieceImages[0]) {
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[0].name);
+        			 }
+        			 if(currentButton.getIcon()==Player3.PieceImages[1]) {
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[1].name);
+        			 }
+        			 if(currentButton.getIcon()==Player3.PieceImages[2]) {
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[2].name);
+        			 }
+        			 if(currentButton.getIcon()==Player3.PieceImages[3]) {
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[3].name);
+        			 }
+        			 if(currentButton.getIcon()==Player3.PieceImages[4]) {
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[4].name);
+        			 }
+        			 if(currentButton.getIcon()==Player4.PieceImages[0]) {
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[0].name);
+        			 }
+        			 if(currentButton.getIcon()==Player4.PieceImages[1]) {
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[1].name);
+        			 }
+        			 if(currentButton.getIcon()==Player4.PieceImages[2]) {
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[2].name);
+        			 }
+        			 if(currentButton.getIcon()==Player4.PieceImages[3]) {
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[3].name);
+        			 }
+        			 if(currentButton.getIcon()==Player4.PieceImages[4]) {
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[4].name);
+        			 }
+        		 }
         		 if(lastButtonPressed!=null){//if two tiles were clicked
         			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
         				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()==null){//if first tile had icon and second was empty
@@ -222,6 +284,7 @@ public class Game extends JPanel{
         						 System.out.println("This is a square");
         					 }
         					 */
+        					 
         						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
         						//Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png")); //will have to change image src to variable so it can work with any token
         						lastButtonPressed.setIcon(null); //sets the tile with the image null
@@ -251,12 +314,12 @@ public class Game extends JPanel{
         gameMenuBar.add(options); //mount it onto menu bar
         JMenuItem key = new JMenuItem("Key"); //create and name options within "options"
         JMenuItem endturn = new JMenuItem("End Turn");
-        JMenuItem exit = new JMenuItem("Exit");
+        JMenuItem concede = new JMenuItem("Concede");
         options.add(key); //put them into "options" within menu bar
         options.add(endturn);
-        options.add(exit);
+        options.add(concede);
         
-        class exitAction implements ActionListener{ //allow "exit" to close program on click
+        class concedeAction implements ActionListener{ //allow "exit" to close program on click
     		public void actionPerformed (ActionEvent e) {
     			System.exit(0);
     		}
@@ -271,7 +334,7 @@ public class Game extends JPanel{
         		System.out.println("Placeholder for endturn function");
         	}
         }
-        exit.addActionListener(new exitAction()); //add action listeners to menu bar
+        concede.addActionListener(new concedeAction()); //add action listeners to menu bar
         key.addActionListener(new keyAction());
         endturn.addActionListener(new endturnAction());
         

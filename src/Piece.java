@@ -1,6 +1,7 @@
 
 public abstract class Piece { //generic game piece class with stats all pieces will have and methods to access them
 	String token;
+	String name;
 	int maxHp;
 	int currHp;
 	int attack;
@@ -34,6 +35,7 @@ public abstract class Piece { //generic game piece class with stats all pieces w
 //more specific stats are given to specific kinds of pieces 
 class warrior extends Piece{ 
 	warrior(){ //warrior is slow, strong and has a lot of health
+		name = "Warrior"; //added name to each piece class
 		token = "Circle";
 		maxHp = 60;
 		attack = 6;
@@ -46,6 +48,7 @@ class warrior extends Piece{
 
 class ranger extends Piece{
 	ranger(){// ranger is fast, has range, but has lower damage
+		name = "Ranger";
 		token = "Square";
 		maxHp = 35;
 		attack = 3;
@@ -58,6 +61,7 @@ class ranger extends Piece{
 
 class rogue extends Piece{
 	rogue(){//rogue is the fastest, has low damage, but had the highest crit chance
+		name = "Rogue";
 		token = "Triangle";
 		maxHp = 40;
 		attack = 3;
@@ -70,6 +74,7 @@ class rogue extends Piece{
 
 class healer extends Piece{
 	healer(){//healer has bad stats all around but will have the ability to heal allies instead of taking the attack action
+		name = "Healer";
 		token = "Star";
 		maxHp = 25;
 		attack = 3;
@@ -82,6 +87,7 @@ class healer extends Piece{
 
 class damageMage extends Piece{
 	damageMage(){//damage mage has high damage, moderate range, but has significantly fewer hit points than the warrior
+		name = "Damage Mage";
 		token = "Pentagon";
 		maxHp = 30;
 		attack = 4;
