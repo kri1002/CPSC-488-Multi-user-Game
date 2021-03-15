@@ -14,6 +14,14 @@ public class Game extends JPanel{
 	
 	//will need something outside of this GUI to keep track of game mode
 	//so can determine player order etc
+	
+	public static void swapImage(JButton currentButton, Icon tempImg) { //swaps the images on the tiles
+		lastButtonPressed.setIcon(null); //sets the tile with the image null
+		currentButton.setIcon(tempImg); //move image to tile that was clicked
+		lastButtonPressed.revalidate(); //resets and updates button
+		currentButton.revalidate(); 
+	}
+	
 	public static void createGui1(JFrame frame1, JFrame frame2, JFrame frame3){ //game selection
 		JButton gameMode[]= new JButton[4];
 		  frame1.setLayout(new GridLayout(4, 0));
@@ -43,8 +51,7 @@ public class Game extends JPanel{
 	        			 System.out.println("4 Player Free-for-All Game game mode selected");
 	        			 numPlayers=4;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
-	        		 }
-	        			
+	        		 }	
 	        	 }
 	         }
 		 
@@ -72,7 +79,6 @@ public class Game extends JPanel{
 		JButton teams[]= new JButton[4];
 		  frame2.setLayout(new GridLayout(4, 0));
 		
-		  
 		  //will have to keep track of num of players after each click, after there's no more players to select team go to next screen
 		   class buttonClicked implements ActionListener{
 			   JButton currentButton=null;
@@ -162,7 +168,6 @@ public class Game extends JPanel{
 	        	 	
 	        	 }
 	        	 }
-		  
 		  
 		   for(int i=0; i<4; i++) {//add the buttons to the frame
 	       	teams[i]= new JButton(); //create button
@@ -261,44 +266,98 @@ public class Game extends JPanel{
         			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
         				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()==null){//if first tile had icon and second was empty
         					 //try{
-        					 
-        					//have to figure out what piece and type was pressed to be able to determine where it can move
-                			 //these if statements don't work I can't think of how to get the icon from the piece after its been set
-       
-        					 /*
-        					 System.out.println(lastButtonPressed.getIcon());
-        					 
-        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[0]) {
-        						 System.out.println("This is a circle");
-        					 }
-        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[1]) {
-        						 System.out.println("This is a triangle");
-        					 }
-        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[2]) {
-        						 System.out.println("This is a star");
-        					 }
-        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[3]) {
-        						 System.out.println("This is a pentagon");
-        					 }
-        					 if(lastButtonPressed.getIcon()==Player.playersTeam.teamPieces[4]) {
-        						 System.out.println("This is a square");
-        					 }
-        					 */
-        					 
         						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
         						//Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png")); //will have to change image src to variable so it can work with any token
-        						lastButtonPressed.setIcon(null); //sets the tile with the image null
-        						currentButton.setIcon(tempImg/*new ImageIcon(img)*/); //move image to tile that was clicked
-        						lastButtonPressed.revalidate(); //resets and updates button
-        						currentButton.revalidate();     //resets and updates button
+      
+        			if(tempImg==Player1.PieceImages[0])	{//pieces can move 3, 4, 5, or 6 tiles
+        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[0].move + " tiles");
+        				swapImage(currentButton, tempImg);	
+        			}
+        			if(tempImg==Player1.PieceImages[1]) {
+        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[1].move + " tiles");
+        				swapImage(currentButton, tempImg);
+        			}
+        			if(tempImg==Player1.PieceImages[2]) {
+        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[2].move + " tiles");
+        				swapImage(currentButton, tempImg);
+        			}			 
+        			if(tempImg==Player1.PieceImages[3]) {
+        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[3].move + " tiles");
+        				swapImage(currentButton, tempImg);
+        			}		
+        			if(tempImg==Player1.PieceImages[4]) {
+        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[4].move + " tiles");
+        				swapImage(currentButton, tempImg);
+        			}
+        			if(tempImg==Player2.PieceImages[0]) {
+        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[0].move + " tiles");
+        				swapImage(currentButton, tempImg);
+        			}
+        			if(tempImg==Player2.PieceImages[1]) {
+        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[1].move + " tiles");
+        				swapImage(currentButton, tempImg);
+        			}
+        			if(tempImg==Player2.PieceImages[2]) {
+        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[2].move + " tiles");
+        				swapImage(currentButton, tempImg);
+        			}
+        			if(tempImg==Player2.PieceImages[3]) {
+        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[3].move + " tiles");
+        				swapImage(currentButton, tempImg);
+        			}
+        			if(tempImg==Player2.PieceImages[4]) {
+        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[4].move + " tiles");
+        				swapImage(currentButton, tempImg);
+        			}
+        			 if(numPlayers==4) {
+        				 if(tempImg==Player3.PieceImages[0]) {
+             				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[0].move + " tiles");
+             				swapImage(currentButton, tempImg);
+             			}
+        				 if(tempImg==Player3.PieceImages[1]) {
+              				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[1].move + " tiles");
+              				swapImage(currentButton, tempImg);
+              			}
+        				 if(tempImg==Player3.PieceImages[2]) {
+              				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[2].move + " tiles");
+              				swapImage(currentButton, tempImg);
+              			}
+        				 if(tempImg==Player3.PieceImages[3]) {
+              				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[3].move + " tiles");
+              				swapImage(currentButton, tempImg);
+              			} if(tempImg==Player3.PieceImages[4]) {
+             				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[4].move + " tiles");
+             				swapImage(currentButton, tempImg);
+             			}
+              			 if(tempImg==Player4.PieceImages[0]) {
+              				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[0].move + " tiles");
+              				swapImage(currentButton, tempImg);
+              			}
+       					 if(tempImg==Player4.PieceImages[1]) {
+               				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[1].move + " tiles");
+               				swapImage(currentButton, tempImg);
+       					 }
+       					 if(tempImg==Player4.PieceImages[2]) {
+                				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[2].move + " tiles");
+                				swapImage(currentButton, tempImg);
+        					 }
+       					 if(tempImg==Player4.PieceImages[3]) {
+                				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[3].move + " tiles");
+                				swapImage(currentButton, tempImg); 
+        					 }
+       					 if(tempImg==Player4.PieceImages[4]) {
+                				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[4].move + " tiles");
+                				swapImage(currentButton, tempImg);
+        					 }				 				
+        			 }//end of if numPlayers ==4			 
         			        	//}catch (IOException ex){}
         					currentButton=null; //resets the ActionListener
         					}
         				}	
-        			}
+        			}// end of if LBR != null	
         			lastButtonPressed=currentButton; //sets initial value for LBP
-        		}
-        	 }
+        		} //end of actionPerformed
+        	 } //end of TileClicked
         
         for(int i=0; i<100; i++) {//add the buttons to the frame
         	tile[i]= new JButton(); //create button
