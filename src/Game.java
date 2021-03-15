@@ -7,6 +7,10 @@ import javax.swing.*;
 public class Game extends JPanel{
 	private static JButton lastButtonPressed;
 	public static int timesClicked = 0;//I feel like there is a better place to put this, but I couldnt get it to work anywhere else
+	public static int pieceXCoord; //Coordinates for the piece to be used in the action listener
+ 	public static int pieceYCoord;
+ 	public static int destinationXCoord; //coordinates for the destination space to be used in the action listener
+ 	public static int destinationYCoord;
 	public static Player Player1 = new Player(1);//players are now generated at the start of the game class so they can be referenced anywhere
 	public static Player Player2 = new Player(2);
 	public static Player Player3 = new Player(3);
@@ -192,162 +196,445 @@ public class Game extends JPanel{
 	public static void createGui3(JFrame frame2, JFrame frame3,int numPlayers) {
 		frame2.dispose();
         frame3.setLayout(new GridLayout(0, 10));
-        JButton tile[] = new JButton[100]; 
+        //JButton tile[] = new JButton[100];
+        JButton tile[][] = new JButton[10][10]; //tile is now a matrix
+        
        
         class tileClicked implements ActionListener{
+        	
         	 JButton currentButton=null;
         	 public void actionPerformed (ActionEvent e){
+        		 
         		 JButton currentButton= (JButton)e.getSource(); //save which button pressed in variable
         		 //System.out.println(currentButton);
         		 //This allows the system to know the type of piece that has been clicked on and its owner
+        		 /*for (int i=0; i<tile.length; i++) {
+        			 for(int j=0; j<tile[i].length; j++) {
+        				 if (currentButton == tile[i][j]) {
+        					 System.out.println("tile clicked is button " + i + j);
+        				 }
+        			 }
+        		 }*/ //this is for debugging, if you want to see the number of the clicked tile
+        		 
+        		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
         		 if(currentButton.getIcon()==Player1.PieceImages[0]) {
-					 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[0].name);
+					 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[0].name + ", it can move " + Player1.playersTeam.teamPieces[0].move + " tiles");
+					 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i; 
+	        					 pieceXCoord = j;
+	        					 //System.out.println(pieceYCoord + "" + pieceXCoord);
+	        				 }
+	        			 }
+	        		 }
 				 }
         		 if(currentButton.getIcon()==Player1.PieceImages[1]) {
-        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[1].name);
+        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[1].name + ", it can move " + Player1.playersTeam.teamPieces[1].move + " tiles");
+        			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i; 
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
         		 }
         		 if(currentButton.getIcon()==Player1.PieceImages[2]) {
-        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[2].name);
+        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[2].name + ", it can move " + Player1.playersTeam.teamPieces[2].move + " tiles");
+        			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
         		 }
         		 if(currentButton.getIcon()==Player1.PieceImages[3]) {
-        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[3].name);
+        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[3].name + ", it can move " + Player1.playersTeam.teamPieces[3].move + " tiles");
+        			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
         		 }
         		 if(currentButton.getIcon()==Player1.PieceImages[4]) {
-        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[4].name);
+        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[4].name + ", it can move " + Player1.playersTeam.teamPieces[4].move + " tiles");
+        			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
         		 }
         		 if(currentButton.getIcon()==Player2.PieceImages[0]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[0].name);
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[0].name + ", it can move " + Player2.playersTeam.teamPieces[0].move + " tiles");
+        			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
         		 }
         		 if(currentButton.getIcon()==Player2.PieceImages[1]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[1].name);
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[1].name + ", it can move " + Player2.playersTeam.teamPieces[1].move + " tiles");
+        			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
         		 }
         		 if(currentButton.getIcon()==Player2.PieceImages[2]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[2].name);
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[2].name + ", it can move " + Player2.playersTeam.teamPieces[2].move + " tiles");
+        			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
         		 }
         		 if(currentButton.getIcon()==Player2.PieceImages[3]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[3].name);
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[3].name + ", it can move " + Player2.playersTeam.teamPieces[3].move + " tiles");
+        			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
         		 }
         		 if(currentButton.getIcon()==Player2.PieceImages[4]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[4].name);
+        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[4].name + ", it can move " + Player2.playersTeam.teamPieces[4].move + " tiles");
+        			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
         		 }
         		 if(numPlayers==4) {
         			 if(currentButton.getIcon()==Player3.PieceImages[0]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[0].name);
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[0].name + ", it can move " + Player3.playersTeam.teamPieces[0].move + " tiles");
+        			 	for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         			 if(currentButton.getIcon()==Player3.PieceImages[1]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[1].name);
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[1].name + ", it can move " + Player3.playersTeam.teamPieces[1].move + " tiles");
+        			 	for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         			 if(currentButton.getIcon()==Player3.PieceImages[2]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[2].name);
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[2].name + ", it can move " + Player3.playersTeam.teamPieces[2].move + " tiles");
+        				for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         			 if(currentButton.getIcon()==Player3.PieceImages[3]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[3].name);
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[3].name + ", it can move " + Player3.playersTeam.teamPieces[3].move + " tiles");
+        				for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         			 if(currentButton.getIcon()==Player3.PieceImages[4]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[4].name);
+        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[4].name + ", it can move " + Player3.playersTeam.teamPieces[4].move + " tiles");
+        				for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         			 if(currentButton.getIcon()==Player4.PieceImages[0]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[0].name);
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[0].name + ", it can move " + Player4.playersTeam.teamPieces[0].move + " tiles");
+        				for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         			 if(currentButton.getIcon()==Player4.PieceImages[1]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[1].name);
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[1].name + ", it can move " + Player4.playersTeam.teamPieces[1].move + " tiles");
+        				for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         			 if(currentButton.getIcon()==Player4.PieceImages[2]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[2].name);
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[2].name + ", it can move " + Player4.playersTeam.teamPieces[2].move + " tiles");
+        				for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         			 if(currentButton.getIcon()==Player4.PieceImages[3]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[3].name);
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[3].name + ", it can move " + Player4.playersTeam.teamPieces[3].move + " tiles");
+        				for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         			 if(currentButton.getIcon()==Player4.PieceImages[4]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[4].name);
+        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[4].name + ", it can move " + Player4.playersTeam.teamPieces[4].move + " tiles");
+        				for (int i=0; i<tile.length; i++) {
+        			 		for(int j=0; j<tile[i].length; j++) {
+        			 			if (currentButton == tile[i][j]) {
+        			 				pieceYCoord = i;
+        			 				pieceXCoord = j;
+        			 			}
+        			 		}
+        			 	}
         			 }
         		 }
         		 if(lastButtonPressed!=null){//if two tiles were clicked
         			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
         				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()==null){//if first tile had icon and second was empty
+        					 for (int i=0; i<tile.length; i++) {
+             			 		for(int j=0; j<tile[i].length; j++) {
+             			 			if (currentButton == tile[i][j]) {
+             			 				destinationYCoord = i;
+             			 				destinationXCoord = j;
+             			 			}
+             			 		}
+             			 	}
         					 //try{
         						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
         						//Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png")); //will have to change image src to variable so it can work with any token
       
+        			//When a second tile is clicked, it makes sure it is a valid move for the piece selected
         			if(tempImg==Player1.PieceImages[0])	{//pieces can move 3, 4, 5, or 6 tiles
-        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[0].move + " tiles");
-        				swapImage(currentButton, tempImg);	
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}
         			if(tempImg==Player1.PieceImages[1]) {
-        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[1].move + " tiles");
-        				swapImage(currentButton, tempImg);
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[1].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}
         			if(tempImg==Player1.PieceImages[2]) {
-        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[2].move + " tiles");
-        				swapImage(currentButton, tempImg);
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[2].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}			 
         			if(tempImg==Player1.PieceImages[3]) {
-        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[3].move + " tiles");
-        				swapImage(currentButton, tempImg);
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}		
         			if(tempImg==Player1.PieceImages[4]) {
-        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[4].move + " tiles");
-        				swapImage(currentButton, tempImg);
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}
         			if(tempImg==Player2.PieceImages[0]) {
-        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[0].move + " tiles");
-        				swapImage(currentButton, tempImg);
+        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[0].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}
         			if(tempImg==Player2.PieceImages[1]) {
-        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[1].move + " tiles");
-        				swapImage(currentButton, tempImg);
+        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[1].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}
         			if(tempImg==Player2.PieceImages[2]) {
-        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[2].move + " tiles");
-        				swapImage(currentButton, tempImg);
+        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[2].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}
         			if(tempImg==Player2.PieceImages[3]) {
-        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[3].move + " tiles");
-        				swapImage(currentButton, tempImg);
+        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[3].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}
         			if(tempImg==Player2.PieceImages[4]) {
-        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[4].move + " tiles");
-        				swapImage(currentButton, tempImg);
+        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[4].move) {
+        					swapImage(currentButton, tempImg);
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
         			}
         			 if(numPlayers==4) {
         				 if(tempImg==Player3.PieceImages[0]) {
-             				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[0].move + " tiles");
-             				swapImage(currentButton, tempImg);
+             				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[0].move) {
+            					swapImage(currentButton, tempImg);
+            				}
+            				else {
+            					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+            					//System.out.println(pieceYCoord + "" + pieceXCoord);
+            				}
              			}
         				 if(tempImg==Player3.PieceImages[1]) {
-              				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[1].move + " tiles");
-              				swapImage(currentButton, tempImg);
+              				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[1].move) {
+            					swapImage(currentButton, tempImg);
+            				}
+            				else {
+            					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+            					//System.out.println(pieceYCoord + "" + pieceXCoord);
+            				}
               			}
         				 if(tempImg==Player3.PieceImages[2]) {
-              				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[2].move + " tiles");
-              				swapImage(currentButton, tempImg);
+              				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[2].move) {
+            					swapImage(currentButton, tempImg);
+            				}
+            				else {
+            					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+            					//System.out.println(pieceYCoord + "" + pieceXCoord);
+            				}
               			}
         				 if(tempImg==Player3.PieceImages[3]) {
-              				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[3].move + " tiles");
-              				swapImage(currentButton, tempImg);
+              				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[3].move) {
+            					swapImage(currentButton, tempImg);
+            				}
+            				else {
+            					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+            					//System.out.println(pieceYCoord + "" + pieceXCoord);
+            				}
               			} if(tempImg==Player3.PieceImages[4]) {
-             				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[4].move + " tiles");
-             				swapImage(currentButton, tempImg);
+             				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[4].move) {
+            					swapImage(currentButton, tempImg);
+            				}
+            				else {
+            					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+            					//System.out.println(pieceYCoord + "" + pieceXCoord);
+            				}
              			}
               			 if(tempImg==Player4.PieceImages[0]) {
-              				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[0].move + " tiles");
-              				swapImage(currentButton, tempImg);
+              				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[0].move) {
+            					swapImage(currentButton, tempImg);
+            				}
+            				else {
+            					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+            					//System.out.println(pieceYCoord + "" + pieceXCoord);
+            				}
               			}
        					 if(tempImg==Player4.PieceImages[1]) {
-               				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[1].move + " tiles");
-               				swapImage(currentButton, tempImg);
+               				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[1].move) {
+            					swapImage(currentButton, tempImg);
+            				}
+            				else {
+            					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+            					//System.out.println(pieceYCoord + "" + pieceXCoord);
+            				}
        					 }
        					 if(tempImg==Player4.PieceImages[2]) {
-                				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[2].move + " tiles");
-                				swapImage(currentButton, tempImg);
+                				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[2].move) {
+                					swapImage(currentButton, tempImg);
+                				}
+                				else {
+                					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+                					//System.out.println(pieceYCoord + "" + pieceXCoord);
+                				}
         					 }
        					 if(tempImg==Player4.PieceImages[3]) {
-                				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[3].move + " tiles");
-                				swapImage(currentButton, tempImg); 
+                				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[3].move) {
+                					swapImage(currentButton, tempImg);
+                				}
+                				else {
+                					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+                					//System.out.println(pieceYCoord + "" + pieceXCoord);
+                				} 
         					 }
        					 if(tempImg==Player4.PieceImages[4]) {
-                				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[4].move + " tiles");
-                				swapImage(currentButton, tempImg);
+                				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[4].move) {
+                					swapImage(currentButton, tempImg);
+                				}
+                				else {
+                					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+                					//System.out.println(pieceYCoord + "" + pieceXCoord);
+                				}
         					 }				 				
         			 }//end of if numPlayers ==4			 
         			        	//}catch (IOException ex){}
@@ -359,11 +646,17 @@ public class Game extends JPanel{
         		} //end of actionPerformed
         	 } //end of TileClicked
         
-        for(int i=0; i<100; i++) {//add the buttons to the frame
-        	tile[i]= new JButton(); //create button
+        for(int i=0; i<10; i++) {//add the buttons to the frame
+        	/*tile[i]= new JButton(); //create button
         	frame3.add(tile[i]); //add to frame
         	tile[i].setBackground(Color.white); //set color of button
-        	tile[i].addActionListener(new tileClicked()); //add listener to button
+        	tile[i].addActionListener(new tileClicked()); //add listener to button*/
+        	for (int j=0; j<10; j++) {
+        		tile[i][j]=new JButton();
+        		frame3.add(tile[i][j]);
+        		tile[i][j].setBackground(Color.white);
+        		tile[i][j].addActionListener(new tileClicked());
+        	}
         }
         
         frame3.setSize(600,600);
