@@ -270,83 +270,83 @@ public class Game extends JPanel{
         						//Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png")); //will have to change image src to variable so it can work with any token
       
         			if(tempImg==Player1.PieceImages[0])	{//pieces can move 3, 4, 5, or 6 tiles
-        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[0].move + " tiles");
+        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[0].move + " tiles");
         				swapImage(currentButton, tempImg);	
         			}
         			if(tempImg==Player1.PieceImages[1]) {
-        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[1].move + " tiles");
+        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[1].move + " tiles");
         				swapImage(currentButton, tempImg);
         			}
         			if(tempImg==Player1.PieceImages[2]) {
-        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[2].move + " tiles");
+        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[2].move + " tiles");
         				swapImage(currentButton, tempImg);
         			}			 
         			if(tempImg==Player1.PieceImages[3]) {
-        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[3].move + " tiles");
+        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[3].move + " tiles");
         				swapImage(currentButton, tempImg);
         			}		
         			if(tempImg==Player1.PieceImages[4]) {
-        				System.out.println("This tile can move " + Player1.playersTeam.teamPieces[4].move + " tiles");
+        				System.out.println("This piece can move " + Player1.playersTeam.teamPieces[4].move + " tiles");
         				swapImage(currentButton, tempImg);
         			}
         			if(tempImg==Player2.PieceImages[0]) {
-        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[0].move + " tiles");
+        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[0].move + " tiles");
         				swapImage(currentButton, tempImg);
         			}
         			if(tempImg==Player2.PieceImages[1]) {
-        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[1].move + " tiles");
+        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[1].move + " tiles");
         				swapImage(currentButton, tempImg);
         			}
         			if(tempImg==Player2.PieceImages[2]) {
-        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[2].move + " tiles");
+        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[2].move + " tiles");
         				swapImage(currentButton, tempImg);
         			}
         			if(tempImg==Player2.PieceImages[3]) {
-        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[3].move + " tiles");
+        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[3].move + " tiles");
         				swapImage(currentButton, tempImg);
         			}
         			if(tempImg==Player2.PieceImages[4]) {
-        				System.out.println("This tile can move " + Player2.playersTeam.teamPieces[4].move + " tiles");
+        				System.out.println("This piece can move " + Player2.playersTeam.teamPieces[4].move + " tiles");
         				swapImage(currentButton, tempImg);
         			}
         			 if(numPlayers==4) {
         				 if(tempImg==Player3.PieceImages[0]) {
-             				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[0].move + " tiles");
+             				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[0].move + " tiles");
              				swapImage(currentButton, tempImg);
              			}
         				 if(tempImg==Player3.PieceImages[1]) {
-              				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[1].move + " tiles");
+              				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[1].move + " tiles");
               				swapImage(currentButton, tempImg);
               			}
         				 if(tempImg==Player3.PieceImages[2]) {
-              				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[2].move + " tiles");
+              				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[2].move + " tiles");
               				swapImage(currentButton, tempImg);
               			}
         				 if(tempImg==Player3.PieceImages[3]) {
-              				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[3].move + " tiles");
+              				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[3].move + " tiles");
               				swapImage(currentButton, tempImg);
               			} if(tempImg==Player3.PieceImages[4]) {
-             				System.out.println("This tile can move " + Player3.playersTeam.teamPieces[4].move + " tiles");
+             				System.out.println("This piece can move " + Player3.playersTeam.teamPieces[4].move + " tiles");
              				swapImage(currentButton, tempImg);
              			}
               			 if(tempImg==Player4.PieceImages[0]) {
-              				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[0].move + " tiles");
+              				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[0].move + " tiles");
               				swapImage(currentButton, tempImg);
               			}
        					 if(tempImg==Player4.PieceImages[1]) {
-               				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[1].move + " tiles");
+               				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[1].move + " tiles");
                				swapImage(currentButton, tempImg);
        					 }
        					 if(tempImg==Player4.PieceImages[2]) {
-                				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[2].move + " tiles");
+                				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[2].move + " tiles");
                 				swapImage(currentButton, tempImg);
         					 }
        					 if(tempImg==Player4.PieceImages[3]) {
-                				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[3].move + " tiles");
+                				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[3].move + " tiles");
                 				swapImage(currentButton, tempImg); 
         					 }
        					 if(tempImg==Player4.PieceImages[4]) {
-                				System.out.println("This tile can move " + Player4.playersTeam.teamPieces[4].move + " tiles");
+                				System.out.println("This piece can move " + Player4.playersTeam.teamPieces[4].move + " tiles");
                 				swapImage(currentButton, tempImg);
         					 }				 				
         			 }//end of if numPlayers ==4			 
