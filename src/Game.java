@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,6 +16,10 @@ public class Game extends JPanel{
 	public static Player Player2 = new Player(2);
 	public static Player Player3 = new Player(3);
 	public static Player Player4 = new Player(4);
+	public static JButton move =new JButton("Move"); //buttons to take actions in the game
+    public static JButton attack =new JButton("Attack");
+    public static JButton heal =new JButton("Heal"); 
+	public static JButton cancel =new JButton("Cancel Action");
 	
 	//will need something outside of this GUI to keep track of game mode
 	//so can determine player order etc
@@ -25,6 +30,74 @@ public class Game extends JPanel{
 		lastButtonPressed.revalidate(); //resets and updates button
 		currentButton.revalidate(); 
 	}
+	
+	public static ImageIcon returnGamePiece(Icon tempImg2){//was trying to use this to figure out the second game piece without having to put a bunch of ifs in the attack piece
+		if(tempImg2==Player1.PieceImages[0]) {
+			return Player1.PieceImages[0];
+		}
+		if(tempImg2==Player1.PieceImages[1]) {
+			return Player1.PieceImages[1];
+		}
+		if(tempImg2==Player1.PieceImages[2]) {
+			return Player1.PieceImages[2];
+		}
+		if(tempImg2==Player1.PieceImages[3]) {
+			return Player1.PieceImages[3];
+		}
+		if(tempImg2==Player1.PieceImages[4]) {
+			return Player1.PieceImages[4];
+		}
+		if(tempImg2==Player2.PieceImages[0]) {
+			return Player2.PieceImages[0];
+		}
+		if(tempImg2==Player2.PieceImages[1]) {
+			return Player2.PieceImages[1];
+		}
+		if(tempImg2==Player2.PieceImages[2]) {
+			return Player2.PieceImages[2];
+		}
+		if(tempImg2==Player2.PieceImages[3]) {
+			return Player2.PieceImages[3];
+		}
+		if(tempImg2==Player2.PieceImages[4]) {
+			return Player2.PieceImages[4];
+		}
+		if(tempImg2==Player3.PieceImages[0]) {
+			return Player3.PieceImages[0];
+		}
+		if(tempImg2==Player3.PieceImages[1]) {
+			return Player3.PieceImages[1];
+		}
+		if(tempImg2==Player3.PieceImages[2]) {
+			return Player3.PieceImages[2];
+		}
+		if(tempImg2==Player3.PieceImages[3]) {
+			return Player3.PieceImages[3];
+		}
+		if(tempImg2==Player3.PieceImages[4]) {
+			return Player3.PieceImages[4];
+		}
+		if(tempImg2==Player4.PieceImages[0]) {
+			return Player4.PieceImages[0];
+		}
+		if(tempImg2==Player4.PieceImages[1]) {
+			return Player4.PieceImages[1];
+		}
+		if(tempImg2==Player4.PieceImages[2]) {
+			return Player4.PieceImages[2];
+		}
+		if(tempImg2==Player4.PieceImages[3]) {
+			return Player4.PieceImages[3];
+		}
+		if(tempImg2==Player4.PieceImages[4]) {
+			return Player4.PieceImages[4];
+		
+		}
+		else {
+			return null;
+		}
+	}
+	
 	
 	public static void createGui1(JFrame frame1, JFrame frame2, JFrame frame3){ //game selection
 		JButton gameMode[]= new JButton[4];
@@ -199,12 +272,439 @@ public class Game extends JPanel{
         //JButton tile[] = new JButton[100];
         JButton tile[][] = new JButton[10][10]; //tile is now a matrix
         
-       
-        class tileClicked implements ActionListener{
+        class healGamePiece implements ActionListener{
+        	JButton currentButton=null;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        }
+              
+        class attackGamePiece implements ActionListener{
+        	JButton currentButton=null;
+        	public void actionPerformed (ActionEvent e) {
+        		 JButton currentButton= (JButton)e.getSource();
+        		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
+       		 if(currentButton.getIcon()==Player1.PieceImages[0]) {
+					 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[0].name);
+					 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i; 
+	        					 pieceXCoord = j;
+	        					 //System.out.println(pieceYCoord + "" + pieceXCoord);
+	        				 }
+	        			 }
+	        		 }
+				 }
+       		 if(currentButton.getIcon()==Player1.PieceImages[1]) {
+       			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[1].name);
+       			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i; 
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
+       		 }
+       		 if(currentButton.getIcon()==Player1.PieceImages[2]) {
+       			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[2].name);
+       			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
+       		 }
+       		 if(currentButton.getIcon()==Player1.PieceImages[3]) {
+       			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[3].name);
+       			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
+       		 }
+       		 if(currentButton.getIcon()==Player1.PieceImages[4]) {
+       			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[4].name);
+       			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
+       		 }
+       		 if(currentButton.getIcon()==Player2.PieceImages[0]) {
+       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[0].name);
+       			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
+       		 }
+       		 if(currentButton.getIcon()==Player2.PieceImages[1]) {
+       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[1].name);
+       			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
+       		 }
+       		 if(currentButton.getIcon()==Player2.PieceImages[2]) {
+       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[2].name);
+       			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
+       		 }
+       		 if(currentButton.getIcon()==Player2.PieceImages[3]) {
+       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[3].name);
+       			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
+       		 }
+       		 if(currentButton.getIcon()==Player2.PieceImages[4]) {
+       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[4].name);
+       			 for (int i=0; i<tile.length; i++) {
+	        			 for(int j=0; j<tile[i].length; j++) {
+	        				 if (currentButton == tile[i][j]) {
+	        					 pieceYCoord = i;
+	        					 pieceXCoord = j;
+	        				 }
+	        			 }
+	        		 }
+       		 }
+       		 if(numPlayers==4) {
+       			 if(currentButton.getIcon()==Player3.PieceImages[0]) {
+       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[0].name);
+       			 	for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       			 if(currentButton.getIcon()==Player3.PieceImages[1]) {
+       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[1].name);
+       			 	for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       			 if(currentButton.getIcon()==Player3.PieceImages[2]) {
+       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[2].name);
+       				for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       			 if(currentButton.getIcon()==Player3.PieceImages[3]) {
+       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[3].name);
+       				for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       			 if(currentButton.getIcon()==Player3.PieceImages[4]) {
+       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[4].name);
+       				for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       			 if(currentButton.getIcon()==Player4.PieceImages[0]) {
+       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[0].name);
+       				for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       			 if(currentButton.getIcon()==Player4.PieceImages[1]) {
+       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[1].name);
+       				for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       			 if(currentButton.getIcon()==Player4.PieceImages[2]) {
+       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[2].name);
+       				for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       			 if(currentButton.getIcon()==Player4.PieceImages[3]) {
+       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[3].name);
+       				for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       			 if(currentButton.getIcon()==Player4.PieceImages[4]) {
+       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[4].name);
+       				for (int i=0; i<tile.length; i++) {
+       			 		for(int j=0; j<tile[i].length; j++) {
+       			 			if (currentButton == tile[i][j]) {
+       			 				pieceYCoord = i;
+       			 				pieceXCoord = j;
+       			 			}
+       			 		}
+       			 	}
+       			 }
+       		 }
+       		 if(lastButtonPressed!=null){//if two tiles were clicked
+       			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
+       				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()!=null){//if both tiles have an icon 
+       					 for (int i=0; i<tile.length; i++) {
+            			 		for(int j=0; j<tile[i].length; j++) {
+            			 			if (currentButton == tile[i][j]) {
+            			 				destinationYCoord = i;
+            			 				destinationXCoord = j;
+            			 			}
+            			 		}
+            			 	}
+       						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
+       						 Icon tempImg2= currentButton.getIcon();
+       			if(tempImg==Player1.PieceImages[0])	{
+       			//check to make sure piece to be attacked isn't the player's pieces 
+       		
+       				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
+       					System.out.println("attack time");
+       				 //System.out.println(returnGamePiece(tempImg2)); //only returns the icon...need to return gamepiece
+       					//System.out.println(Player1.playersTeam.teamPieces[0].attack);
+       				}
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}
+       			if(tempImg==Player1.PieceImages[1]){
+       				if (currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
+       					System.out.println("attack time");
+       				}
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}
+       			if(tempImg==Player1.PieceImages[2]){
+       				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
+       					System.out.println("attack time");
+       				}
+       				else{
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}			 
+       			if(tempImg==Player1.PieceImages[3]) {
+       				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[4]) {
+       					System.out.println("attack time");
+       				}
+       				else{
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}	
+       			
+       			if(tempImg==Player1.PieceImages[4]) {
+       				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[0]) {
+       					System.out.println("attack time");
+       				}
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}
+       			if(tempImg==Player2.PieceImages[0]) {
+       				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
+       					System.out.println("attack time");
+       				}
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}
+       			if(tempImg==Player2.PieceImages[1]) {
+       				if (currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
+       					System.out.println("attack time");
+       				}
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}
+       			if(tempImg==Player2.PieceImages[2]) {
+       				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
+       					System.out.println("attack time");
+       				}
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}
+       			if(tempImg==Player2.PieceImages[3]) {
+       				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[4]) {
+       					System.out.println("attack time");
+       				}
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}
+       			if(tempImg==Player2.PieceImages[4]) {
+       				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[0]) {
+       					System.out.println("attack time");
+       				}
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+       				}
+       			}
+       			 if(numPlayers==4) {
+       				 if(tempImg==Player3.PieceImages[0]) {
+            				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
+            					System.out.println("attack time");
+           				}
+           				else {
+           					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+           				}
+            			}
+       				 if(tempImg==Player3.PieceImages[1]) {
+             				if (currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
+           					System.out.println("attack time");
+           				}
+           				else {
+           					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+           				}
+             			}
+       				 if(tempImg==Player3.PieceImages[2]) {
+             				if(currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]){
+           					System.out.println("attack time");
+           				}
+           				else {
+           					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+           				}
+             			}
+       				 if(tempImg==Player3.PieceImages[3]) {
+             				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[4]) {
+           					System.out.println("attack time");
+           				}
+           				else {
+           					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+           					
+           				}
+             			} if(tempImg==Player3.PieceImages[4]) {
+            				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[0]) {
+           					System.out.println("attack time");
+           				}
+           				else {
+           					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+           				}
+            			}
+             			 if(tempImg==Player4.PieceImages[0]) {
+             				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]){
+           					System.out.println("attack time");
+           				}
+           				else {
+           					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+           				}
+             			}
+      					 if(tempImg==Player4.PieceImages[1]) {
+              				if(currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
+           					System.out.println("attack time");
+           				}
+           				else {
+           					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+           					
+           				}
+      					 }
+      					 if(tempImg==Player4.PieceImages[2]) {
+               				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
+               					System.out.println("attack time");
+               				}
+               				else {
+               					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+               				}
+       					 }
+      					 if(tempImg==Player4.PieceImages[3]) {
+               				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[4]) {
+               					System.out.println("attack time");
+               				}
+               				else {
+               					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+               				} 
+       					 }
+      					 if(tempImg==Player4.PieceImages[4]) {
+               				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[0]) {
+               					System.out.println("attack time");
+               				}
+               				else {
+               					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+               				}
+               				
+       					 }				 				
+       			 }//end of if numPlayers ==4			 
+       					currentButton=null; //resets the ActionListener
+       					}
+       			 }
+       		 }
+       				lastButtonPressed=currentButton;
+        	}
         	
+        }
+        
+        
+        class tileClicked implements ActionListener{
         	 JButton currentButton=null;
+        	 
         	 public void actionPerformed (ActionEvent e){
-        		 
         		 JButton currentButton= (JButton)e.getSource(); //save which button pressed in variable
         		 //System.out.println(currentButton);
         		 //This allows the system to know the type of piece that has been clicked on and its owner
@@ -215,6 +715,7 @@ public class Game extends JPanel{
         				 }
         			 }
         		 }*/ //this is for debugging, if you want to see the number of the clicked tile
+        		 
         		 
         		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
         		 if(currentButton.getIcon()==Player1.PieceImages[0]) {
@@ -451,6 +952,7 @@ public class Game extends JPanel{
              			 			}
              			 		}
              			 	}
+        					 
         					 //try{
         						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
         						//Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png")); //will have to change image src to variable so it can work with any token
@@ -459,6 +961,7 @@ public class Game extends JPanel{
         			if(tempImg==Player1.PieceImages[0])	{//pieces can move 3, 4, 5, or 6 tiles
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].move) {
         					swapImage(currentButton, tempImg);
+        					
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -646,20 +1149,68 @@ public class Game extends JPanel{
         		} //end of actionPerformed
         	 } //end of TileClicked
         
+        class attackPiece implements ActionListener{//sets the action listener of the gameboard to attack pieces
+        	public void actionPerformed (ActionEvent e) {
+       			for(int i=0; i<10; i++) {//add the buttons to the frame
+       	        	for (int j=0; j<10; j++) {
+       	        		tile[i][j].addActionListener(new attackGamePiece());
+       	        	}
+       	        }
+       		}
+       	}
+       
+       	class movePiece implements ActionListener{//sets the action listener of the gameboard to move pieces
+       		public void actionPerformed (ActionEvent e) {
+       			for(int i=0; i<10; i++) {//add the buttons to the frame
+       	        	for (int j=0; j<10; j++) {
+       	        		tile[i][j].addActionListener(new tileClicked());
+       	        	}
+       	        }
+       		}
+       	}
+        
+        class healPiece implements ActionListener{
+          	 public void actionPerformed (ActionEvent e){
+           			for(int i=0; i<10; i++) {//add the buttons to the frame
+           	        	for (int j=0; j<10; j++) {
+           	        		tile[i][j].addActionListener(new healGamePiece()); //need to implement healGamePiece
+           	        	}
+           	        }
+          	 }
+        }
+         
+        class cancelAction implements ActionListener{
+         	 public void actionPerformed (ActionEvent e){
+         		 
+         		for(int i=0; i<10; i++) {//add the buttons to the frame
+       	        	for (int j=0; j<10; j++) {
+       	        		//remove the action listener, might need to keep track of action listener in a variable
+       	        	}
+       	        }
+       		
+         	 }  
+       }
+        
         for(int i=0; i<10; i++) {//add the buttons to the frame
-        	/*tile[i]= new JButton(); //create button
-        	frame3.add(tile[i]); //add to frame
-        	tile[i].setBackground(Color.white); //set color of button
-        	tile[i].addActionListener(new tileClicked()); //add listener to button*/
         	for (int j=0; j<10; j++) {
         		tile[i][j]=new JButton();
         		frame3.add(tile[i][j]);
         		tile[i][j].setBackground(Color.white);
-        		tile[i][j].addActionListener(new tileClicked());
+        		//tile[i][j].addActionListener(new tileClicked());
         	}
         }
         
-        frame3.setSize(600,600);
+        move.addActionListener(new movePiece());
+        attack.addActionListener(new attackPiece());
+        heal.addActionListener(new healPiece());
+        cancel.addActionListener(new cancelAction());
+        
+        frame3.add(move);
+        frame3.add(attack);
+        frame3.add(heal);
+        frame3.add(cancel);
+        
+        frame3.setSize(700,600);
         JMenuBar gameMenuBar = new JMenuBar(); //create menu bar
         frame3.setJMenuBar(gameMenuBar); //mount it onto frame
         JMenu options = new JMenu("Options"); //create "options" option
