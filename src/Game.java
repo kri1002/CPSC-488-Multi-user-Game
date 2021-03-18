@@ -276,7 +276,7 @@ public class Game extends JPanel{
         	JButton currentButton=null;
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
         }
@@ -526,7 +526,33 @@ public class Game extends JPanel{
        			//check to make sure piece to be attacked isn't the player's pieces 
        		
        				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
-       					System.out.println("attack time");
+       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[0].name + " attacks!");//message to user
+       					Piece targetPiece;//alias for piece being attacked
+       					for(int i=0; i<5; i++) {//find piece being attacked, searches all 3 opposing teams for a match
+       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       							Player1.playersTeam.teamPieces[0].attack(targetPiece);//make attack
+       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					
        				 //System.out.println(returnGamePiece(tempImg2)); //only returns the icon...need to return gamepiece
        					//System.out.println(Player1.playersTeam.teamPieces[0].attack);
        				}
@@ -536,7 +562,32 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player1.PieceImages[1]){
        				if (currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
-       					System.out.println("attack time");
+       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[1].name + " attacks!");
+       					Piece targetPiece;
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+       							targetPiece = Player2.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -544,7 +595,32 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player1.PieceImages[2]){
        				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
-       					System.out.println("attack time");
+       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[2].name + " attacks!");
+       					Piece targetPiece;
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+       							targetPiece = Player2.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
        				}
        				else{
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -552,7 +628,32 @@ public class Game extends JPanel{
        			}			 
        			if(tempImg==Player1.PieceImages[3]) {
        				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[4]) {
-       					System.out.println("attack time");
+       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[3].name + " attacks!");
+       					Piece targetPiece;
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+       							targetPiece = Player2.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
        				}
        				else{
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -561,7 +662,32 @@ public class Game extends JPanel{
        			
        			if(tempImg==Player1.PieceImages[4]) {
        				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[0]) {
-       					System.out.println("attack time");
+       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[4].name + " attacks!");
+       					Piece targetPiece;
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+       							targetPiece = Player2.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -569,7 +695,32 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player2.PieceImages[0]) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
-       					System.out.println("attack time");
+       					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[0].name + " attacks!");
+       					Piece targetPiece;
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       							targetPiece = Player1.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -577,7 +728,32 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player2.PieceImages[1]) {
        				if (currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
-       					System.out.println("attack time");
+       					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[1].name + " attacks!");
+       					Piece targetPiece;
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       							targetPiece = Player1.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -585,7 +761,32 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player2.PieceImages[2]) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
-       					System.out.println("attack time");
+       					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[2].name + " attacks!");
+       					Piece targetPiece;
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       							targetPiece = Player1.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -593,7 +794,32 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player2.PieceImages[3]) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[4]) {
-       					System.out.println("attack time");
+       					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[3].name + " attacks!");
+       					Piece targetPiece;
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       							targetPiece = Player1.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -601,7 +827,32 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player2.PieceImages[4]) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[0]) {
-       					System.out.println("attack time");
+       					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[4].name + " attacks!");
+       					Piece targetPiece;
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       							targetPiece = Player1.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							targetPiece = Player3.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
+       					for(int i=0; i<5; i++) {
+       						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							targetPiece = Player4.playersTeam.teamPieces[i];
+       							int tempHp = targetPiece.getCurrHp();
+       							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -610,7 +861,32 @@ public class Game extends JPanel{
        			 if(numPlayers==4) {
        				 if(tempImg==Player3.PieceImages[0]) {
             				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
-            					System.out.println("attack time");
+            					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[0].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							targetPiece = Player4.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+               							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
            				}
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -618,7 +894,32 @@ public class Game extends JPanel{
             			}
        				 if(tempImg==Player3.PieceImages[1]) {
              				if (currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
-           					System.out.println("attack time");
+             					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[1].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							targetPiece = Player4.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+               							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
            				}
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -626,7 +927,32 @@ public class Game extends JPanel{
              			}
        				 if(tempImg==Player3.PieceImages[2]) {
              				if(currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]){
-           					System.out.println("attack time");
+             					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[2].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							targetPiece = Player4.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+               							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
            				}
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -634,7 +960,32 @@ public class Game extends JPanel{
              			}
        				 if(tempImg==Player3.PieceImages[3]) {
              				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[4]) {
-           					System.out.println("attack time");
+             					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[3].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							targetPiece = Player4.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+               							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
            				}
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -642,7 +993,32 @@ public class Game extends JPanel{
            				}
              			} if(tempImg==Player3.PieceImages[4]) {
             				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[0]) {
-           					System.out.println("attack time");
+            					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[4].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							targetPiece = Player4.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+               							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
            				}
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -650,7 +1026,32 @@ public class Game extends JPanel{
             			}
              			 if(tempImg==Player4.PieceImages[0]) {
              				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]){
-           					System.out.println("attack time");
+             					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[0].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               							targetPiece = Player3.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+               							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
            				}
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -658,7 +1059,32 @@ public class Game extends JPanel{
              			}
       					 if(tempImg==Player4.PieceImages[1]) {
               				if(currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
-           					System.out.println("attack time");
+              					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[1].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               							targetPiece = Player3.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
            				}
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -667,7 +1093,32 @@ public class Game extends JPanel{
       					 }
       					 if(tempImg==Player4.PieceImages[2]) {
                				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
-               					System.out.println("attack time");
+               					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[2].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               							targetPiece = Player3.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+               							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
                				}
                				else {
                					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -675,7 +1126,32 @@ public class Game extends JPanel{
        					 }
       					 if(tempImg==Player4.PieceImages[3]) {
                				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[4]) {
-               					System.out.println("attack time");
+               					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[3].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               							targetPiece = Player3.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+               							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
                				}
                				else {
                					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -683,7 +1159,32 @@ public class Game extends JPanel{
        					 }
       					 if(tempImg==Player4.PieceImages[4]) {
                				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[0]) {
-               					System.out.println("attack time");
+               					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[4].name + " attacks!");
+               					Piece targetPiece;
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							targetPiece = Player1.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+               							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							targetPiece = Player2.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
+               					for(int i=0; i<5; i++) {
+               						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               							targetPiece = Player3.playersTeam.teamPieces[i];
+               							int tempHp = targetPiece.getCurrHp();
+               							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+               							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
+               					}
                				}
                				else {
                					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -1156,6 +1657,7 @@ public class Game extends JPanel{
        	        		tile[i][j].addActionListener(new attackGamePiece());
        	        	}
        	        }
+       			System.out.println("Attack Mode Selected");
        		}
        	}
        
@@ -1166,6 +1668,7 @@ public class Game extends JPanel{
        	        		tile[i][j].addActionListener(new tileClicked());
        	        	}
        	        }
+       			System.out.println("Move Mode Selected");
        		}
        	}
         
@@ -1176,6 +1679,7 @@ public class Game extends JPanel{
            	        		tile[i][j].addActionListener(new healGamePiece()); //need to implement healGamePiece
            	        	}
            	        }
+           			System.out.println("Heal Mode Selected");
           	 }
         }
          
@@ -1187,6 +1691,7 @@ public class Game extends JPanel{
        	        		//remove the action listener, might need to keep track of action listener in a variable
        	        	}
        	        }
+         		System.out.println("Action Mode Canceled.  Please select and Action Mode");
        		
          	 }  
        }

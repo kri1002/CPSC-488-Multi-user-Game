@@ -16,7 +16,7 @@ class Team1 extends Team{
 class Team2 extends Team{
 	Team2(){//team 2 is a reckless team, having no healer, but 2 warriors
 		teamPieces[0] = new warrior();
-		teamPieces[1] = new warrior();
+		teamPieces[1] = new warriorClone();
 		teamPieces[2] = new ranger();
 		teamPieces[3] = new rogue();
 		teamPieces[4] = new damageMage();
@@ -26,9 +26,9 @@ class Team2 extends Team{
 class Team3 extends Team{
 	Team3(){//team 3 is a fast team that focuses on mobility
 		teamPieces[0] = new ranger();
-		teamPieces[1] = new ranger();
+		teamPieces[1] = new rangerClone();//clone is created if this team already has a piece of this type
 		teamPieces[2] = new rogue();
-		teamPieces[3] = new rogue();
+		teamPieces[3] = new rogueClone();
 		teamPieces[4] = new healer();
 	}
 }
@@ -36,9 +36,9 @@ class Team3 extends Team{
 class Team4 extends Team{
 	Team4(){//team 4 is a team that focuses around dealing damage
 		teamPieces[0] = new warrior();
-		teamPieces[1] = new warrior();
+		teamPieces[1] = new warriorClone();
 		teamPieces[2] = new damageMage();
-		teamPieces[3] = new damageMage();
+		teamPieces[3] = new damageMageClone();
 		teamPieces[4] = new healer();
 	}
 }
