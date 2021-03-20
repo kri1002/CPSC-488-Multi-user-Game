@@ -31,74 +31,232 @@ public class Game extends JPanel{
 		currentButton.revalidate(); 
 	}
 	
-	public static ImageIcon returnGamePiece(Icon tempImg2){//was trying to use this to figure out the second game piece without having to put a bunch of ifs in the attack piece
-		if(tempImg2==Player1.PieceImages[0]) {
-			return Player1.PieceImages[0];
-		}
-		if(tempImg2==Player1.PieceImages[1]) {
-			return Player1.PieceImages[1];
-		}
-		if(tempImg2==Player1.PieceImages[2]) {
-			return Player1.PieceImages[2];
-		}
-		if(tempImg2==Player1.PieceImages[3]) {
-			return Player1.PieceImages[3];
-		}
-		if(tempImg2==Player1.PieceImages[4]) {
-			return Player1.PieceImages[4];
-		}
-		if(tempImg2==Player2.PieceImages[0]) {
-			return Player2.PieceImages[0];
-		}
-		if(tempImg2==Player2.PieceImages[1]) {
-			return Player2.PieceImages[1];
-		}
-		if(tempImg2==Player2.PieceImages[2]) {
-			return Player2.PieceImages[2];
-		}
-		if(tempImg2==Player2.PieceImages[3]) {
-			return Player2.PieceImages[3];
-		}
-		if(tempImg2==Player2.PieceImages[4]) {
-			return Player2.PieceImages[4];
-		}
-		if(tempImg2==Player3.PieceImages[0]) {
-			return Player3.PieceImages[0];
-		}
-		if(tempImg2==Player3.PieceImages[1]) {
-			return Player3.PieceImages[1];
-		}
-		if(tempImg2==Player3.PieceImages[2]) {
-			return Player3.PieceImages[2];
-		}
-		if(tempImg2==Player3.PieceImages[3]) {
-			return Player3.PieceImages[3];
-		}
-		if(tempImg2==Player3.PieceImages[4]) {
-			return Player3.PieceImages[4];
-		}
-		if(tempImg2==Player4.PieceImages[0]) {
-			return Player4.PieceImages[0];
-		}
-		if(tempImg2==Player4.PieceImages[1]) {
-			return Player4.PieceImages[1];
-		}
-		if(tempImg2==Player4.PieceImages[2]) {
-			return Player4.PieceImages[2];
-		}
-		if(tempImg2==Player4.PieceImages[3]) {
-			return Player4.PieceImages[3];
-		}
-		if(tempImg2==Player4.PieceImages[4]) {
-			return Player4.PieceImages[4];
-		
-		}
-		else {
-			return null;
-		}
+	public static void setCoordinates(JButton currentButton, int numPlayers, JButton tile[][] ) {//set the coordinate of current clicked game piece and output what piece it is
+		 if(currentButton.getIcon()==Player1.PieceImages[0]) {
+			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[0].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i; 
+    					 pieceXCoord = j;
+    					 //System.out.println(pieceYCoord + "" + pieceXCoord);
+    				 }
+    			 }
+    		 }
+		 }
+		 if(currentButton.getIcon()==Player1.PieceImages[1]) {
+			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[1].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i; 
+    					 pieceXCoord = j;
+    				 }
+    			 }
+    		 }
+		 }
+		 if(currentButton.getIcon()==Player1.PieceImages[2]) {
+			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[2].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i;
+    					 pieceXCoord = j;
+    				 }
+    			 }
+    		 }
+		 }
+		 if(currentButton.getIcon()==Player1.PieceImages[3]) {
+			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[3].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i;
+    					 pieceXCoord = j;
+    				 }
+    			 }
+    		 }
+		 }
+		 if(currentButton.getIcon()==Player1.PieceImages[4]) {
+			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[4].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i;
+    					 pieceXCoord = j;
+    				 }
+    			 }
+    		 }
+		 }
+		 if(currentButton.getIcon()==Player2.PieceImages[0]) {
+			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[0].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i;
+    					 pieceXCoord = j;
+    				 }
+    			 }
+    		 }
+		 }
+		 if(currentButton.getIcon()==Player2.PieceImages[1]) {
+			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[1].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i;
+    					 pieceXCoord = j;
+    				 }
+    			 }
+    		 }
+		 }
+		 if(currentButton.getIcon()==Player2.PieceImages[2]) {
+			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[2].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i;
+    					 pieceXCoord = j;
+    				 }
+    			 }
+    		 }
+		 }
+		 if(currentButton.getIcon()==Player2.PieceImages[3]) {
+			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[3].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i;
+    					 pieceXCoord = j;
+    				 }
+    			 }
+    		 }
+		 }
+		 if(currentButton.getIcon()==Player2.PieceImages[4]) {
+			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[4].name);
+			 for (int i=0; i<tile.length; i++) {
+    			 for(int j=0; j<tile[i].length; j++) {
+    				 if (currentButton == tile[i][j]) {
+    					 pieceYCoord = i;
+    					 pieceXCoord = j;
+    				 }
+    			 }
+    		 }
+		 }
+		 if(numPlayers==4) {
+			 if(currentButton.getIcon()==Player3.PieceImages[0]) {
+			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[0].name);
+			 	for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+			 if(currentButton.getIcon()==Player3.PieceImages[1]) {
+			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[1].name);
+			 	for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+			 if(currentButton.getIcon()==Player3.PieceImages[2]) {
+			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[2].name);
+				for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+			 if(currentButton.getIcon()==Player3.PieceImages[3]) {
+			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[3].name);
+				for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+			 if(currentButton.getIcon()==Player3.PieceImages[4]) {
+			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[4].name);
+				for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+			 if(currentButton.getIcon()==Player4.PieceImages[0]) {
+			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[0].name);
+				for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+			 if(currentButton.getIcon()==Player4.PieceImages[1]) {
+			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[1].name);
+				for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+			 if(currentButton.getIcon()==Player4.PieceImages[2]) {
+			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[2].name);
+				for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+			 if(currentButton.getIcon()==Player4.PieceImages[3]) {
+			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[3].name);
+				for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+			 if(currentButton.getIcon()==Player4.PieceImages[4]) {
+			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[4].name);
+				for (int i=0; i<tile.length; i++) {
+			 		for(int j=0; j<tile[i].length; j++) {
+			 			if (currentButton == tile[i][j]) {
+			 				pieceYCoord = i;
+			 				pieceXCoord = j;
+			 			}
+			 		}
+			 	}
+			 }
+		 }
+
 	}
-	
-	
 	public static void createGui1(JFrame frame1, JFrame frame2, JFrame frame3){ //game selection
 		JButton gameMode[]= new JButton[4];
 		  frame1.setLayout(new GridLayout(4, 0));
@@ -264,7 +422,6 @@ public class Game extends JPanel{
 		   frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	       frame2.setVisible(true);
 	}
-	
 
 	public static void createGui3(JFrame frame2, JFrame frame3,int numPlayers) {
 		frame2.dispose();
@@ -272,13 +429,217 @@ public class Game extends JPanel{
         //JButton tile[] = new JButton[100];
         JButton tile[][] = new JButton[10][10]; //tile is now a matrix
         
-        class healGamePiece implements ActionListener{
+        class healGamePiece implements ActionListener{//have to add an else statement if you clicked the same button bc you want to heal yourself
         	JButton currentButton=null;
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
-			}
+				 JButton currentButton= (JButton)e.getSource();
+        		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
+				 setCoordinates(currentButton, numPlayers, tile);
+       		 if(lastButtonPressed!=null){//if two tiles were clicked
+       			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
+       				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()!=null){//if both tiles have an icon 
+       					 for (int i=0; i<tile.length; i++) {
+            			 		for(int j=0; j<tile[i].length; j++) {
+            			 			if (currentButton == tile[i][j]) {
+            			 				destinationYCoord = i;
+            			 				destinationXCoord = j;
+            			 			}
+            			 		}
+            			 	}
+       						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
+       						 Icon tempImg2= currentButton.getIcon();
+       						 Piece targetPiece;
+       			if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
+       			//check to make sure piece to be heal is the player's pieces 
+       				if(currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] ||currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[4]){
+       				System.out.println("Player 1's healer is healing");
+       				for(int i=0; i<5; i++) {
+       					if(currentButton.getIcon()==Player1.PieceImages[i]) {//find piece being healed, searches current team for match
+       						targetPiece= Player1.playersTeam.teamPieces[i]; //set target piece
+       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       						if(tempHp != targetPiece.getMaxHp()){
+       						Player1.playersTeam.teamPieces[0].heal(targetPiece);
+       						System.out.println("Player 1's " + targetPiece.name + "went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + "hit points"); //print remaining hp
+       					}
+       						else {
+       							System.out.println("This game piece is already at full health");
+       						}
+       					}
+       				}
+       			}
+       				else {
+       					System.out.println("Cannot heal other team's pieces");
+       				}
+       			}
+       		
+       			else if(tempImg==Player1.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer") {
+       				if(currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] ||currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[3]){
+       				System.out.println("Player 1's healer is healing");
+       				for(int i=0; i<5; i++) {
+       					if(currentButton.getIcon()==Player1.PieceImages[i]) {//find piece being healed, searches current team for match
+       						targetPiece= Player1.playersTeam.teamPieces[i]; //set target piece
+       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       						if(tempHp != targetPiece.getMaxHp()){
+       						Player1.playersTeam.teamPieces[0].heal(targetPiece);
+       						System.out.println("Player 1's " + targetPiece.name + "went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + "hit points"); //print remaining hp
+       					}
+       						else {
+       							System.out.println("This game piece is already at full health");
+       						}
+       					}
+       				}
+       			}
+       				else {
+       					System.out.println("Cannot heal other team's pieces");
+       				}
+       			}
+       			else if(tempImg==Player2.PieceImages[3] && Player2.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
+       	       			//check to make sure piece to be heal is the player's pieces 
+       				if(currentButton.getIcon()==Player2.PieceImages[0] || currentButton.getIcon()==Player2.PieceImages[1] ||currentButton.getIcon()==Player2.PieceImages[2] || currentButton.getIcon()==Player2.PieceImages[4]) {
+       	       				System.out.println("Player 2's healer is healing");
+       	       				for(int i=0; i<5; i++) {
+       	       					if(currentButton.getIcon()==Player2.PieceImages[i]) {//find piece being healed, searches current team for match
+       	       						targetPiece= Player2.playersTeam.teamPieces[i]; //set target piece
+       	       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       	       						if(tempHp != targetPiece.getMaxHp()){
+       	       						Player2.playersTeam.teamPieces[0].heal(targetPiece);
+       	       						System.out.println("Player 2's " + targetPiece.name + "went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + "hit points"); //print remaining hp
+       	       					}
+       	       						else {
+       	       							System.out.println("This game piece is already at full health");
+       	       						}
+       	       					}
+       	       				}
+       	       			}
+       				else {
+       					System.out.println("Cannot heal other team's pieces");
+       				}
+       			}
+       	       				
+       			else if(tempImg==Player2.PieceImages[4] && Player2.playersTeam.teamPieces[4].name == "Healer") {
+       				if(currentButton.getIcon()==Player2.PieceImages[0] || currentButton.getIcon()==Player2.PieceImages[1] ||currentButton.getIcon()==Player2.PieceImages[2] || currentButton.getIcon()==Player2.PieceImages[3]) {	
+       				System.out.println("Player 2's healer is healing");
+       	       				for(int i=0; i<5; i++) {
+       	       					if(currentButton.getIcon()==Player2.PieceImages[i]) {//find piece being healed, searches current team for match
+       	       						targetPiece= Player2.playersTeam.teamPieces[i]; //set target piece
+       	       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       	       						if(tempHp != targetPiece.getMaxHp()){
+       	       						Player2.playersTeam.teamPieces[0].heal(targetPiece);
+       	       						System.out.println("Player 2's " + targetPiece.name + "went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + "hit points"); //print remaining hp
+       	       					}
+       	       						else {
+       	       							System.out.println("This game piece is already at full health");
+       	       						}
+       	       					}
+       	       				}
+       	       				}
+       				else {
+       					System.out.println("Cannot heal other team's pieces");
+       				}
+       			}
+       	       		else {
+   						System.out.println("Invalid action, this game piece is not a healer");
+   					}
+       			
+       			 if(numPlayers==4) {
+       				if(tempImg==Player3.PieceImages[3] && Player3.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
+       	       			//check to make sure piece to be heal is the player's pieces 
+       					if(currentButton.getIcon()==Player3.PieceImages[0] || currentButton.getIcon()==Player3.PieceImages[1] || currentButton.getIcon()==Player3.PieceImages[4]){
+       	       				System.out.println("Player 3's healer is healing");
+       	       				for(int i=0; i<5; i++) {
+       	       					if(currentButton.getIcon()==Player3.PieceImages[i]) {//find piece being healed, searches current team for match
+       	       						targetPiece= Player3.playersTeam.teamPieces[i]; //set target piece
+       	       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       	       						if(tempHp != targetPiece.getMaxHp()){
+       	       						Player3.playersTeam.teamPieces[0].heal(targetPiece);
+       	       						System.out.println("Player 3's " + targetPiece.name + "went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + "hit points"); //print remaining hp
+       	       					}
+       	       						else {
+       	       							System.out.println("This game piece is already at full health");
+       	       						}
+       	       					}
+       	       				}
+       	       			}
+       					else {
+           					System.out.println("Cannot heal other team's pieces");
+           				}
+       				}
+       	       				
+       				else if(tempImg==Player3.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer") {
+       					if(currentButton.getIcon()==Player3.PieceImages[0] || currentButton.getIcon()==Player3.PieceImages[1] ||currentButton.getIcon()==Player3.PieceImages[2] || currentButton.getIcon()==Player3.PieceImages[3]) {
+       					System.out.println("Player 3's healer is healing");
+       	       				for(int i=0; i<5; i++) {
+       	       					if(currentButton.getIcon()==Player3.PieceImages[i]) {//find piece being healed, searches current team for match
+       	       						targetPiece= Player3.playersTeam.teamPieces[i]; //set target piece
+       	       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       	       						if(tempHp != targetPiece.getMaxHp()){
+       	       						Player3.playersTeam.teamPieces[0].heal(targetPiece);
+       	       						System.out.println("Player 3's " + targetPiece.name + "went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + "hit points"); //print remaining hp
+       	       					}
+       	       						else {
+       	       							System.out.println("This game piece is already at full health");
+       	       						}
+       	       					}
+       	       				}
+       	       			}
+       					else {
+           					System.out.println("Cannot heal other team's pieces");
+           				}
+       				}
+       	       			else if(tempImg==Player4.PieceImages[3] && Player4.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
+       	       			if(currentButton.getIcon()==Player4.PieceImages[0] || currentButton.getIcon()==Player4.PieceImages[1] || currentButton.getIcon()==Player4.PieceImages[2] || currentButton.getIcon()==Player4.PieceImages[4]) {
+       	       				//check to make sure piece to be heal is the player's pieces 
+       	        				System.out.println("Player 4's healer is healing");
+       	        				for(int i=0; i<5; i++) {
+       	        					if(currentButton.getIcon()==Player4.PieceImages[i]) {//find piece being healed, searches current team for match
+       	        						targetPiece= Player4.playersTeam.teamPieces[i]; //set target piece
+       	        						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       	        						if(tempHp != targetPiece.getMaxHp()){
+       	        						Player4.playersTeam.teamPieces[0].heal(targetPiece);
+       	        						System.out.println("Player 4's " + targetPiece.name + "went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + "hit points"); //print remaining hp
+       	        					}
+       	        						else {
+       	        							System.out.println("This game piece is already at full health");
+       	        						}
+       	        					}
+       	        				}
+       	        			}
+       	       		else {
+       					System.out.println("Cannot heal other team's pieces");
+       				}
+       	       			}
+       				
+       	       			else if(tempImg==Player4.PieceImages[4] && Player4.playersTeam.teamPieces[4].name == "Healer") {
+       	       			if(currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] ||currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[3] || currentButton.getIcon()==Player1.PieceImages[4]) {	
+       	       				System.out.println("Player 1's healer is healing");
+       	        				for(int i=0; i<5; i++) {
+       	        					if(currentButton.getIcon()==Player4.PieceImages[i]) {//find piece being healed, searches current team for match
+       	        						targetPiece= Player4.playersTeam.teamPieces[i]; //set target piece
+       	        						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       	        						if(tempHp != targetPiece.getMaxHp()){
+       	        						Player4.playersTeam.teamPieces[0].heal(targetPiece);
+       	        						System.out.println("Player 4's " + targetPiece.name + "went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + "hit points"); //print remaining hp
+       	        					}
+       	        						else {
+       	        							System.out.println("This game piece is already at full health");
+       	        						}
+       	        					}
+       	        				}
+       	        			}
+       	       		else {
+       					System.out.println("Cannot heal other team's pieces");
+       				}
+       	       			}
+       	        				else {
+       	       						System.out.println("Invalid action, this game piece is not a healer");
+       	       					}
+       			 }//end of if numPlayers ==4			 
+       					currentButton=null; //resets the ActionListener
+       					}
+       			 }
+       		 }
+       				lastButtonPressed=currentButton;
+        	}
         }
               
         class attackGamePiece implements ActionListener{
@@ -286,229 +647,7 @@ public class Game extends JPanel{
         	public void actionPerformed (ActionEvent e) {
         		 JButton currentButton= (JButton)e.getSource();
         		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
-       		 if(currentButton.getIcon()==Player1.PieceImages[0]) {
-					 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[0].name);
-					 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i; 
-	        					 pieceXCoord = j;
-	        					 //System.out.println(pieceYCoord + "" + pieceXCoord);
-	        				 }
-	        			 }
-	        		 }
-				 }
-       		 if(currentButton.getIcon()==Player1.PieceImages[1]) {
-       			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[1].name);
-       			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i; 
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-       		 }
-       		 if(currentButton.getIcon()==Player1.PieceImages[2]) {
-       			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[2].name);
-       			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-       		 }
-       		 if(currentButton.getIcon()==Player1.PieceImages[3]) {
-       			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[3].name);
-       			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-       		 }
-       		 if(currentButton.getIcon()==Player1.PieceImages[4]) {
-       			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[4].name);
-       			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-       		 }
-       		 if(currentButton.getIcon()==Player2.PieceImages[0]) {
-       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[0].name);
-       			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-       		 }
-       		 if(currentButton.getIcon()==Player2.PieceImages[1]) {
-       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[1].name);
-       			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-       		 }
-       		 if(currentButton.getIcon()==Player2.PieceImages[2]) {
-       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[2].name);
-       			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-       		 }
-       		 if(currentButton.getIcon()==Player2.PieceImages[3]) {
-       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[3].name);
-       			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-       		 }
-       		 if(currentButton.getIcon()==Player2.PieceImages[4]) {
-       			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[4].name);
-       			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-       		 }
-       		 if(numPlayers==4) {
-       			 if(currentButton.getIcon()==Player3.PieceImages[0]) {
-       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[0].name);
-       			 	for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       			 if(currentButton.getIcon()==Player3.PieceImages[1]) {
-       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[1].name);
-       			 	for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       			 if(currentButton.getIcon()==Player3.PieceImages[2]) {
-       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[2].name);
-       				for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       			 if(currentButton.getIcon()==Player3.PieceImages[3]) {
-       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[3].name);
-       				for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       			 if(currentButton.getIcon()==Player3.PieceImages[4]) {
-       			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[4].name);
-       				for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       			 if(currentButton.getIcon()==Player4.PieceImages[0]) {
-       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[0].name);
-       				for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       			 if(currentButton.getIcon()==Player4.PieceImages[1]) {
-       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[1].name);
-       				for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       			 if(currentButton.getIcon()==Player4.PieceImages[2]) {
-       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[2].name);
-       				for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       			 if(currentButton.getIcon()==Player4.PieceImages[3]) {
-       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[3].name);
-       				for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       			 if(currentButton.getIcon()==Player4.PieceImages[4]) {
-       			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[4].name);
-       				for (int i=0; i<tile.length; i++) {
-       			 		for(int j=0; j<tile[i].length; j++) {
-       			 			if (currentButton == tile[i][j]) {
-       			 				pieceYCoord = i;
-       			 				pieceXCoord = j;
-       			 			}
-       			 		}
-       			 	}
-       			 }
-       		 }
+        		 setCoordinates(currentButton, numPlayers, tile);
        		 if(lastButtonPressed!=null){//if two tiles were clicked
        			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
        				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()!=null){//if both tiles have an icon 
@@ -533,15 +672,34 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
        							int tempHp = targetPiece.getCurrHp();//save hp it currently has
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);//make attack
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								
+       								/*try {
+       								currentButton.setIcon(null); //sets the tile with the image null
+       								currentButton.revalidate(); //resets and updates button
+       								}
+       								catch (Exception ee) {}
+       							*/ //dont try this way it destroys the program 
+       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
-       						}
+       							}
+       							}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -549,12 +707,15 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							}
        						}
        					}
-       					
-       				 //System.out.println(returnGamePiece(tempImg2)); //only returns the icon...need to return gamepiece
-       					//System.out.println(Player1.playersTeam.teamPieces[0].attack);
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -569,7 +730,13 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -577,7 +744,13 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
-       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else { 
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -585,8 +758,14 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							}
+       							}
        					}
        				}
        				else {
@@ -602,7 +781,13 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -610,7 +795,13 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -618,7 +809,13 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        				}
@@ -635,7 +832,13 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -643,7 +846,13 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -651,7 +860,13 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        				}
@@ -669,7 +884,13 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -677,15 +898,27 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
        						}
+       							}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        				}
@@ -702,7 +935,13 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -710,7 +949,13 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -718,7 +963,13 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        				}
@@ -735,7 +986,13 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -743,7 +1000,13 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -751,7 +1014,13 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        				}
@@ -768,7 +1037,13 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -776,7 +1051,13 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -784,7 +1065,13 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        				}
@@ -801,7 +1088,13 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -809,7 +1102,13 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -817,7 +1116,13 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        				}
@@ -834,7 +1139,13 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -842,6 +1153,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
        						}
        					}
@@ -850,7 +1165,13 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       								targetPiece.currHp=0;
+       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							}
+       							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       						}
        						}
        					}
        				}
@@ -868,7 +1189,13 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -876,7 +1203,13 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -884,7 +1217,13 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
            				}
@@ -901,7 +1240,13 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -909,7 +1254,13 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -917,9 +1268,15 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
                						}
                					}
+               						}	
            				}
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
@@ -934,7 +1291,13 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -942,7 +1305,13 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -950,7 +1319,13 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
            				}
@@ -967,15 +1342,27 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
                						}
+               					}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -983,7 +1370,13 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
            				}
@@ -1000,7 +1393,13 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1008,15 +1407,27 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
                						}
+               							}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player4.PieceImages[i]) {
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
            				}
@@ -1033,7 +1444,13 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1041,7 +1458,13 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1049,7 +1472,13 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
            				}
@@ -1065,8 +1494,13 @@ public class Game extends JPanel{
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
-               							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[1].attack(targetPiece);if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1074,7 +1508,13 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1082,7 +1522,13 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
            				}
@@ -1100,7 +1546,13 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1108,7 +1560,13 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1116,7 +1574,13 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                				}
@@ -1133,7 +1597,13 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1141,7 +1611,13 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
-               							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
+               							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1149,7 +1625,13 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                				}
@@ -1166,7 +1648,13 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1174,7 +1662,13 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1182,7 +1676,13 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               								targetPiece.currHp=0;
+               								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							}
+               							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               						}
                						}
                					}
                				}
@@ -1198,9 +1698,7 @@ public class Game extends JPanel{
        		 }
        				lastButtonPressed=currentButton;
         	}
-        	
         }
-        
         
         class tileClicked implements ActionListener{
         	 JButton currentButton=null;
@@ -1219,229 +1717,7 @@ public class Game extends JPanel{
         		 
         		 
         		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
-        		 if(currentButton.getIcon()==Player1.PieceImages[0]) {
-					 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[0].name + ", it can move " + Player1.playersTeam.teamPieces[0].move + " tiles");
-					 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i; 
-	        					 pieceXCoord = j;
-	        					 //System.out.println(pieceYCoord + "" + pieceXCoord);
-	        				 }
-	        			 }
-	        		 }
-				 }
-        		 if(currentButton.getIcon()==Player1.PieceImages[1]) {
-        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[1].name + ", it can move " + Player1.playersTeam.teamPieces[1].move + " tiles");
-        			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i; 
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-        		 }
-        		 if(currentButton.getIcon()==Player1.PieceImages[2]) {
-        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[2].name + ", it can move " + Player1.playersTeam.teamPieces[2].move + " tiles");
-        			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-        		 }
-        		 if(currentButton.getIcon()==Player1.PieceImages[3]) {
-        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[3].name + ", it can move " + Player1.playersTeam.teamPieces[3].move + " tiles");
-        			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-        		 }
-        		 if(currentButton.getIcon()==Player1.PieceImages[4]) {
-        			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[4].name + ", it can move " + Player1.playersTeam.teamPieces[4].move + " tiles");
-        			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-        		 }
-        		 if(currentButton.getIcon()==Player2.PieceImages[0]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[0].name + ", it can move " + Player2.playersTeam.teamPieces[0].move + " tiles");
-        			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-        		 }
-        		 if(currentButton.getIcon()==Player2.PieceImages[1]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[1].name + ", it can move " + Player2.playersTeam.teamPieces[1].move + " tiles");
-        			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-        		 }
-        		 if(currentButton.getIcon()==Player2.PieceImages[2]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[2].name + ", it can move " + Player2.playersTeam.teamPieces[2].move + " tiles");
-        			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-        		 }
-        		 if(currentButton.getIcon()==Player2.PieceImages[3]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[3].name + ", it can move " + Player2.playersTeam.teamPieces[3].move + " tiles");
-        			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-        		 }
-        		 if(currentButton.getIcon()==Player2.PieceImages[4]) {
-        			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[4].name + ", it can move " + Player2.playersTeam.teamPieces[4].move + " tiles");
-        			 for (int i=0; i<tile.length; i++) {
-	        			 for(int j=0; j<tile[i].length; j++) {
-	        				 if (currentButton == tile[i][j]) {
-	        					 pieceYCoord = i;
-	        					 pieceXCoord = j;
-	        				 }
-	        			 }
-	        		 }
-        		 }
-        		 if(numPlayers==4) {
-        			 if(currentButton.getIcon()==Player3.PieceImages[0]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[0].name + ", it can move " + Player3.playersTeam.teamPieces[0].move + " tiles");
-        			 	for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        			 if(currentButton.getIcon()==Player3.PieceImages[1]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[1].name + ", it can move " + Player3.playersTeam.teamPieces[1].move + " tiles");
-        			 	for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        			 if(currentButton.getIcon()==Player3.PieceImages[2]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[2].name + ", it can move " + Player3.playersTeam.teamPieces[2].move + " tiles");
-        				for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        			 if(currentButton.getIcon()==Player3.PieceImages[3]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[3].name + ", it can move " + Player3.playersTeam.teamPieces[3].move + " tiles");
-        				for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        			 if(currentButton.getIcon()==Player3.PieceImages[4]) {
-        			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[4].name + ", it can move " + Player3.playersTeam.teamPieces[4].move + " tiles");
-        				for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        			 if(currentButton.getIcon()==Player4.PieceImages[0]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[0].name + ", it can move " + Player4.playersTeam.teamPieces[0].move + " tiles");
-        				for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        			 if(currentButton.getIcon()==Player4.PieceImages[1]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[1].name + ", it can move " + Player4.playersTeam.teamPieces[1].move + " tiles");
-        				for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        			 if(currentButton.getIcon()==Player4.PieceImages[2]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[2].name + ", it can move " + Player4.playersTeam.teamPieces[2].move + " tiles");
-        				for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        			 if(currentButton.getIcon()==Player4.PieceImages[3]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[3].name + ", it can move " + Player4.playersTeam.teamPieces[3].move + " tiles");
-        				for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        			 if(currentButton.getIcon()==Player4.PieceImages[4]) {
-        			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[4].name + ", it can move " + Player4.playersTeam.teamPieces[4].move + " tiles");
-        				for (int i=0; i<tile.length; i++) {
-        			 		for(int j=0; j<tile[i].length; j++) {
-        			 			if (currentButton == tile[i][j]) {
-        			 				pieceYCoord = i;
-        			 				pieceXCoord = j;
-        			 			}
-        			 		}
-        			 	}
-        			 }
-        		 }
+        		 setCoordinates(currentButton, numPlayers, tile);
         		 if(lastButtonPressed!=null){//if two tiles were clicked
         			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
         				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()==null){//if first tile had icon and second was empty
@@ -1691,7 +1967,7 @@ public class Game extends JPanel{
        	        		//remove the action listener, might need to keep track of action listener in a variable
        	        	}
        	        }
-         		System.out.println("Action Mode Canceled.  Please select and Action Mode");
+         		System.out.println("Action Mode Canceled.  Please select an Action Mode");
        		
          	 }  
        }

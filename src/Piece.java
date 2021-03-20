@@ -32,6 +32,7 @@ public abstract class Piece { //generic game piece class with stats all pieces w
 	int getMovementStat() {
 		return move;
 	}
+	
 	void attack(Piece targetPiece) {//attack function
 		Random rand = new Random();//instantiate java random library
 		int varRand = rand.nextInt(this.variance)+1;//create random number between 1 and variance
@@ -44,7 +45,25 @@ public abstract class Piece { //generic game piece class with stats all pieces w
 			targetPiece.currHp = targetPiece.currHp - (this.attack + varRand);//else deal normal damage
 		}
 	}
+	
+	void heal(Piece targetPiece) {
+		int heal =4; //realized the healer piece doesnt have these in their 
+		int healVariance =6;
+		
+		Random rand= new Random();
+		int varRand=rand.nextInt(healVariance)+1;
+		int critRand=rand.nextInt(100)+1;
+		if(critRand <= this.crit) {
+			targetPiece.currHp = targetPiece.currHp + ((heal + varRand)*2);//deal twice healing hp
+			System.out.println("Critical Heal");//inform user of crit
+		}
+		else {
+			targetPiece.currHp = targetPiece.currHp + (4 + varRand);//else heal normally
+		}
+	}
+		
 }
+
 //more specific stats are given to specific kinds of pieces 
 class warrior extends Piece{ 
 	warrior(){ //warrior is slow, strong and has a lot of health
