@@ -30,6 +30,61 @@ public class Game extends JPanel{
 		lastButtonPressed.revalidate(); //resets and updates button
 		currentButton.revalidate(); 
 	}
+	public static void removeImage(JButton currentButton) {
+		for (int i=0; i<5; i++) {
+			if (currentButton.getIcon() == Player1.PieceImages[i]) {
+				Player1.piecesLeft--;
+				if (Player1.piecesLeft>1) {
+					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[i].name + " has been defeated!  Player 1 has " + Player1.piecesLeft + " pieces left!");
+				}
+				else if (Player1.piecesLeft==1) {
+					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[i].name + " has been defeated!  Player 1 has 1 piece left!");
+				}
+				else {
+					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[i].name + " has been defeated!  Player 1 has lost the game!");
+				}
+				
+			}
+			if (currentButton.getIcon() == Player2.PieceImages[i]) {
+				Player2.piecesLeft--;
+				if (Player2.piecesLeft>1) {
+					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[i].name + " has been defeated!  Player 2 has " + Player2.piecesLeft + " pieces left!");
+				}
+				else if (Player2.piecesLeft==1) {
+					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[i].name + " has been defeated!  Player 2 has 1 piece left!");
+				}
+				else {
+					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[i].name + " has been defeated!  Player 2 has lost the game!");
+				}
+			}
+			if (currentButton.getIcon() == Player3.PieceImages[i]) {
+				Player3.piecesLeft--;
+				if (Player3.piecesLeft>1) {
+					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[i].name + " has been defeated!  Player 3 has " + Player3.piecesLeft + " pieces left!");
+				}
+				else if (Player3.piecesLeft==1) {
+					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[i].name + " has been defeated!  Player 3 has 1 piece left!");
+				}
+				else {
+					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[i].name + " has been defeated!  Player 3 has lost the game!");
+				}
+			}
+			if (currentButton.getIcon() == Player4.PieceImages[i]) {
+				Player4.piecesLeft--;
+				if (Player4.piecesLeft>1) {
+					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[i].name + " has been defeated!  Player 4 has " + Player4.piecesLeft + " pieces left!");
+				}
+				else if (Player4.piecesLeft==1) {
+					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[i].name + " has been defeated!  Player 4 has 1 piece left!");
+				}
+				else {
+					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[i].name + " has been defeated!  Player 4 has lost the game!");
+				}
+			}
+		}
+		currentButton.setIcon(null);
+		currentButton.revalidate();
+	}
 	
 	public static void setCoordinates(JButton currentButton, int numPlayers, JButton tile[][] ) {//set the coordinate of current clicked game piece and output what piece it is
 		 if(currentButton.getIcon()==Player1.PieceImages[0]) {
@@ -672,9 +727,8 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
        							int tempHp = targetPiece.getCurrHp();//save hp it currently has
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);//make attack
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
-       								
        								/*try {
        								currentButton.setIcon(null); //sets the tile with the image null
        								currentButton.revalidate(); //resets and updates button
@@ -682,6 +736,7 @@ public class Game extends JPanel{
        								catch (Exception ee) {}
        							*/ //dont try this way it destroys the program 
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
@@ -693,9 +748,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -707,10 +763,11 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       							}
+       								removeImage(currentButton);
+       								}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
        							}
@@ -730,9 +787,10 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -744,10 +802,11 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       							}
+       								removeImage(currentButton);
+       								}
        							else { 
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
        							}
@@ -758,9 +817,10 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -781,9 +841,10 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -795,9 +856,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -809,9 +871,10 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -832,9 +895,10 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -846,9 +910,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -860,9 +925,10 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -884,9 +950,10 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -898,9 +965,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -912,9 +980,10 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -935,9 +1004,10 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -949,9 +1019,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -963,9 +1034,10 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -986,9 +1058,10 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1000,9 +1073,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1014,9 +1088,10 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1037,9 +1112,10 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1051,9 +1127,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1065,9 +1142,10 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1088,9 +1166,10 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1102,9 +1181,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1116,9 +1196,10 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1139,9 +1220,10 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1153,9 +1235,10 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
        						}
@@ -1165,9 +1248,10 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
-       							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								removeImage(currentButton);
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1189,9 +1273,10 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1203,9 +1288,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1217,9 +1303,10 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1240,9 +1327,10 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1254,9 +1342,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1268,9 +1357,10 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1291,9 +1381,10 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1305,9 +1396,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1319,9 +1411,10 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1342,9 +1435,10 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1356,9 +1450,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1370,9 +1465,10 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1393,9 +1489,10 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1407,9 +1504,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1421,9 +1519,10 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1444,9 +1543,10 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1458,9 +1558,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1472,9 +1573,10 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1494,9 +1596,11 @@ public class Game extends JPanel{
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
-               							Player4.playersTeam.teamPieces[1].attack(targetPiece);if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1508,9 +1612,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1522,9 +1627,10 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1546,9 +1652,10 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1560,9 +1667,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1574,9 +1682,10 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1597,9 +1706,10 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1611,9 +1721,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1625,9 +1736,10 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1648,9 +1760,10 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1662,9 +1775,10 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
@@ -1676,9 +1790,10 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
-               							if(targetPiece.currHp<0) {//don't want negative numbers for hp
+               							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								removeImage(currentButton);
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");

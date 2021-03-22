@@ -12,7 +12,7 @@ int playerNum; //for player turn order
 int teamChosen; //keep track of what team was chosen so can make the proper pieces
 Team playersTeam; //had to make playersTeam non static, otherwise every players team was stored as the first players team
 ImageIcon[] PieceImages = new ImageIcon[5]; //this array keeps track of the icons of each piece in each team
-
+int piecesLeft = 5;
 
 public Player(int playerNum, int teamChosen){ //constructor
 	this.playerNum=playerNum;
