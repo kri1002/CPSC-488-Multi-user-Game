@@ -171,6 +171,7 @@ class damageMage extends Piece{
 		currHp = maxHp;
 		attack = 4;
 		variance = 6;
+		range = 3;
 		crit = 10;
 		move = 4;
 	}
@@ -184,6 +185,7 @@ class damageMageClone extends Piece{
 		currHp = maxHp;
 		attack = 4;
 		variance = 6;
+		range = 3;
 		crit = 10;
 		move = 4;
 	}

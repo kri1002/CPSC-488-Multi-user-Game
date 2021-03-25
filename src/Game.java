@@ -923,10 +923,12 @@ public class Game extends JPanel{
         	public void actionPerformed (ActionEvent e) {
         		 JButton currentButton= (JButton)e.getSource();
         		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
-        		 setCoordinates(currentButton, numPlayers, tile);
+        		 //setCoordinates(currentButton, numPlayers, tile);
+        		 //System.out.println(pieceXCoord);
        		 if(lastButtonPressed!=null){//if two tiles were clicked
        			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
        				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()!=null){//if both tiles have an icon 
+       					 setCoordinates(lastButtonPressed, numPlayers, tile); //set coords had to be moved
        					 for (int i=0; i<tile.length; i++) {
             			 		for(int j=0; j<tile[i].length; j++) {
             			 			if (currentButton == tile[i][j]) {
@@ -937,9 +939,11 @@ public class Game extends JPanel{
             			 	}
        						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
        						 Icon tempImg2= currentButton.getIcon();
+       			
        			if(tempImg==Player1.PieceImages[0])	{
        			//check to make sure piece to be attacked isn't the player's pieces 
-       		
+       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].range) {
+       					//This checks for the range of the attacking piece^
        				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[0].name + " attacks!");//message to user
        					Piece targetPiece;//alias for piece being attacked
@@ -964,6 +968,7 @@ public class Game extends JPanel{
        							}
        							}
        					}
+       					if(numPlayers == 4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -994,12 +999,18 @@ public class Game extends JPanel{
        							}
        						}
        					}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       			}//end of range check
+       			else {
+       				System.out.println("That is an invalid attack, cannot a piece further than your piece's range");
+       			}
        			}
        			if(tempImg==Player1.PieceImages[1]){
+       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[1].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[1].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[1].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[1].range) {
        				if (currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[1].name + " attacks!");
        					Piece targetPiece;
@@ -1018,6 +1029,7 @@ public class Game extends JPanel{
        							}
        						}
        					}
+       					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -1048,12 +1060,18 @@ public class Game extends JPanel{
        							}
        							}
        					}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of range check
+       				else {
+       					System.out.println("that is an invalid attack, cannot attack piece further than your piece's range");
+       				}
        			}
        			if(tempImg==Player1.PieceImages[2]){
+       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[2].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[2].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[2].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[2].range) {
        				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[2].name + " attacks!");
        					Piece targetPiece;
@@ -1072,6 +1090,7 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -1102,12 +1121,18 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					}
        				}
        				else{
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of range check
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       				}
        			}			 
        			if(tempImg==Player1.PieceImages[3]) {
+       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].range) {
        				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[4]) {
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[3].name + " attacks!");
        					Piece targetPiece;
@@ -1126,6 +1151,7 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -1156,13 +1182,19 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					}
        				}
        				else{
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of range check
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       				}
        			}	
        			
        			if(tempImg==Player1.PieceImages[4]) {
+       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].range) {
        				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[0]) {
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[4].name + " attacks!");
        					Piece targetPiece;
@@ -1181,6 +1213,7 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -1211,12 +1244,18 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of range check
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       				}
        			}
        			if(tempImg==Player2.PieceImages[0]) {
+       				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[0].range) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[0].name + " attacks!");
        					Piece targetPiece;
@@ -1235,6 +1274,7 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -1265,12 +1305,18 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of range check
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       				}
        			}
        			if(tempImg==Player2.PieceImages[1]) {
+       				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[1].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[1].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[1].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[1].range) {
        				if (currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[1].name + " attacks!");
        					Piece targetPiece;
@@ -1289,6 +1335,7 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -1319,12 +1366,18 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of range check
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       				}
        			}
        			if(tempImg==Player2.PieceImages[2]) {
+       				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[2].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[2].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[2].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[2].range) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[2].name + " attacks!");
        					Piece targetPiece;
@@ -1343,6 +1396,7 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -1373,12 +1427,18 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of range check
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       				}
        			}
        			if(tempImg==Player2.PieceImages[3]) {
+       				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[3].range) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[3].name + " attacks!");
        					Piece targetPiece;
@@ -1397,6 +1457,7 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -1427,12 +1488,18 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of range check
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       				}
        			}
        			if(tempImg==Player2.PieceImages[4]) {
+       				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[4].range) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[0]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[4].name + " attacks!");
        					Piece targetPiece;
@@ -1451,6 +1518,7 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
        							targetPiece = Player3.playersTeam.teamPieces[i];
@@ -1479,13 +1547,19 @@ public class Game extends JPanel{
        						}
        						}
        					}
+       					}
        				}
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of range check
+       				else {
+       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       				}
        			}
        			 if(numPlayers==4) {
        				 if(tempImg==Player3.PieceImages[0]) {
+       					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[0].range) {
             				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
             					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[0].name + " attacks!");
                					Piece targetPiece;
@@ -1538,8 +1612,13 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+       					}//end of range check
+       					else {
+       						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       					}
             			}
        				 if(tempImg==Player3.PieceImages[1]) {
+       					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[1].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[1].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[1].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[1].range) {
              				if (currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
              					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[1].name + " attacks!");
                					Piece targetPiece;
@@ -1592,8 +1671,13 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+       					}//end of range check
+       					else {
+       						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       					}
              			}
        				 if(tempImg==Player3.PieceImages[2]) {
+       					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[2].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[2].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[2].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[2].range) {
              				if(currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]){
              					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[2].name + " attacks!");
                					Piece targetPiece;
@@ -1646,8 +1730,13 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+       					}//end of range check
+       					else {
+       						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       					}
              			}
        				 if(tempImg==Player3.PieceImages[3]) {
+       					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[3].range) {
              				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[4]) {
              					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[3].name + " attacks!");
                					Piece targetPiece;
@@ -1701,7 +1790,13 @@ public class Game extends JPanel{
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            					
            				}
-             			} if(tempImg==Player3.PieceImages[4]) {
+       					}//end of range check
+       					else {
+       						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       					}
+             			} 
+       				 if(tempImg==Player3.PieceImages[4]) {
+       					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[4].range) {
             				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[0]) {
             					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[4].name + " attacks!");
                					Piece targetPiece;
@@ -1754,8 +1849,13 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+       					}//end of range check
+       					else {
+       						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+       					}
             			}
              			 if(tempImg==Player4.PieceImages[0]) {
+             				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[0].range) {
              				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]){
              					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[0].name + " attacks!");
                					Piece targetPiece;
@@ -1808,8 +1908,13 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+             			}//end of range check
+             			else {
+             				System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");	
+             			}
              			}
       					 if(tempImg==Player4.PieceImages[1]) {
+      						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[1].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[1].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[1].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[1].range) {
               				if(currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
               					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[1].name + " attacks!");
                					Piece targetPiece;
@@ -1863,8 +1968,13 @@ public class Game extends JPanel{
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            					
            				}
+      					}//end of range check
+      					else {
+      						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+      					}
       					 }
       					 if(tempImg==Player4.PieceImages[2]) {
+      						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[2].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[2].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[2].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[2].range) {
                				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
                					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[2].name + " attacks!");
                					Piece targetPiece;
@@ -1917,8 +2027,13 @@ public class Game extends JPanel{
                				else {
                					System.out.println("That is an invalid attack, cannot attack your own game pieces");
                				}
+      						}//end of range check
+      						else {
+      							System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+      						}
        					 }
       					 if(tempImg==Player4.PieceImages[3]) {
+      						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[3].range) {
                				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[4]) {
                					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[3].name + " attacks!");
                					Piece targetPiece;
@@ -1971,8 +2086,13 @@ public class Game extends JPanel{
                				else {
                					System.out.println("That is an invalid attack, cannot attack your own game pieces");
                				} 
+      						}//end of range check
+      						else {
+      							System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+      						}
        					 }
       					 if(tempImg==Player4.PieceImages[4]) {
+      						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[4].range) {
                				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[0]) {
                					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[4].name + " attacks!");
                					Piece targetPiece;
@@ -2025,9 +2145,12 @@ public class Game extends JPanel{
                				else {
                					System.out.println("That is an invalid attack, cannot attack your own game pieces");
                				}
-               				
+      						}//end of range check
+      						else {
+      							System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+      						}
        					 }				 				
-       			 }//end of if numPlayers ==4			 
+       			 }//end of if numPlayers ==4
        					currentButton=null; //resets the ActionListener
        					}
        			 }
