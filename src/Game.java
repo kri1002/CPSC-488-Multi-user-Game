@@ -493,9 +493,17 @@ public class Game extends JPanel{
 				 if(lastButtonPressed!=null){//if two tiles were clicked
 					 if(lastButtonPressed == currentButton) {//if button pressed was the same -> for healing the healer
 						 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()!=null){//if both tiles have an icon  
+							 for (int i=0; i<tile.length; i++) {
+	            			 		for(int j=0; j<tile[i].length; j++) {
+	            			 			if (currentButton == tile[i][j]) {
+	            			 				destinationYCoord = i;
+	            			 				destinationXCoord = j;
+	            			 			}
+	            			 		}
+	            			 	}
 							 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
 							 Piece targetPiece;
-							 
+							 if(numPlayers!=4) {
 							 if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
 								 //don't need to check bc under assumption that the piece is healing itself       				
 								 System.out.println("Player 1's healer is healing");
@@ -573,11 +581,91 @@ public class Game extends JPanel{
            	       				System.out.println("This game piece is already at full health");
            	       				}
 							}
-           	       			else {
-       						System.out.println("Invalid action, this game piece is not a healer");
-           	       			}
+							else {
+		           				 System.out.println("Invalid action, this game piece is not a healer");
+		           			 }
+							 }
            			
-           			 if(numPlayers==4) {
+							 
+							 else {
+								 if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
+									 //don't need to check bc under assumption that the piece is healing itself       				
+									 System.out.println("Player 1's healer is healing");
+									 targetPiece=Player1.playersTeam.teamPieces[3]; //set to the same as healer
+									 int tempHp=targetPiece.getCurrHp();
+									 	if(tempHp!= targetPiece.getMaxHp()) {
+									 		Player1.playersTeam.teamPieces[0].heal(targetPiece);    				
+									 		if(targetPiece.currHp>targetPiece.getMaxHp()) {//can't have more than max hp
+									 			targetPiece.currHp=targetPiece.getMaxHp();
+									 			System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+									 		}
+									 		else {
+									 			System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+									 		}
+									 	}
+									 	else {
+									 		System.out.println("This game piece is already at full health");
+									 	}
+	           					}
+								 
+								 else if(tempImg==Player1.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer") {
+									 System.out.println("Player 1's healer is healing");
+									 targetPiece=Player1.playersTeam.teamPieces[4]; //set to the same as healer
+									 int tempHp=targetPiece.getCurrHp();
+									 if(tempHp!= targetPiece.getMaxHp()) {
+										 Player1.playersTeam.teamPieces[0].heal(targetPiece); 
+										 if(targetPiece.currHp>targetPiece.getMaxHp()) {//can't have more than max hp
+											 targetPiece.currHp=targetPiece.getMaxHp();
+											 System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+										 }
+										 else {
+											 System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+										 }
+	               				
+									 }
+									 else {
+										 System.out.println("This game piece is already at full health");
+									 }	
+								}
+	       			
+								else if(tempImg==Player2.PieceImages[3] && Player2.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
+									 System.out.println("Player 2's healer is healing");
+									 targetPiece=Player2.playersTeam.teamPieces[3]; //set to the same as healer
+									 int tempHp=targetPiece.getCurrHp();
+									 if(tempHp!= targetPiece.getMaxHp()) {
+										 Player2.playersTeam.teamPieces[0].heal(targetPiece);    				
+										 if(targetPiece.currHp>targetPiece.getMaxHp()) {//can't have more than max hp
+											 targetPiece.currHp=targetPiece.getMaxHp();
+											 System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+										 }
+										 else {
+											 System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+										 }
+									 }
+	           	       				else {
+	           	       					System.out.println("This game piece is already at full health");
+	           	       				}
+	           	       			}
+	           	       					
+								else if(tempImg==Player2.PieceImages[4] && Player2.playersTeam.teamPieces[4].name == "Healer") {
+									System.out.println("Player 2's healer is healing");
+									targetPiece=Player2.playersTeam.teamPieces[4]; //set to the same as healer
+									int tempHp=targetPiece.getCurrHp();
+									if(tempHp!= targetPiece.getMaxHp()) {
+										Player2.playersTeam.teamPieces[0].heal(targetPiece);    				
+										if(targetPiece.currHp>targetPiece.getMaxHp()) {//can't have more than max hp
+											targetPiece.currHp=targetPiece.getMaxHp();
+											System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+										}
+										else {
+											System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+										}
+									}
+	           	       				else {
+	           	       				System.out.println("This game piece is already at full health");
+	           	       				}
+								}
+								 
            				if(tempImg==Player3.PieceImages[3] && Player3.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
            					System.out.println("Player 3's healer is healing");
                				targetPiece=Player3.playersTeam.teamPieces[3]; //set to the same as healer
@@ -597,7 +685,7 @@ public class Game extends JPanel{
            	       			}
            				}
            	       				
-           				else if(tempImg==Player3.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer") {
+           				else if(tempImg==Player3.PieceImages[4] && Player3.playersTeam.teamPieces[4].name == "Healer") {
            					System.out.println("Player 3's healer is healing");
                				targetPiece=Player3.playersTeam.teamPieces[4]; //set to the same as healer
                    			int tempHp=targetPiece.getCurrHp();
@@ -657,8 +745,8 @@ public class Game extends JPanel{
            	        	else {
            	       			System.out.println("Invalid action, this game piece is not a healer");
            	       			}
-           			 }//end of if numPlayers ==4			 
-           					
+           			 }//end of if numPlayers ==4
+           			 
        				 }	 
        			 }
        			
@@ -675,8 +763,10 @@ public class Game extends JPanel{
        						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
        						 Icon tempImg2= currentButton.getIcon();
        						 Piece targetPiece;
+       						 if(numPlayers!=4) {
        			if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
        			//check to make sure piece to be heal is the player's pieces 
+       				//if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].range) {
        				if(currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] ||currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[4]){
        				System.out.println("Player 1's healer is healing");
        				for(int i=0; i<5; i++) {
@@ -704,7 +794,7 @@ public class Game extends JPanel{
        					System.out.println("Cannot heal other team's pieces");
        				}
        			}
-       		
+       				
        			else if(tempImg==Player1.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer") {
        				if(currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] ||currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[3]){
        				System.out.println("Player 1's healer is healing");
@@ -788,14 +878,130 @@ public class Game extends JPanel{
        					System.out.println("Cannot heal other team's pieces");
        				}
        			}
-       	       		else {
-   						System.out.println("Invalid action, this game piece is not a healer");
-   					}
+       			else {
+      				 System.out.println("Invalid action, this game piece is not a healer");
+      			 }
+       			 }
        			
-       			 if(numPlayers==4) {
+       						 else{
+       							if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
+       				       			//check to make sure piece to be heal is the player's pieces 
+       				       				//if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].range) {
+       				       				if(currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] ||currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[4]){
+       				       				System.out.println("Player 1's healer is healing");
+       				       				for(int i=0; i<5; i++) {
+       				       					if(currentButton.getIcon()==Player1.PieceImages[i]) {//find piece being healed, searches current team for match
+       				       						targetPiece= Player1.playersTeam.teamPieces[i]; //set target piece
+       				       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       				       						if(tempHp != targetPiece.getMaxHp()){
+       				       						Player1.playersTeam.teamPieces[0].heal(targetPiece);
+       				       						if(targetPiece.currHp>targetPiece.getMaxHp()) {//can't have more than max hp
+       				    							targetPiece.currHp=targetPiece.getMaxHp();
+       				    							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+       				           				}
+       				           				else {
+       				           					System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+       				           				}
+       				       						
+       				       					}
+       				       						else {
+       				       							System.out.println("This game piece is already at full health");
+       				       						}
+       				       					}
+       				       				}
+       				       			}
+       				       				else {
+       				       					System.out.println("Cannot heal other team's pieces");
+       				       				}
+       				       			}
+       				       				
+       				       			else if(tempImg==Player1.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer") {
+       				       				if(currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] ||currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[3]){
+       				       				System.out.println("Player 1's healer is healing");
+       				       				for(int i=0; i<5; i++) {
+       				       					if(currentButton.getIcon()==Player1.PieceImages[i]) {//find piece being healed, searches current team for match
+       				       						targetPiece= Player1.playersTeam.teamPieces[i]; //set target piece
+       				       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       				       						if(tempHp != targetPiece.getMaxHp()){
+       				       						Player1.playersTeam.teamPieces[0].heal(targetPiece);
+       				       						if(targetPiece.currHp>targetPiece.getMaxHp()) {//can't have more than max hp
+       				    							targetPiece.currHp=targetPiece.getMaxHp();
+       				    							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+       				           				}
+       				           				else {
+       				           					System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+       				           				}	
+       				       					}
+       				       						else {
+       				       							System.out.println("This game piece is already at full health");
+       				       						}
+       				       					}
+       				       				}
+       				       			}
+       				       				else {
+       				       					System.out.println("Cannot heal other team's pieces");
+       				       				}
+       				       			}
+       				       			else if(tempImg==Player2.PieceImages[3] && Player2.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
+       				       	       			//check to make sure piece to be heal is the player's pieces 
+       				       				if(currentButton.getIcon()==Player2.PieceImages[0] || currentButton.getIcon()==Player2.PieceImages[1] ||currentButton.getIcon()==Player2.PieceImages[2] || currentButton.getIcon()==Player2.PieceImages[4]) {
+       				       	       				System.out.println("Player 2's healer is healing");
+       				       	       				for(int i=0; i<5; i++) {
+       				       	       					if(currentButton.getIcon()==Player2.PieceImages[i]) {//find piece being healed, searches current team for match
+       				       	       						targetPiece= Player2.playersTeam.teamPieces[i]; //set target piece
+       				       	       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       				       	       						if(tempHp != targetPiece.getMaxHp()){
+       				       	       						Player2.playersTeam.teamPieces[0].heal(targetPiece);
+       				       	       					if(targetPiece.currHp>targetPiece.getMaxHp()) {//can't have more than max hp
+       				       								targetPiece.currHp=targetPiece.getMaxHp();
+       				       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+       				       	       				}
+       				       	       				else {
+       				       	       					System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+       				       	       				}
+       				       	       					}
+       				       	       						else {
+       				       	       							System.out.println("This game piece is already at full health");
+       				       	       						}
+       				       	       					}
+       				       	       				}
+       				       	       			}
+       				       				else {
+       				       					System.out.println("Cannot heal other team's pieces");
+       				       				}
+       				       			}
+       				       	       				
+       				       			else if(tempImg==Player2.PieceImages[4] && Player2.playersTeam.teamPieces[4].name == "Healer") {
+       				       				if(currentButton.getIcon()==Player2.PieceImages[0] || currentButton.getIcon()==Player2.PieceImages[1] ||currentButton.getIcon()==Player2.PieceImages[2] || currentButton.getIcon()==Player2.PieceImages[3]) {	
+       				       				System.out.println("Player 2's healer is healing");
+       				       	       				for(int i=0; i<5; i++) {
+       				       	       					if(currentButton.getIcon()==Player2.PieceImages[i]) {//find piece being healed, searches current team for match
+       				       	       						targetPiece= Player2.playersTeam.teamPieces[i]; //set target piece
+       				       	       						int tempHp=targetPiece.getCurrHp(); //save hp it currently has
+       				       	       						if(tempHp != targetPiece.getMaxHp()){
+       				       	       						Player2.playersTeam.teamPieces[0].heal(targetPiece);
+       				       	       					if(targetPiece.currHp>targetPiece.getMaxHp()) {//can't have more than max hp
+       				       								targetPiece.currHp=targetPiece.getMaxHp();
+       				       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+       				       	       				}
+       				       	       				else {
+       				       	       					System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " + targetPiece.getCurrHp() + " hit points");
+       				       	       				}
+       				       	       					}
+       				       	       						else {
+       				       	       							System.out.println("This game piece is already at full health");
+       				       	       						}
+       				       	       					}
+       				       	       				}
+       				       	       				}
+       				       				else {
+       				       					System.out.println("Cannot heal other team's pieces");
+       				       				}
+       				       			}
+       				       		 
        				if(tempImg==Player3.PieceImages[3] && Player3.playersTeam.teamPieces[3].name == "Healer")	{//only checks PieceImages[3] & [4] for each player because those are the only possible healer locations
        	       			//check to make sure piece to be heal is the player's pieces 
-       					if(currentButton.getIcon()==Player3.PieceImages[0] || currentButton.getIcon()==Player3.PieceImages[1] || currentButton.getIcon()==Player3.PieceImages[4]){
+       					if(currentButton.getIcon()==Player3.PieceImages[0] || currentButton.getIcon()==Player3.PieceImages[1] || currentButton.getIcon()==Player3.PieceImages[2] || currentButton.getIcon()==Player3.PieceImages[4]){
        	       				System.out.println("Player 3's healer is healing");
        	       				for(int i=0; i<5; i++) {
        	       					if(currentButton.getIcon()==Player3.PieceImages[i]) {//find piece being healed, searches current team for match
@@ -906,10 +1112,11 @@ public class Game extends JPanel{
        					System.out.println("Cannot heal other team's pieces");
        				}
        	       			}
-       	        				else {
-       	       						System.out.println("Invalid action, this game piece is not a healer");
+       	        		else {
+       	       					System.out.println("Invalid action, this game piece is not a healer");
        	       					}
-       			 }//end of if numPlayers ==4			 
+       			 }//end of if numPlayers ==4	
+       				 
        					currentButton=null; //resets the ActionListener
        					}
        			 }
