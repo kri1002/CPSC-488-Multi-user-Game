@@ -10,6 +10,7 @@ public abstract class Piece { //generic game piece class with stats all pieces w
 	int range;
 	int crit;
 	int move;
+	int team;//each piece knows what team it is a part of
 	
 	int getMaxHp() {
 		return maxHp;
@@ -66,7 +67,7 @@ public abstract class Piece { //generic game piece class with stats all pieces w
 
 //more specific stats are given to specific kinds of pieces 
 class warrior extends Piece{ 
-	warrior(){ //warrior is slow, strong and has a lot of health
+	warrior(int playerNum){ //warrior is slow, strong and has a lot of health
 		name = "Warrior"; //added name to each piece class
 		token = "Circle";
 		maxHp = 60;
@@ -76,11 +77,12 @@ class warrior extends Piece{
 		range = 1;
 		crit = 10;
 		move = 3;
+		team = playerNum;//each piece now gets passed the number of the player who created it
 	}
 }
 
 class warriorClone extends Piece{
-	warriorClone(){ //This is a clone of warrior with a different name to be used if a team needs two warriors
+	warriorClone(int playerNum){ //This is a clone of warrior with a different name to be used if a team needs two warriors
 		name = "Warrior"; 
 		token = "Circle2";
 		maxHp = 60;
@@ -90,11 +92,12 @@ class warriorClone extends Piece{
 		range = 1;
 		crit = 10;
 		move = 3;
+		team = playerNum;
 	}
 }
 
 class ranger extends Piece{
-	ranger(){// ranger is fast, has range, but has lower damage
+	ranger(int playerNum){// ranger is fast, has range, but has lower damage
 		name = "Ranger";
 		token = "Square";
 		maxHp = 35;
@@ -104,11 +107,12 @@ class ranger extends Piece{
 		range = 4;
 		crit = 15;
 		move = 5;
+		team = playerNum;
 	}
 }
 
 class rangerClone extends Piece{
-	rangerClone(){//a clone of ranger to be used if a team has multiple rangers
+	rangerClone(int playerNum){//a clone of ranger to be used if a team has multiple rangers
 		name = "Ranger";
 		token = "Square2";
 		maxHp = 35;
@@ -118,11 +122,12 @@ class rangerClone extends Piece{
 		range = 4;
 		crit = 15;
 		move = 5;
+		team = playerNum;
 	}
 }
 
 class rogue extends Piece{
-	rogue(){//rogue is the fastest, has low damage, but had the highest crit chance
+	rogue(int playerNum){//rogue is the fastest, has low damage, but had the highest crit chance
 		name = "Rogue";
 		token = "Triangle";
 		maxHp = 40;
@@ -132,11 +137,12 @@ class rogue extends Piece{
 		range = 1;
 		crit = 25;
 		move = 6;
+		team = playerNum;
 	}
 }
 
 class rogueClone extends Piece{
-	rogueClone(){// a clone of rogue to be used if a team has multiple rogues
+	rogueClone(int playerNum){// a clone of rogue to be used if a team has multiple rogues
 		name = "Rogue";
 		token = "Triangle2";
 		maxHp = 40;
@@ -146,11 +152,12 @@ class rogueClone extends Piece{
 		range = 1;
 		crit = 25;
 		move = 6;
+		team = playerNum;
 	}
 }
 
 class healer extends Piece{
-	healer(){//healer has bad stats all around but will have the ability to heal allies instead of taking the attack action
+	healer(int playerNum){//healer has bad stats all around but will have the ability to heal allies instead of taking the attack action
 		name = "Healer";
 		token = "Star";
 		maxHp = 25;
@@ -160,11 +167,12 @@ class healer extends Piece{
 		range = 3;
 		crit = 10;
 		move = 4;
+		team = playerNum;
 	}
 }
 
 class damageMage extends Piece{
-	damageMage(){//damage mage has high damage, moderate range, but has significantly fewer hit points than the warrior
+	damageMage(int playerNum){//damage mage has high damage, moderate range, but has significantly fewer hit points than the warrior
 		name = "Damage Mage";
 		token = "Pentagon";
 		maxHp = 30;
@@ -174,11 +182,12 @@ class damageMage extends Piece{
 		range = 3;
 		crit = 10;
 		move = 4;
+		team = playerNum;
 	}
 }
 
 class damageMageClone extends Piece{
-	damageMageClone(){// a clone of damage mage to be used if a team has multiple damage mages
+	damageMageClone(int playerNum){// a clone of damage mage to be used if a team has multiple damage mages
 		name = "Damage Mage";
 		token = "Pentagon2";
 		maxHp = 30;
@@ -188,5 +197,6 @@ class damageMageClone extends Piece{
 		range = 3;
 		crit = 10;
 		move = 4;
+		team = playerNum;
 	}
 }

@@ -45,16 +45,16 @@ public void createGamePieces(JButton tile[][], String color, int loc1, int loc2,
 	int tempLoc5;
 	
 	if(teamChosen == 1) {
-		playersTeam = new Team1();
+		playersTeam = new Team1(this.playerNum);//each team needs the number of the player it belongs to
 	}
 	else if(teamChosen == 2) {
-		playersTeam = new Team2();
+		playersTeam = new Team2(this.playerNum);
 	}
 	else if(teamChosen == 3) {
-		playersTeam = new Team3();
+		playersTeam = new Team3(this.playerNum);
 	}
 	else if(teamChosen == 4) {
-		playersTeam = new Team4();
+		playersTeam = new Team4(this.playerNum);
 	}
 	else {
 		System.out.print("enter valid team number");

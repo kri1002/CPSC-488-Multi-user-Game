@@ -5,6 +5,7 @@ import java.beans.PropertyVetoException;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.util.Random;
 public class Game extends JPanel{
 	private static JButton lastButtonPressed;
 	public static int timesClicked = 0;//I feel like there is a better place to put this, but I couldnt get it to work anywhere else
@@ -12,6 +13,8 @@ public class Game extends JPanel{
  	public static int pieceYCoord;
  	public static int destinationXCoord; //coordinates for the destination space to be used in the action listener
  	public static int destinationYCoord;
+ 	public static int turnSeed;//the player who is going first
+ 	public static int turnNumber = 0;//the current number of elapsed turns
 	public static Player Player1 = new Player(1);//players are now generated at the start of the game class so they can be referenced anywhere
 	public static Player Player2 = new Player(2);
 	public static Player Player3 = new Player(3);
@@ -23,6 +26,55 @@ public class Game extends JPanel{
 	
 	//will need something outside of this GUI to keep track of game mode
 	//so can determine player order etc
+	
+	public static int whosTurn(int numPlayers) {//this function determines who's turn it is based on the number of players
+		if (numPlayers == 2) {
+			if((turnNumber+turnSeed)%numPlayers == 1) {
+				return 1;
+			}
+			else {
+				return 2;
+			}
+		}
+		else {
+			if ((turnNumber+turnSeed)%numPlayers == 1) {
+				return 1;
+			}
+			else if((turnNumber+turnSeed)%numPlayers == 2) {
+				return 2;
+			}
+			else if((turnNumber+turnSeed)%numPlayers == 3) {
+				return 3;
+			}
+			else {
+				return 4;
+			}
+		}
+	}
+	
+	public static Piece findPiece(Icon tempImg) {//returns the piece that corresponds to the given image
+		Piece foundPiece = null;
+		for (int i=0; i<5; i++) {
+			 if(tempImg==Player1.PieceImages[i]) {
+				 foundPiece=Player1.playersTeam.teamPieces[i];
+			 }
+			 if(tempImg==Player2.PieceImages[i]) {
+				 foundPiece=Player2.playersTeam.teamPieces[i];
+			 }
+			 if(tempImg==Player3.PieceImages[i]) {
+				 foundPiece=Player3.playersTeam.teamPieces[i];
+			 }
+			 if(tempImg==Player4.PieceImages[i]) {
+				 foundPiece=Player4.playersTeam.teamPieces[i];
+			 }
+		 }
+		return foundPiece;
+	}
+	
+	public static int genTurnSeed(int numPlayers) {//randomly generates the player who is going first
+		Random turnRand = new Random();
+		return turnRand.nextInt(numPlayers)+1;
+	}
 	
 	public static void swapImage(JButton currentButton, Icon tempImg) { //swaps the images on the tiles
 		lastButtonPressed.setIcon(null); //sets the tile with the image null
@@ -368,6 +420,8 @@ public class Game extends JPanel{
 		frame1.dispose(); //get rid of previous gui and create new one
 		JButton teams[]= new JButton[4];
 		  frame2.setLayout(new GridLayout(4, 0));
+		  turnSeed = genTurnSeed(numPlayers);
+		  System.out.println("Player " + turnSeed + " will be going first");
 		
 		  //will have to keep track of num of players after each click, after there's no more players to select team go to next screen
 		   class buttonClicked implements ActionListener{
@@ -486,6 +540,7 @@ public class Game extends JPanel{
         
         class healGamePiece implements ActionListener{
         	JButton currentButton=null;
+        	Piece tempPiece;
         	public void actionPerformed (ActionEvent e) {
         		 JButton currentButton= (JButton)e.getSource();
        		 if(lastButtonPressed!=null){//if two tiles were clicked
@@ -501,7 +556,8 @@ public class Game extends JPanel{
         			 		}
         			 	}
    						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
-   			
+   						 tempPiece = findPiece(tempImg);//find the piece that has been clicked
+   			if (whosTurn(numPlayers) == 1) {//if it is player 1's turn
    			if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name =="Healer"){ //check only locations 3 &4 bc teams sets healers to those locations & check to make sure piece is healer
    				System.out.println("Player 1's " + Player1.playersTeam.teamPieces[3].name + " is healing itself");//message to user
    				Piece targetPiece;//alias for piece being healed
@@ -543,8 +599,13 @@ public class Game extends JPanel{
    				else {
    					System.out.println("Player 1's " + targetPiece.name + " is already at full health");
    					}
-   			}			 
+   			}	
+   			}//end of if it is player 1's turn
+   			else if(tempPiece.team == 1){//if player 1's piece has been clicked and it is not their turn
+   				System.out.println("It is not Player 1's turn");//send error message
+   			}
    			
+   			if (whosTurn(numPlayers) == 2) {
    			if(tempImg==Player2.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer") {
    					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[3].name + " is healing itself");
    					Piece targetPiece;
@@ -585,8 +646,13 @@ public class Game extends JPanel{
    						System.out.println("Player 2's " + targetPiece.name + " is already at full health");
    						}
    			}
+   			}//end of if it is player 2's turn
+   			else if(tempPiece.team == 2){
+   				System.out.println("It is not Player 2's turn");
+   			}
    			
    			 if(numPlayers==4) {
+   				if (whosTurn(numPlayers) == 3) {
    				 if(tempImg==Player3.PieceImages[3] && Player3.playersTeam.teamPieces[3].name == "Healer") {
          			System.out.println("Player 3's " + Player3.playersTeam.teamPieces[3].name + " is healing itself");
            			Piece targetPiece;	
@@ -630,7 +696,12 @@ public class Game extends JPanel{
            					System.out.println("Player 3's " + targetPiece.name + " is already at full health");
            					}	
         			}
-         			
+   					}//end of if it is player 3's turn	
+   					else if(tempPiece.team == 3){
+   						System.out.println("It is not Player 3's turn");
+   					}
+   				
+   				if (whosTurn(numPlayers) == 4) {
   					 if(tempImg==Player4.PieceImages[3] && Player4.playersTeam.teamPieces[3].name=="Healer") {
            				System.out.println("Player 4's " + Player4.playersTeam.teamPieces[3].name + " is healing itself");
            				Piece targetPiece;
@@ -672,6 +743,11 @@ public class Game extends JPanel{
            						System.out.println("Player 4's " + targetPiece.name + "is already at full health");
            					}			
   					 }
+   				}//end of if it is player 4's turn
+   				else if(tempPiece.team == 4){
+   					System.out.println("It is not Player 4's turn");
+   				}
+
    				} //end of if players =4
        		}
        	}//end of self healing
@@ -688,7 +764,9 @@ public class Game extends JPanel{
             			 		}
             			 	}
        						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
-       			
+       						 tempPiece = findPiece(tempImg);
+       				
+       			if (whosTurn(numPlayers) == 1) {
        			if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name =="Healer"){//checks 3& 4 bc teams only set those as healers & make sure it is a healer
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].range) {
        					//This checks for the range of the healing piece^
@@ -758,7 +836,12 @@ public class Game extends JPanel{
        					System.out.println("That is an invalid heal, cannot heal piece further than healer's range");
        				}
        			}			 
-       			
+       			}//end of if it is player 1's turn
+       			else if(tempPiece.team == 1){
+       				System.out.println("It is not Player 1's turn");
+       			}
+
+       			if (whosTurn(numPlayers) == 2) {
        			if(tempImg==Player2.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer") {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[3].range) {
        				if (currentButton.getIcon()==Player2.PieceImages[0] || currentButton.getIcon()==Player2.PieceImages[1] || currentButton.getIcon()!=Player2.PieceImages[2] || currentButton.getIcon()!=Player2.PieceImages[4]) {
@@ -828,7 +911,13 @@ public class Game extends JPanel{
        					System.out.println("That is an invalid heal, cannot heal piece further than your healer's range");
        				}
        			}
+       			}//end of if it is player 2's turn
+       			else if(tempPiece.team == 2){
+       				System.out.println("It is not Player 2's turn");
+       			}
+
        			 if(numPlayers==4) {
+       				if (whosTurn(numPlayers) == 3) {
        				 if(tempImg==Player3.PieceImages[3] && Player3.playersTeam.teamPieces[3].name == "Healer") {
        					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[3].range) {
              				if (currentButton.getIcon()==Player3.PieceImages[0] || currentButton.getIcon()==Player3.PieceImages[1] || currentButton.getIcon()==Player3.PieceImages[2] || currentButton.getIcon()==Player3.PieceImages[4]) {
@@ -897,7 +986,12 @@ public class Game extends JPanel{
        						System.out.println("That is an invalid heal, cannot heal piece further than your healer's range");
        					}
             			}
-             			
+       					}//end of if it is player 3's turn
+       					else if(tempPiece.team == 3){
+       						System.out.println("It is not Player 3's turn");
+       					}
+       				
+       					if (whosTurn(numPlayers) == 4) {
       					 if(tempImg==Player4.PieceImages[3] && Player4.playersTeam.teamPieces[3].name=="Healer") {
       						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[3].range) {
                				if (currentButton.getIcon()==Player4.PieceImages[0] || currentButton.getIcon()==Player4.PieceImages[1] || currentButton.getIcon()==Player4.PieceImages[2] || currentButton.getIcon()==Player4.PieceImages[4]){
@@ -962,7 +1056,12 @@ public class Game extends JPanel{
       						else {
       							System.out.println("That is an invalid heal, cannot heal piece further than your healer's range");
       						}
-       					 }				 				
+       					 }		
+       					}//end of if it is player 4's turn
+       					else if(tempPiece.team == 4){
+       						System.out.println("It is not Player 4's turn");
+       					}
+
        			 }//end of if numPlayers ==4
        					currentButton=null; //resets the ActionListener
        					}
@@ -974,6 +1073,7 @@ public class Game extends JPanel{
               
         class attackGamePiece implements ActionListener{
         	JButton currentButton=null;
+        	Piece tempPiece;
         	public void actionPerformed (ActionEvent e) {
         		 JButton currentButton= (JButton)e.getSource();
         		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
@@ -993,7 +1093,8 @@ public class Game extends JPanel{
             			 	}
        						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
        						 Icon tempImg2= currentButton.getIcon();
-       			
+       						 tempPiece = findPiece(tempImg);
+       			if (whosTurn(numPlayers) == 1) {
        			if(tempImg==Player1.PieceImages[0])	{
        			//check to make sure piece to be attacked isn't the player's pieces 
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].range) {
@@ -1308,6 +1409,11 @@ public class Game extends JPanel{
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
        				}
        			}
+       			}//end of if it is player 1's turn
+       			else if(tempPiece.team == 1){
+       				System.out.println("It is not Player 1's turn");
+       			}
+       			if (whosTurn(numPlayers) == 2) {
        			if(tempImg==Player2.PieceImages[0]) {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[0].range) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
@@ -1611,7 +1717,12 @@ public class Game extends JPanel{
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
        				}
        			}
+       			}//end of if it is player 2's turn
+       			else if(tempPiece.team == 2){
+       				System.out.println("It is not Player 2's turn");
+       			}
        			 if(numPlayers==4) {
+       				if (whosTurn(numPlayers) == 3) {
        				 if(tempImg==Player3.PieceImages[0]) {
        					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[0].range) {
             				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
@@ -1908,6 +2019,11 @@ public class Game extends JPanel{
        						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
        					}
             			}
+       					}//end of if it is player 3's turn
+       					else if(tempPiece.team == 3){
+       						System.out.println("It is not Player 3's turn");
+       					}
+       					if (whosTurn(numPlayers) == 4) {
              			 if(tempImg==Player4.PieceImages[0]) {
              				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[0].range) {
              				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]){
@@ -2203,7 +2319,11 @@ public class Game extends JPanel{
       						else {
       							System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
       						}
-       					 }				 				
+       					 }	
+       					}//end of if it is player 4's turn
+       					else if(tempPiece.team == 4){
+       						System.out.println("It is not Player 4's turn");
+       					}
        			 }//end of if numPlayers ==4
        					currentButton=null; //resets the ActionListener
        					}
@@ -2215,6 +2335,7 @@ public class Game extends JPanel{
         
         class tileClicked implements ActionListener{
         	 JButton currentButton=null;
+        	 Piece tempPiece;
         	 
         	 public void actionPerformed (ActionEvent e){
         		 JButton currentButton= (JButton)e.getSource(); //save which button pressed in variable
@@ -2230,6 +2351,7 @@ public class Game extends JPanel{
         		 
         		 
         		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
+        		 
         		 setCoordinates(currentButton, numPlayers, tile);
         		 if(lastButtonPressed!=null){//if two tiles were clicked
         			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
@@ -2245,9 +2367,11 @@ public class Game extends JPanel{
         					 
         					 //try{
         						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
+        						 tempPiece = findPiece(tempImg);
         						//Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png")); //will have to change image src to variable so it can work with any token
       
         			//When a second tile is clicked, it makes sure it is a valid move for the piece selected
+        			if (whosTurn(numPlayers) == 1) {
         			if(tempImg==Player1.PieceImages[0])	{//pieces can move 3, 4, 5, or 6 tiles
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].move) {
         					swapImage(currentButton, tempImg);
@@ -2294,6 +2418,11 @@ public class Game extends JPanel{
         					//System.out.println(pieceYCoord + "" + pieceXCoord);
         				}
         			}
+        			}//end of if it is player 1's turn
+        			else if(tempPiece.team == 1){
+        				System.out.println("It is not Player 1's turn");
+        			}
+        			if (whosTurn(numPlayers) == 2) {
         			if(tempImg==Player2.PieceImages[0]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[0].move) {
         					swapImage(currentButton, tempImg);
@@ -2339,7 +2468,12 @@ public class Game extends JPanel{
         					//System.out.println(pieceYCoord + "" + pieceXCoord);
         				}
         			}
+        			}//end of if it is player 2's turn
+        			else if(tempPiece.team==2){
+        				System.out.println("It is not Player 2's turn");
+        			}
         			 if(numPlayers==4) {
+        				 if (whosTurn(numPlayers) == 3) {
         				 if(tempImg==Player3.PieceImages[0]) {
              				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[0].move) {
             					swapImage(currentButton, tempImg);
@@ -2384,6 +2518,11 @@ public class Game extends JPanel{
             					//System.out.println(pieceYCoord + "" + pieceXCoord);
             				}
              			}
+        				 }//end of if it is player 3's turn
+        				 else if (tempPiece.team==3){
+        					 System.out.println("It is not Player 3's turn");
+        				 }
+        				 if (whosTurn(numPlayers) == 4) {
               			 if(tempImg==Player4.PieceImages[0]) {
               				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[0].move) {
             					swapImage(currentButton, tempImg);
@@ -2428,7 +2567,11 @@ public class Game extends JPanel{
                 					System.out.println("That is an invalid move, it exceeds that piece's movement range");
                 					//System.out.println(pieceYCoord + "" + pieceXCoord);
                 				}
-        					 }				 				
+        					 }
+        				 }//end of if it is player 4's turn
+        				 else if(tempPiece.team==4){
+        					 System.out.println("It is not Player 4's turn");
+        				 }
         			 }//end of if numPlayers ==4			 
         			        	//}catch (IOException ex){}
         					currentButton=null; //resets the ActionListener
@@ -2528,7 +2671,13 @@ public class Game extends JPanel{
         }
         class endturnAction implements ActionListener{ //placeholder for endturn
         	public void actionPerformed (ActionEvent e) {
-        		System.out.println("Placeholder for endturn function");
+        		if ((turnNumber + turnSeed)%numPlayers == 0) {
+        			System.out.println("Player " + numPlayers + "'s turn ending, it is now Player 1's turn");
+        		}
+        		else {
+        			System.out.println("Player " + ((turnNumber + turnSeed)%numPlayers) + "'s turn ending, it is now Player " + (((turnNumber + turnSeed)%numPlayers)+1) + "'s turn");
+        		}
+        		turnNumber++;
         	}
         }
         concede.addActionListener(new concedeAction()); //add action listeners to menu bar
