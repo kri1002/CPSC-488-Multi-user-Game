@@ -24,8 +24,37 @@ public class Game extends JPanel{
     public static JButton heal =new JButton("Heal"); 
 	public static JButton cancel =new JButton("Cancel Action");
 	
+	public static boolean noOtherActions(Piece testPiece, Player turnPlayer) {//check if the passes player has any othe pieces that have acted this turn
+		int checkVal=0;
+		for (int i=0; i<5; i++) {
+			if (turnPlayer.playersTeam.teamPieces[i] != testPiece) {
+				if (turnPlayer.playersTeam.teamPieces[i].tookAction > 0 || turnPlayer.playersTeam.teamPieces[i].moved > 0) {
+					checkVal++;
+				}
+			}
+		}
+		if (checkVal == 0) {
+			return true; 
+		}
+		else {
+			return false; 
+		}
+	}
+	
 	public static void endTurn(int numPlayers) {
     	int currTurn=whosTurn(numPlayers);
+    	for (int i=0; i<5; i++) {//the end of the turn resets the counters
+    		Player1.playersTeam.teamPieces[i].tookAction=0;
+    		Player1.playersTeam.teamPieces[i].moved=0;
+    		Player2.playersTeam.teamPieces[i].tookAction=0;
+    		Player2.playersTeam.teamPieces[i].moved=0;
+    		if(numPlayers==4) {
+    			Player3.playersTeam.teamPieces[i].tookAction=0;
+        		Player3.playersTeam.teamPieces[i].moved=0;
+        		Player4.playersTeam.teamPieces[i].tookAction=0;
+        		Player4.playersTeam.teamPieces[i].moved=0;
+    		}
+    	}
     	if(numPlayers==2){
     		if(currTurn==1){
     			System.out.println("Player " + currTurn + "'s turn has ended"); //tell user who's turn ended
@@ -590,6 +619,7 @@ public class Game extends JPanel{
    						 tempPiece = findPiece(tempImg);//find the piece that has been clicked
    			if (whosTurn(numPlayers) == 1) {//if it is player 1's turn
    			if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name =="Healer"){ //check only locations 3 &4 bc teams sets healers to those locations & check to make sure piece is healer
+   				if (noOtherActions(Player1.playersTeam.teamPieces[3], Player1) && Player1.playersTeam.teamPieces[3].tookAction<1) {
    				System.out.println("Player 1's " + Player1.playersTeam.teamPieces[3].name + " is healing itself");//message to user
    				Piece targetPiece;//alias for piece being healed
    				targetPiece = Player1.playersTeam.teamPieces[3];//set target piece to the healer
@@ -597,24 +627,34 @@ public class Game extends JPanel{
    					
    				if(tempHp != targetPiece.getMaxHp()){
    				Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal piece
+   				Player1.playersTeam.teamPieces[3].tookAction++;
    					if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the maximum hp
    						targetPiece.currHp=targetPiece.getMaxHp();
    						System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   						if(Player1.playersTeam.teamPieces[3].moved==1) {
    						endTurn(numPlayers); //prints out turn ended & next player
    						turnSeed=2; //set the player to player 2
+   						}
    					}
    					else {
    						System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   						if(Player1.playersTeam.teamPieces[3].moved==1) {
    						endTurn(numPlayers);
    						turnSeed=2;	
+   						}
    					}
    				}
    				else {
    					System.out.println("Player 1's " + targetPiece.name + " is already at full health");
    					}
+   			}//end of action check
+   			else{
+   				System.out.println("Only one piece may move and act once each turn");
+   			}
    			}
    			
    			if(tempImg==Player1.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer"){
+   				if (noOtherActions(Player1.playersTeam.teamPieces[4], Player1) && Player1.playersTeam.teamPieces[4].tookAction<1) {
    				System.out.println("Player 1's " + Player1.playersTeam.teamPieces[4].name + " is healing itself");
    					Piece targetPiece;
    					targetPiece = Player1.playersTeam.teamPieces[4];
@@ -622,22 +662,31 @@ public class Game extends JPanel{
    					
    					if(tempHp != targetPiece.getMaxHp()) {
    						Player1.playersTeam.teamPieces[4].heal(targetPiece);
+   						Player1.playersTeam.teamPieces[4].tookAction++;
    						if(targetPiece.currHp> targetPiece.getMaxHp()) {
    							targetPiece.currHp=targetPiece.getMaxHp();
    							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   							if(Player1.playersTeam.teamPieces[4].moved==1) {
    							endTurn(numPlayers);
    							turnSeed=2;
+   							}
    						}
    							
    						else {
    							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   							if(Player1.playersTeam.teamPieces[4].moved==1) {
    							endTurn(numPlayers);
    							turnSeed=2;
+   							}
    						}
    					}
    				else {
    					System.out.println("Player 1's " + targetPiece.name + " is already at full health");
    					}
+   			}//end of action check
+   			else{
+   	   			System.out.println("Only one piece may move and act once each turn");
+   	   		}
    			}	
    			}//end of if it is player 1's turn
    			else if(tempPiece.team == 1){//if player 1's piece has been clicked and it is not their turn
@@ -646,6 +695,7 @@ public class Game extends JPanel{
    			
    			if (whosTurn(numPlayers) == 2) {
    			if(tempImg==Player2.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer") {
+   				if (noOtherActions(Player2.playersTeam.teamPieces[3], Player2) && Player2.playersTeam.teamPieces[3].tookAction<1) {
    					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[3].name + " is healing itself");
    					Piece targetPiece;
    					targetPiece = Player2.playersTeam.teamPieces[3];
@@ -653,9 +703,11 @@ public class Game extends JPanel{
    					
    					if(tempHp != targetPiece.getMaxHp()) {
    						Player2.playersTeam.teamPieces[3].heal(targetPiece);
+   						Player2.playersTeam.teamPieces[3].tookAction++;
    						if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
    							targetPiece.currHp=targetPiece.getMaxHp();
    							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   						if(Player2.playersTeam.teamPieces[3].moved==1) {
    						endTurn(numPlayers); //prints out turn ended & next player
    						if(numPlayers==2) { //if only 2 players, set next to player 1
    							turnSeed=1;
@@ -664,8 +716,10 @@ public class Game extends JPanel{
    							turnSeed=3; //if 4 players, player 3 will go next
    							}
    						}
+   						}
    						else {
    							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   							if(Player2.playersTeam.teamPieces[3].moved==1) {
    							endTurn(numPlayers);
    	   						if(numPlayers==2) {
    	   							turnSeed=1;
@@ -673,23 +727,31 @@ public class Game extends JPanel{
    	   						else {
    	   							turnSeed=3;
    	   							}
+   							}
    						}
    					}
    			else {
    				System.out.println("Player 2's " + targetPiece.name + " is already at full health");
    				}
+   			}//end of action check
+   			else{
+   	   			System.out.println("Only one piece may move and act once each turn");
+   	   		}
    			}
    			
    			if(tempImg==Player2.PieceImages[4] && Player2.playersTeam.teamPieces[4].name == "Healer") {
+   				if (noOtherActions(Player2.playersTeam.teamPieces[4], Player2) && Player2.playersTeam.teamPieces[4].tookAction<1) {
    				System.out.println("Player 2's " + Player2.playersTeam.teamPieces[4].name + " is healing itself");
    				Piece targetPiece;
    				targetPiece = Player2.playersTeam.teamPieces[4];
    				int tempHp = targetPiece.getCurrHp();
    					if(tempHp != targetPiece.getMaxHp()) {
    						Player2.playersTeam.teamPieces[4].heal(targetPiece);
+   						Player2.playersTeam.teamPieces[4].tookAction++;
    						if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
    							targetPiece.currHp=targetPiece.getMaxHp();
    							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   							if(Player2.playersTeam.teamPieces[4].moved==1) {
    							endTurn(numPlayers);
    	   						if(numPlayers==2) {
    	   							turnSeed=1;
@@ -697,9 +759,11 @@ public class Game extends JPanel{
    	   						else {
    	   							turnSeed=3;
    	   							}
-   						}	
+   							}	
+   						}
    						else {
    							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   							if(Player2.playersTeam.teamPieces[4].moved==1) {
    							endTurn(numPlayers);
    	   						if(numPlayers==2) {
    	   							turnSeed=1;
@@ -707,11 +771,16 @@ public class Game extends JPanel{
    	   						else {
    	   							turnSeed=3;
    	   							}
+   							}
    						}
    					}
    					else {
    						System.out.println("Player 2's " + targetPiece.name + " is already at full health");
    						}
+   			}//end of action check
+   			else{
+   	   			System.out.println("Only one piece may move and act once each turn");
+   	   		}
    			}
    			}//end of if it is player 2's turn
    			else if(tempPiece.team == 2){
@@ -721,6 +790,7 @@ public class Game extends JPanel{
    			 if(numPlayers==4) {
    				if (whosTurn(numPlayers) == 3) {
    				 if(tempImg==Player3.PieceImages[3] && Player3.playersTeam.teamPieces[3].name == "Healer") {
+   					if (noOtherActions(Player3.playersTeam.teamPieces[3], Player3) && Player3.playersTeam.teamPieces[3].tookAction<1) {
          			System.out.println("Player 3's " + Player3.playersTeam.teamPieces[3].name + " is healing itself");
            			Piece targetPiece;	
            			targetPiece = Player3.playersTeam.teamPieces[3];
@@ -728,25 +798,35 @@ public class Game extends JPanel{
            			
            				if(tempHp != targetPiece.getMaxHp()) {
            					Player3.playersTeam.teamPieces[3].heal(targetPiece);
+           					Player3.playersTeam.teamPieces[3].tookAction++;
            					if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
            						targetPiece.currHp=targetPiece.getMaxHp();
            						System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-           					endTurn(numPlayers); //prints out turn ended & next player
-           					turnSeed=4; //sets next player to player 4
+           						if(Player3.playersTeam.teamPieces[3].moved==1) {
+           						endTurn(numPlayers); //prints out turn ended & next player
+           						turnSeed=4; //sets next player to player 4
+           						}
            					}
            							
            					else {
            						System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           						if(Player3.playersTeam.teamPieces[3].moved==1) {
            						endTurn(numPlayers);
                					turnSeed=4;
+           						}
            					}
            				}
            			else {
            				System.out.println("Player 3's " + targetPiece.name + " is already at full health");
            				}
-         			} 
+         			}//end of action check 
+   					else{
+   		   				System.out.println("Only one piece may move and act once each turn");
+   		   			}
+   				 }
    				 
    				 if(tempImg==Player3.PieceImages[4] && Player3.playersTeam.teamPieces[4].name =="Healer") {
+   					if (noOtherActions(Player3.playersTeam.teamPieces[4], Player3) && Player3.playersTeam.teamPieces[4].tookAction<1) {
         			System.out.println("Player 3's " + Player3.playersTeam.teamPieces[4].name + " is healing itself");
            			Piece targetPiece;
            			targetPiece = Player3.playersTeam.teamPieces[4];
@@ -754,23 +834,32 @@ public class Game extends JPanel{
            			
            				if(tempHp != targetPiece.getMaxHp()) {
            					Player3.playersTeam.teamPieces[4].heal(targetPiece);
+           					Player3.playersTeam.teamPieces[4].tookAction++;
            					if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
            						targetPiece.currHp=targetPiece.getMaxHp();
            						System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+           						if(Player3.playersTeam.teamPieces[4].moved==1) {
            						endTurn(numPlayers);
                					turnSeed=4;
+           						}
            					}
            							
            					else {
            						System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           						if(Player3.playersTeam.teamPieces[4].moved==1) {
            						endTurn(numPlayers);
                					turnSeed=4;
+           						}
            					}
            				}
            				else {
            					System.out.println("Player 3's " + targetPiece.name + " is already at full health");
            					}	
-        			}
+        			}//end of action check
+   					else{
+   		   				System.out.println("Only one piece may move and act once each turn");
+   		   			}
+   				 	}
    					}//end of if it is player 3's turn	
    					else if(tempPiece.team == 3){
    						System.out.println("It is not Player 3's turn");
@@ -778,53 +867,73 @@ public class Game extends JPanel{
    				
    				if (whosTurn(numPlayers) == 4) {
   					 if(tempImg==Player4.PieceImages[3] && Player4.playersTeam.teamPieces[3].name=="Healer") {
-           				System.out.println("Player 4's " + Player4.playersTeam.teamPieces[3].name + " is healing itself");
+  						if (noOtherActions(Player4.playersTeam.teamPieces[3], Player4) && Player4.playersTeam.teamPieces[3].tookAction<1) {
+  						System.out.println("Player 4's " + Player4.playersTeam.teamPieces[3].name + " is healing itself");
            				Piece targetPiece;
            				targetPiece = Player4.playersTeam.teamPieces[3];
            				int tempHp = targetPiece.getCurrHp();
            				
            				if(tempHp != targetPiece.getMaxHp()) {
            					Player4.playersTeam.teamPieces[3].heal(targetPiece);
+           					Player4.playersTeam.teamPieces[3].tookAction++;
            					if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
            						targetPiece.currHp=targetPiece.getMaxHp();
            						System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           						if(Player4.playersTeam.teamPieces[3].moved==1) {
            						endTurn(numPlayers);//prints out turn ended & next player
                					turnSeed=1; //sets next player to player 1
+           						}
            					}
            					else {
            						System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           						if(Player4.playersTeam.teamPieces[3].moved==1) {
            						endTurn(numPlayers);
                					turnSeed=1;
+           						}
            					}
            				}
            				else {
            				System.out.println("Player 4's " + targetPiece.name + "is already at full health");
            				}
-   					 }
+   					 }//end of action check
+  					else{
+  			   			System.out.println("Only one piece may move and act once each turn");
+  			   		}
+  					 }
   						
   					 if(tempImg==Player4.PieceImages[4]) {
-           				System.out.println("Player 4's " + Player4.playersTeam.teamPieces[4].name + " is healing itself");
+  						if (noOtherActions(Player4.playersTeam.teamPieces[4], Player4) && Player4.playersTeam.teamPieces[4].tookAction<1) {
+  						System.out.println("Player 4's " + Player4.playersTeam.teamPieces[4].name + " is healing itself");
            				Piece targetPiece;
            				targetPiece = Player4.playersTeam.teamPieces[4];
            				int tempHp = targetPiece.getCurrHp();
            				
            					if(tempHp != targetPiece.getMaxHp()) {
            						Player4.playersTeam.teamPieces[4].heal(targetPiece);
+           						Player4.playersTeam.teamPieces[4].tookAction++;
            						if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
            							targetPiece.currHp=targetPiece.getMaxHp();
            							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+           							if(Player4.playersTeam.teamPieces[4].moved==1) {
            							endTurn(numPlayers);
                    					turnSeed=1;
+           							}
            						}
            						else {
            							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           							if(Player4.playersTeam.teamPieces[4].moved==1) {
            							endTurn(numPlayers);
                    					turnSeed=1;
+           							}
            						}
            					}
            					else {
            						System.out.println("Player 4's " + targetPiece.name + "is already at full health");
            					}			
+  					 }//end of action check
+  						else{
+  			   				System.out.println("Only one piece may move and act once each turn");
+  			   			}
   					 }
    				}//end of if it is player 4's turn
    				else if(tempPiece.team == 4){
@@ -853,6 +962,7 @@ public class Game extends JPanel{
        			if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name =="Healer"){//checks 3& 4 bc teams only set those as healers & make sure it is a healer
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].range) {
        					//This checks for the range of the healing piece^
+       				if (noOtherActions(Player1.playersTeam.teamPieces[3], Player1) && Player1.playersTeam.teamPieces[3].tookAction<1) {
        				if (currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] || currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[4]){
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[3].name + " is healing");//message to user
        					Piece targetPiece;//alias for piece being healed
@@ -862,16 +972,21 @@ public class Game extends JPanel{
        							int tempHp = targetPiece.getCurrHp();//save hp it currently has
        							if(tempHp != targetPiece.getMaxHp()){
        							Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       							Player1.playersTeam.teamPieces[3].tookAction++;
        							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
        								targetPiece.currHp=targetPiece.getMaxHp();
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       							endTurn(numPlayers); //prints out turn ended & next player
-       							turnSeed=2; //sets next player to player 2
+       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       								endTurn(numPlayers); //prints out turn ended & next player
+       								turnSeed=2; //sets next player to player 2
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       							if(Player1.playersTeam.teamPieces[3].moved==1) {
        							endTurn(numPlayers);
        							turnSeed=2;
+       							}
        							}
        							}
        							else {
@@ -883,6 +998,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
        				}
+       			}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        			}//end of range check
        			else {
        				System.out.println("That is an invalid heal, cannot a piece further than you healer's range");
@@ -891,6 +1010,7 @@ public class Game extends JPanel{
        			
        			if(tempImg==Player1.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer"){
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].range) {
+       				if (noOtherActions(Player1.playersTeam.teamPieces[4], Player1) && Player1.playersTeam.teamPieces[4].tookAction<1) {
        				if(currentButton.getIcon()==Player1.PieceImages[0] && currentButton.getIcon()==Player1.PieceImages[1] && currentButton.getIcon()==Player1.PieceImages[2] && currentButton.getIcon()==Player1.PieceImages[3]){
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[2].name + " is healing");
        					Piece targetPiece;
@@ -901,16 +1021,21 @@ public class Game extends JPanel{
        							
        							if(tempHp != targetPiece.getMaxHp()) {
        							Player1.playersTeam.teamPieces[4].heal(targetPiece);
+       							Player1.playersTeam.teamPieces[4].tookAction++;
        							if(targetPiece.currHp> targetPiece.getMaxHp()) {
        								targetPiece.currHp=targetPiece.getMaxHp();
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								if(Player1.playersTeam.teamPieces[4].moved==1) {
        								endTurn(numPlayers);
            							turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player1.playersTeam.teamPieces[4].moved==1) {
        							endTurn(numPlayers);
        							turnSeed=2;
+       							}
        							}
        							}
        							else {
@@ -922,6 +1047,10 @@ public class Game extends JPanel{
        				else{
        					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid heal, cannot heal piece further than healer's range");
@@ -935,6 +1064,7 @@ public class Game extends JPanel{
        			if (whosTurn(numPlayers) == 2) {
        			if(tempImg==Player2.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer") {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[3].range) {
+       				if (noOtherActions(Player2.playersTeam.teamPieces[3], Player2) && Player2.playersTeam.teamPieces[3].tookAction<1) {
        				if (currentButton.getIcon()==Player2.PieceImages[0] || currentButton.getIcon()==Player2.PieceImages[1] || currentButton.getIcon()!=Player2.PieceImages[2] || currentButton.getIcon()!=Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[3].name + " is healing");
        					Piece targetPiece;
@@ -944,26 +1074,31 @@ public class Game extends JPanel{
        							int tempHp = targetPiece.getCurrHp();
        							if(tempHp != targetPiece.getMaxHp()) {
        							Player2.playersTeam.teamPieces[3].heal(targetPiece);
+       							Player2.playersTeam.teamPieces[3].tookAction++;
        							if(targetPiece.currHp> targetPiece.getMaxHp()) {
        								targetPiece.currHp=targetPiece.getMaxHp();
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       							endTurn(numPlayers); //prints out turn ended & next player
-       							if(numPlayers==2){ //if 2 players, set next to player 1
-       								turnSeed=1;
-       							}
-       							else { //if 4 players, set next to player 3
-       								turnSeed=3; 
-       							}
+       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+       								endTurn(numPlayers); //prints out turn ended & next player
+       								if(numPlayers==2){ //if 2 players, set next to player 1
+       									turnSeed=1;
+       								}
+       								else { //if 4 players, set next to player 3
+       									turnSeed=3; 
+       								}
+       								}
        							}
        							
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[3].moved==1) {
        							endTurn(numPlayers);
        							if(numPlayers==2){
        								turnSeed=1;
        							}
        							else {
        								turnSeed=3;
+       							}
        							}
        							}
        						}
@@ -976,6 +1111,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid heal, cannot heal piece further than healer's range");
@@ -984,6 +1123,7 @@ public class Game extends JPanel{
        			
        			if(tempImg==Player2.PieceImages[4] && Player2.playersTeam.teamPieces[4].name == "Healer") {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[4].range) {
+       				if (noOtherActions(Player2.playersTeam.teamPieces[4], Player2) && Player2.playersTeam.teamPieces[4].tookAction<1) {
        				if (currentButton.getIcon()==Player2.PieceImages[0] || currentButton.getIcon()==Player2.PieceImages[1] || currentButton.getIcon()==Player2.PieceImages[2] || currentButton.getIcon()==Player2.PieceImages[3]){
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[4].name + " is healing");
        					Piece targetPiece;
@@ -993,9 +1133,11 @@ public class Game extends JPanel{
        							int tempHp = targetPiece.getCurrHp();
        							if(tempHp != targetPiece.getMaxHp()) {
        							Player2.playersTeam.teamPieces[4].heal(targetPiece);
+       							Player2.playersTeam.teamPieces[4].tookAction++;
        							if(targetPiece.currHp> targetPiece.getMaxHp()) {
        								targetPiece.currHp=targetPiece.getMaxHp();
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       								if(Player2.playersTeam.teamPieces[4].moved==1) {
        								endTurn(numPlayers);
            							if(numPlayers==2){
            								turnSeed=1;
@@ -1003,16 +1145,19 @@ public class Game extends JPanel{
            							else {
            								turnSeed=3;
            							}
+       								}
        							}
        							
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[4].moved==1) {
        							endTurn(numPlayers);
        							if(numPlayers==2){
        								turnSeed=1;
        							}
        							else {
        								turnSeed=3;
+       							}
        							}
        							}
        						}
@@ -1025,6 +1170,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid heal, cannot heal piece further than your healer's range");
@@ -1039,7 +1188,8 @@ public class Game extends JPanel{
        				if (whosTurn(numPlayers) == 3) {
        				 if(tempImg==Player3.PieceImages[3] && Player3.playersTeam.teamPieces[3].name == "Healer") {
        					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[3].range) {
-             				if (currentButton.getIcon()==Player3.PieceImages[0] || currentButton.getIcon()==Player3.PieceImages[1] || currentButton.getIcon()==Player3.PieceImages[2] || currentButton.getIcon()==Player3.PieceImages[4]) {
+       						if (noOtherActions(Player3.playersTeam.teamPieces[3], Player3) && Player3.playersTeam.teamPieces[3].tookAction<1) {
+       						if (currentButton.getIcon()==Player3.PieceImages[0] || currentButton.getIcon()==Player3.PieceImages[1] || currentButton.getIcon()==Player3.PieceImages[2] || currentButton.getIcon()==Player3.PieceImages[4]) {
              					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[3].name + " is healing");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -1048,16 +1198,21 @@ public class Game extends JPanel{
                							int tempHp = targetPiece.getCurrHp();
                							if(tempHp != targetPiece.getMaxHp()) {
                							Player3.playersTeam.teamPieces[3].heal(targetPiece);
+               							Player3.playersTeam.teamPieces[3].tookAction++;
                							if(targetPiece.currHp> targetPiece.getMaxHp()) {
                								targetPiece.currHp=targetPiece.getMaxHp();
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               							endTurn(numPlayers); //prints out turn ended & next player
-               							turnSeed=4; //sets next player to player 4
+               								if(Player3.playersTeam.teamPieces[3].moved==1) {
+               								endTurn(numPlayers); //prints out turn ended & next player
+               								turnSeed=4; //sets next player to player 4
+               								}
                							}
                							else {
-               							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               							endTurn(numPlayers);
-               							turnSeed=4;
+               								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               								if(Player3.playersTeam.teamPieces[3].moved==1) {
+               								endTurn(numPlayers);
+               								turnSeed=4;
+               								}
                							}
                					}
                							else {
@@ -1069,6 +1224,10 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
            				}
+       					}//end of action check
+       						else{
+       			   				System.out.println("Only one piece may move and act once each turn");
+       			   			}
        					}//end of range check
        					else {
        						System.out.println("That is an invalid heal, cannot heal piece further than your healer's range");
@@ -1077,7 +1236,8 @@ public class Game extends JPanel{
        				 
        				 if(tempImg==Player3.PieceImages[4] && Player3.playersTeam.teamPieces[4].name =="Healer") {
        					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[4].range) {
-            				if (currentButton.getIcon()==Player3.PieceImages[0] || currentButton.getIcon()==Player3.PieceImages[1] || currentButton.getIcon()!=Player3.PieceImages[2] || currentButton.getIcon()==Player3.PieceImages[3]) {
+       						if (noOtherActions(Player3.playersTeam.teamPieces[4], Player3) && Player3.playersTeam.teamPieces[4].tookAction<1) {
+       						if (currentButton.getIcon()==Player3.PieceImages[0] || currentButton.getIcon()==Player3.PieceImages[1] || currentButton.getIcon()!=Player3.PieceImages[2] || currentButton.getIcon()==Player3.PieceImages[3]) {
             					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[4].name + " is healing");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -1086,17 +1246,22 @@ public class Game extends JPanel{
                							int tempHp = targetPiece.getCurrHp();
                							if(tempHp != targetPiece.getMaxHp()) {
                							Player3.playersTeam.teamPieces[4].heal(targetPiece);
+               							Player3.playersTeam.teamPieces[4].tookAction++;
                							if(targetPiece.currHp> targetPiece.getMaxHp()) {
                								targetPiece.currHp=targetPiece.getMaxHp();
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								if(Player3.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                    							turnSeed=4;
+               								}
                							}
                							
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
                							turnSeed=4;
+               							}
                							}
                						}
                							else {
@@ -1108,6 +1273,10 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
            				}
+       					}//end of action check
+       						else{
+       			   				System.out.println("Only one piece may move and act once each turn");
+       			   			}
        					}//end of range check
        					else {
        						System.out.println("That is an invalid heal, cannot heal piece further than your healer's range");
@@ -1121,7 +1290,8 @@ public class Game extends JPanel{
        					if (whosTurn(numPlayers) == 4) {
       					 if(tempImg==Player4.PieceImages[3] && Player4.playersTeam.teamPieces[3].name=="Healer") {
       						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[3].range) {
-               				if (currentButton.getIcon()==Player4.PieceImages[0] || currentButton.getIcon()==Player4.PieceImages[1] || currentButton.getIcon()==Player4.PieceImages[2] || currentButton.getIcon()==Player4.PieceImages[4]){
+      						if (noOtherActions(Player4.playersTeam.teamPieces[3], Player4) && Player4.playersTeam.teamPieces[3].tookAction<1) {
+      						if (currentButton.getIcon()==Player4.PieceImages[0] || currentButton.getIcon()==Player4.PieceImages[1] || currentButton.getIcon()==Player4.PieceImages[2] || currentButton.getIcon()==Player4.PieceImages[4]){
                					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[3].name + " is healing");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -1130,17 +1300,22 @@ public class Game extends JPanel{
                							int tempHp = targetPiece.getCurrHp();
                							if(tempHp != targetPiece.getMaxHp()) {
                							Player4.playersTeam.teamPieces[3].heal(targetPiece);
+               							Player4.playersTeam.teamPieces[3].tookAction++;
                							if(targetPiece.currHp> targetPiece.getMaxHp()) {
                								targetPiece.currHp=targetPiece.getMaxHp();
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               								if(Player4.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers); //prints out turn ended & next player
                    							turnSeed=1; //sets next player to player 1
+               								}
                							}
                						
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[3].moved==1) {
                							endTurn(numPlayers);
                							turnSeed=1;
+               							}
                							}
                						}
                							else {
@@ -1152,6 +1327,10 @@ public class Game extends JPanel{
                				else {
                					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
                				} 
+      						}//end of action check
+      						else{
+      			   				System.out.println("Only one piece may move and act once each turn");
+      			   			}
       						}//end of range check
       						else {
       							System.out.println("That is an invalid heal, cannot heal piece further than your healer's range");
@@ -1160,7 +1339,8 @@ public class Game extends JPanel{
       					 
       					 if(tempImg==Player4.PieceImages[4]) {
       						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[4].range) {
-               				if (currentButton.getIcon()==Player4.PieceImages[0] || currentButton.getIcon()==Player4.PieceImages[1] || currentButton.getIcon()==Player4.PieceImages[2] || currentButton.getIcon()==Player4.PieceImages[3]){
+      						if (noOtherActions(Player4.playersTeam.teamPieces[4], Player4) && Player4.playersTeam.teamPieces[4].tookAction<1) {
+      						if (currentButton.getIcon()==Player4.PieceImages[0] || currentButton.getIcon()==Player4.PieceImages[1] || currentButton.getIcon()==Player4.PieceImages[2] || currentButton.getIcon()==Player4.PieceImages[3]){
                					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[4].name + " is healing");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -1169,16 +1349,21 @@ public class Game extends JPanel{
                							int tempHp = targetPiece.getCurrHp();
                							if(targetPiece.currHp> targetPiece.getMaxHp()) {
                							Player4.playersTeam.teamPieces[4].heal(targetPiece);
+               							Player4.playersTeam.teamPieces[4].tookAction++;
                							if(targetPiece.currHp> targetPiece.getMaxHp()) {
                								targetPiece.currHp=targetPiece.getMaxHp();
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								if(Player4.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                    							turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
                							turnSeed=1;
+               							}
                							}
                						}
                						}
@@ -1187,6 +1372,10 @@ public class Game extends JPanel{
                				else {
                					System.out.println("That is an invalid heal, cannot heal the other team's game pieces");
                				}
+      						}//end of action check
+      						else{
+      			   				System.out.println("Only one piece may move and act once each turn");
+      			   			}
       						}//end of range check
       						else {
       							System.out.println("That is an invalid heal, cannot heal piece further than your healer's range");
@@ -1234,6 +1423,7 @@ public class Game extends JPanel{
        			//check to make sure piece to be attacked isn't the player's pieces 
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].range) {
        					//This checks for the range of the attacking piece^
+       				if (noOtherActions(Player1.playersTeam.teamPieces[0], Player1) && Player1.playersTeam.teamPieces[0].tookAction<1) {
        				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[0].name + " attacks!");//message to user
        					Piece targetPiece;//alias for piece being attacked
@@ -1242,17 +1432,22 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
        							int tempHp = targetPiece.getCurrHp();//save hp it currently has
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);//make attack
+       							Player1.playersTeam.teamPieces[0].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers); //prints out turn ended & next player
-       								turnSeed=2; //sets next to player 2
+       								if(Player1.playersTeam.teamPieces[0].moved==1) {
+       									endTurn(numPlayers); //prints out turn ended & next player
+           								turnSeed=2; //sets next to player 2
+       								}
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[0].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        							}
        					}
@@ -1262,17 +1457,22 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[0].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[0].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[0].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1281,17 +1481,22 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[0].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[0].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        								}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[0].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1300,6 +1505,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        			}//end of range check
        			else {
        				System.out.println("That is an invalid attack, cannot a piece further than your piece's range");
@@ -1307,6 +1516,7 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player1.PieceImages[1]){
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[1].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[1].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[1].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[1].range) {
+       				if (noOtherActions(Player1.playersTeam.teamPieces[1], Player1) && Player1.playersTeam.teamPieces[1].tookAction<1) {
        				if (currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[1].name + " attacks!");
        					Piece targetPiece;
@@ -1315,17 +1525,22 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[1].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[1].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[1].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1335,17 +1550,22 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[1].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[1].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        								}
        							else { 
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[1].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        						}
        					}
@@ -1354,17 +1574,22 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[1].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[1].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[1].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        							}
        					}
@@ -1373,6 +1598,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("that is an invalid attack, cannot attack piece further than your piece's range");
@@ -1380,6 +1609,7 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player1.PieceImages[2]){
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[2].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[2].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[2].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[2].range) {
+       				if (noOtherActions(Player1.playersTeam.teamPieces[2], Player1) && Player1.playersTeam.teamPieces[2].tookAction<1) {
        				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[2].name + " attacks!");
        					Piece targetPiece;
@@ -1388,17 +1618,22 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[2].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[2].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[2].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1408,17 +1643,22 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[2].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[2].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[2].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1427,17 +1667,22 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[2].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[2].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[2].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1446,6 +1691,10 @@ public class Game extends JPanel{
        				else{
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -1453,6 +1702,7 @@ public class Game extends JPanel{
        			}			 
        			if(tempImg==Player1.PieceImages[3]) {
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].range) {
+       				if (noOtherActions(Player1.playersTeam.teamPieces[3], Player1) && Player1.playersTeam.teamPieces[3].tookAction<1) {
        				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[4]) {
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[3].name + " attacks!");
        					Piece targetPiece;
@@ -1461,17 +1711,22 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[3].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1481,17 +1736,22 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[3].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1500,17 +1760,22 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[3].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1519,6 +1784,10 @@ public class Game extends JPanel{
        				else{
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -1527,6 +1796,7 @@ public class Game extends JPanel{
        			
        			if(tempImg==Player1.PieceImages[4]) {
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].range) {
+       				if (noOtherActions(Player1.playersTeam.teamPieces[4], Player1) && Player1.playersTeam.teamPieces[4].tookAction<1) {
        				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[0]) {
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[4].name + " attacks!");
        					Piece targetPiece;
@@ -1535,17 +1805,22 @@ public class Game extends JPanel{
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[4].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1555,17 +1830,22 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[4].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        							}
        					}
@@ -1574,17 +1854,22 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       							Player1.playersTeam.teamPieces[4].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers);
-       								turnSeed=2;
+       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+       									endTurn(numPlayers);
+       									turnSeed=2;
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       							endTurn(numPlayers);
-   								turnSeed=2;
+       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+       								endTurn(numPlayers);
+       								turnSeed=2;
+       							}
        							}
        						}
        					}
@@ -1593,6 +1878,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -1605,6 +1894,7 @@ public class Game extends JPanel{
        			if (whosTurn(numPlayers) == 2) {
        			if(tempImg==Player2.PieceImages[0]) {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[0].range) {
+       				if (noOtherActions(Player2.playersTeam.teamPieces[0], Player2) && Player2.playersTeam.teamPieces[0].tookAction<1) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[0].name + " attacks!");
        					Piece targetPiece;
@@ -1613,20 +1903,24 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[0].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
-       								endTurn(numPlayers); //prints out turn ended & next player
-       								if(numPlayers==2){ //if 2 players, set next to player 1
-       								turnSeed=1;	
-       								}
-       								else { //if 4 players, set next to player 3
+       								if(Player2.playersTeam.teamPieces[0].moved==1) {
+       									endTurn(numPlayers); //prints out turn ended & next player
+       									if(numPlayers==2){ //if 2 players, set next to player 1
+       										turnSeed=1;	
+       									}
+       									else { //if 4 players, set next to player 3
        									turnSeed=3;
+       									}
        								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[0].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1634,6 +1928,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -1643,10 +1938,12 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[0].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[0].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1654,9 +1951,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[0].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1664,6 +1963,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -1672,10 +1972,12 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[0].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[0].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1683,9 +1985,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[0].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1694,6 +1998,7 @@ public class Game extends JPanel{
    									turnSeed=3;
    								}
        							}
+       							}
        						}
        					}
        					}
@@ -1701,6 +2006,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -1708,6 +2017,7 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player2.PieceImages[1]) {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[1].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[1].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[1].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[1].range) {
+       				if (noOtherActions(Player2.playersTeam.teamPieces[1], Player2) && Player2.playersTeam.teamPieces[1].tookAction<1) {
        				if (currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[1].name + " attacks!");
        					Piece targetPiece;
@@ -1716,10 +2026,12 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[1].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[1].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1727,9 +2039,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[1].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1737,6 +2051,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -1746,10 +2061,12 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[1].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[1].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1757,9 +2074,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[1].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1767,6 +2086,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -1775,10 +2095,12 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[1].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[1].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1786,9 +2108,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[1].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1797,6 +2121,7 @@ public class Game extends JPanel{
    									turnSeed=3;
    								}
        							}
+       							}
        						}
        					}
        					}
@@ -1804,6 +2129,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -1811,6 +2140,7 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player2.PieceImages[2]) {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[2].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[2].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[2].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[2].range) {
+       				if (noOtherActions(Player2.playersTeam.teamPieces[2], Player2) && Player2.playersTeam.teamPieces[2].tookAction<1) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[2].name + " attacks!");
        					Piece targetPiece;
@@ -1819,10 +2149,12 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[2].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[2].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1830,9 +2162,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[2].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1840,6 +2174,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -1849,10 +2184,12 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[2].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[2].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1860,9 +2197,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[2].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1870,6 +2209,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -1878,10 +2218,12 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[2].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[2].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1889,9 +2231,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[2].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1900,6 +2244,7 @@ public class Game extends JPanel{
    									turnSeed=3;
    								}
        							}
+       							}
        						}
        					}
        					}
@@ -1907,6 +2252,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -1914,6 +2263,7 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player2.PieceImages[3]) {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[3].range) {
+       				if (noOtherActions(Player2.playersTeam.teamPieces[3], Player2) && Player2.playersTeam.teamPieces[3].tookAction<1) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[0] && currentButton.getIcon()!=Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[3].name + " attacks!");
        					Piece targetPiece;
@@ -1922,10 +2272,12 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[3].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[3].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1933,9 +2285,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[3].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1943,6 +2297,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -1952,10 +2307,12 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[3].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[3].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1963,9 +2320,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[3].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -1973,6 +2332,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -1981,10 +2341,12 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[3].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[3].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -1992,9 +2354,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[3].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -2003,6 +2367,7 @@ public class Game extends JPanel{
    									turnSeed=3;
    								}
        							}
+       							}
        						}
        					}
        					}
@@ -2010,6 +2375,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2017,6 +2386,7 @@ public class Game extends JPanel{
        			}
        			if(tempImg==Player2.PieceImages[4]) {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[4].range) {
+       				if (noOtherActions(Player2.playersTeam.teamPieces[4], Player2) && Player2.playersTeam.teamPieces[4].tookAction<1) {
        				if (currentButton.getIcon()!=Player2.PieceImages[1] && currentButton.getIcon()!=Player2.PieceImages[2] && currentButton.getIcon()!=Player2.PieceImages[3] && currentButton.getIcon()!=Player2.PieceImages[0]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[4].name + " attacks!");
        					Piece targetPiece;
@@ -2025,10 +2395,12 @@ public class Game extends JPanel{
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[4].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[4].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -2036,9 +2408,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[4].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -2046,6 +2420,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -2055,10 +2430,12 @@ public class Game extends JPanel{
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[4].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[4].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -2066,8 +2443,10 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[4].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -2075,6 +2454,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -2082,10 +2462,12 @@ public class Game extends JPanel{
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       							Player2.playersTeam.teamPieces[4].tookAction++;
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								if(Player2.playersTeam.teamPieces[4].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
        								turnSeed=1;	
@@ -2093,9 +2475,11 @@ public class Game extends JPanel{
        								else {
        									turnSeed=3;
        								}
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							if(Player2.playersTeam.teamPieces[4].moved==1) {
        							endTurn(numPlayers);
    								if(numPlayers==2){
    								turnSeed=1;	
@@ -2103,6 +2487,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        						}
        					}
@@ -2111,6 +2496,10 @@ public class Game extends JPanel{
        				else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
+       				}//end of action check
+       				else{
+       	   				System.out.println("Only one piece may move and act once each turn");
+       	   			}
        				}//end of range check
        				else {
        					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2124,7 +2513,8 @@ public class Game extends JPanel{
        				if (whosTurn(numPlayers) == 3) {
        				 if(tempImg==Player3.PieceImages[0]) {
        					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[0].range) {
-            				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
+       						if (noOtherActions(Player3.playersTeam.teamPieces[0], Player3) && Player3.playersTeam.teamPieces[0].tookAction<1) {
+       						if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
             					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[0].name + " attacks!");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -2132,17 +2522,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[0].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers); //prints out turn ended & next player
                								turnSeed=4; //set next to player 4
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[0].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2151,17 +2546,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[0].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[0].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2170,17 +2570,22 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[0].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[0].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2188,6 +2593,10 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+       					}//end of action check
+       						else{
+       			   				System.out.println("Only one piece may move and act once each turn");
+       			   			}
        					}//end of range check
        					else {
        						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2195,7 +2604,8 @@ public class Game extends JPanel{
             			}
        				 if(tempImg==Player3.PieceImages[1]) {
        					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[1].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[1].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[1].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[1].range) {
-             				if (currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
+       						if (noOtherActions(Player3.playersTeam.teamPieces[1], Player3) && Player3.playersTeam.teamPieces[1].tookAction<1) {
+       						if (currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]) {
              					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[1].name + " attacks!");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -2203,17 +2613,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[1].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[1].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2222,17 +2637,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[1].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[1].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2241,17 +2661,22 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[1].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[1].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                					}
                						}	
@@ -2259,6 +2684,10 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+       					}//end of action check
+       						else{
+       			   				System.out.println("Only one piece may move and act once each turn");
+       			   			}
        					}//end of range check
        					else {
        						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2266,7 +2695,8 @@ public class Game extends JPanel{
              			}
        				 if(tempImg==Player3.PieceImages[2]) {
        					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[2].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[2].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[2].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[2].range) {
-             				if(currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]){
+       						if (noOtherActions(Player3.playersTeam.teamPieces[2], Player3) && Player3.playersTeam.teamPieces[2].tookAction<1) {
+       						if(currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[4]){
              					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[2].name + " attacks!");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -2274,17 +2704,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[2].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[2].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2293,17 +2728,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[2].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[2].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2312,17 +2752,22 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[2].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[2].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2330,6 +2775,10 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+       					}//end of action check
+       						else{
+       			   				System.out.println("Only one piece may move and act once each turn");
+       			   			}
        					}//end of range check
        					else {
        						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2337,7 +2786,8 @@ public class Game extends JPanel{
              			}
        				 if(tempImg==Player3.PieceImages[3]) {
        					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[3].range) {
-             				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[4]) {
+       						if (noOtherActions(Player3.playersTeam.teamPieces[3], Player3) && Player3.playersTeam.teamPieces[3].tookAction<1) {
+       						if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[0] && currentButton.getIcon()!=Player3.PieceImages[4]) {
              					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[3].name + " attacks!");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -2345,17 +2795,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[3].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[3].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                					}
                					}
@@ -2364,17 +2819,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[3].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[3].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2383,17 +2843,22 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[3].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[3].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2402,6 +2867,10 @@ public class Game extends JPanel{
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            					
            				}
+       					}//end of action check
+       						else{
+       			   				System.out.println("Only one piece may move and act once each turn");
+       			   			}
        					}//end of range check
        					else {
        						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2409,7 +2878,8 @@ public class Game extends JPanel{
              			} 
        				 if(tempImg==Player3.PieceImages[4]) {
        					if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[4].range) {
-            				if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[0]) {
+       						if (noOtherActions(Player3.playersTeam.teamPieces[4], Player3) && Player3.playersTeam.teamPieces[4].tookAction<1) {
+       						if (currentButton.getIcon()!=Player3.PieceImages[1] && currentButton.getIcon()!=Player3.PieceImages[2] && currentButton.getIcon()!=Player3.PieceImages[3] && currentButton.getIcon()!=Player3.PieceImages[0]) {
             					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[4].name + " attacks!");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -2417,17 +2887,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[4].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2436,17 +2911,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[4].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                							}
                					}
@@ -2455,17 +2935,22 @@ public class Game extends JPanel{
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+               							Player3.playersTeam.teamPieces[4].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player3.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
+               								}
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player3.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                						}
                					}
@@ -2473,6 +2958,10 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+       					}//end of action check
+       						else{
+       			   				System.out.println("Only one piece may move and act once each turn");
+       			   			}
        					}//end of range check
        					else {
        						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2485,6 +2974,7 @@ public class Game extends JPanel{
        					if (whosTurn(numPlayers) == 4) {
              			 if(tempImg==Player4.PieceImages[0]) {
              				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[0].range) {
+             				if (noOtherActions(Player4.playersTeam.teamPieces[0], Player4) && Player4.playersTeam.teamPieces[0].tookAction<1) {
              				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]){
              					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[0].name + " attacks!");
                					Piece targetPiece;
@@ -2493,17 +2983,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[0].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers); //prints out turn ended & next player
                								turnSeed=1; //sets next to player 1
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[0].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2512,17 +3007,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[0].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[0].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2531,17 +3031,22 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[0].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[0].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2549,6 +3054,10 @@ public class Game extends JPanel{
            				else {
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            				}
+             			}//end of action check
+             				else{
+             	   				System.out.println("Only one piece may move and act once each turn");
+             	   			}
              			}//end of range check
              			else {
              				System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");	
@@ -2556,7 +3065,8 @@ public class Game extends JPanel{
              			}
       					 if(tempImg==Player4.PieceImages[1]) {
       						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[1].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[1].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[1].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[1].range) {
-              				if(currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
+      						if (noOtherActions(Player4.playersTeam.teamPieces[1], Player4) && Player4.playersTeam.teamPieces[1].tookAction<1) {
+      						if(currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
               					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[1].name + " attacks!");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -2564,17 +3074,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[1].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[1].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2583,17 +3098,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[1].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[1].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2602,17 +3122,22 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[1].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[1].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2621,6 +3146,10 @@ public class Game extends JPanel{
            					System.out.println("That is an invalid attack, cannot attack your own game pieces");
            					
            				}
+      					}//end of action check
+      						else{
+      			   				System.out.println("Only one piece may move and act once each turn");
+      			   			}
       					}//end of range check
       					else {
       						System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2628,7 +3157,8 @@ public class Game extends JPanel{
       					 }
       					 if(tempImg==Player4.PieceImages[2]) {
       						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[2].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[2].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[2].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[2].range) {
-               				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
+      						if (noOtherActions(Player4.playersTeam.teamPieces[2], Player4) && Player4.playersTeam.teamPieces[2].tookAction<1) {
+      						if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[4]) {
                					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[2].name + " attacks!");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -2636,17 +3166,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[2].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[2].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2655,17 +3190,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[2].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[2].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2674,17 +3214,22 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[2].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[2].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2692,6 +3237,10 @@ public class Game extends JPanel{
                				else {
                					System.out.println("That is an invalid attack, cannot attack your own game pieces");
                				}
+      						}//end of action check
+      						else{
+      			   				System.out.println("Only one piece may move and act once each turn");
+      			   			}
       						}//end of range check
       						else {
       							System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2699,7 +3248,8 @@ public class Game extends JPanel{
        					 }
       					 if(tempImg==Player4.PieceImages[3]) {
       						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[3].range) {
-               				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[4]) {
+      						if (noOtherActions(Player4.playersTeam.teamPieces[3], Player4) && Player4.playersTeam.teamPieces[3].tookAction<1) {
+      						if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[0] && currentButton.getIcon()!=Player4.PieceImages[4]) {
                					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[3].name + " attacks!");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -2707,17 +3257,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[3].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[3].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2726,17 +3281,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[3].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[3].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2745,17 +3305,22 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[3].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[3].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2763,6 +3328,10 @@ public class Game extends JPanel{
                				else {
                					System.out.println("That is an invalid attack, cannot attack your own game pieces");
                				} 
+      						}//end of action check
+      						else{
+      			   				System.out.println("Only one piece may move and act once each turn");
+      			   			}
       						}//end of range check
       						else {
       							System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2770,7 +3339,8 @@ public class Game extends JPanel{
        					 }
       					 if(tempImg==Player4.PieceImages[4]) {
       						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[4].range) {
-               				if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[0]) {
+      						if (noOtherActions(Player4.playersTeam.teamPieces[4], Player4) && Player4.playersTeam.teamPieces[4].tookAction<1) {
+      						if (currentButton.getIcon()!=Player4.PieceImages[1] && currentButton.getIcon()!=Player4.PieceImages[2] && currentButton.getIcon()!=Player4.PieceImages[3] && currentButton.getIcon()!=Player4.PieceImages[0]) {
                					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[4].name + " attacks!");
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
@@ -2778,17 +3348,22 @@ public class Game extends JPanel{
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[4].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2797,17 +3372,22 @@ public class Game extends JPanel{
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[4].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2816,17 +3396,22 @@ public class Game extends JPanel{
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+               							Player4.playersTeam.teamPieces[4].tookAction++;
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								if(Player4.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
+               								}
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               							if(Player4.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                						}
                					}
@@ -2834,6 +3419,10 @@ public class Game extends JPanel{
                				else {
                					System.out.println("That is an invalid attack, cannot attack your own game pieces");
                				}
+      						}//end of action check
+      						else{
+      			   				System.out.println("Only one piece may move and act once each turn");
+      			   			}
       						}//end of range check
       						else {
       							System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
@@ -2893,9 +3482,17 @@ public class Game extends JPanel{
         			if (whosTurn(numPlayers) == 1) {
         			if(tempImg==Player1.PieceImages[0])	{//pieces can move 3, 4, 5, or 6 tiles
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].move) {
-        					swapImage(currentButton, tempImg);
-        					endTurn(numPlayers); //prints out turn ended & next player
-								turnSeed=2; //sets next to player 2
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
+        						swapImage(currentButton, tempImg);
+        						tempPiece.moved++;
+        						if(tempPiece.tookAction==1) {
+        							endTurn(numPlayers); //prints out turn ended & next player
+    								turnSeed=2; //sets next to player 2
+        						}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2904,9 +3501,17 @@ public class Game extends JPanel{
         			}
         			if(tempImg==Player1.PieceImages[1]) {
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[1].move) {
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
         					swapImage(currentButton, tempImg);
-        					endTurn(numPlayers);
-							turnSeed=2;
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
+        						endTurn(numPlayers);
+								turnSeed=2;
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2915,9 +3520,17 @@ public class Game extends JPanel{
         			}
         			if(tempImg==Player1.PieceImages[2]) {
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[2].move) {
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
         					swapImage(currentButton, tempImg);
-        					endTurn(numPlayers);
-							turnSeed=2;
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
+        						endTurn(numPlayers);
+        						turnSeed=2;
+        					}
+        				}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2926,9 +3539,17 @@ public class Game extends JPanel{
         			}			 
         			if(tempImg==Player1.PieceImages[3]) {
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].move) {
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
         					swapImage(currentButton, tempImg);
-        					endTurn(numPlayers);
-							turnSeed=2;
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
+        						endTurn(numPlayers);
+        						turnSeed=2;
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2937,9 +3558,17 @@ public class Game extends JPanel{
         			}		
         			if(tempImg==Player1.PieceImages[4]) {
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].move) {
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
         					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
         					endTurn(numPlayers);
 							turnSeed=2;
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2953,7 +3582,10 @@ public class Game extends JPanel{
         			if (whosTurn(numPlayers) == 2) {
         			if(tempImg==Player2.PieceImages[0]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[0].move) {
+        					if (noOtherActions(tempPiece, Player2) && tempPiece.moved<1) {
         					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
         					endTurn(numPlayers); //prints out turn ended & next player
         					if(numPlayers==2){ //if 2 players, set next to player 1
         						turnSeed=1;
@@ -2961,6 +3593,11 @@ public class Game extends JPanel{
         					else { //if 4 players, set next to player 3
         						turnSeed=3;
         					}
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2969,7 +3606,10 @@ public class Game extends JPanel{
         			}
         			if(tempImg==Player2.PieceImages[1]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[1].move) {
+        					if (noOtherActions(tempPiece, Player2) && tempPiece.moved<1) {
         					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
         					endTurn(numPlayers);
         					if(numPlayers==2){
         						turnSeed=1;
@@ -2977,6 +3617,11 @@ public class Game extends JPanel{
         					else {
         						turnSeed=3;
         					}
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2985,7 +3630,10 @@ public class Game extends JPanel{
         			}
         			if(tempImg==Player2.PieceImages[2]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[2].move) {
+        					if (noOtherActions(tempPiece, Player2) && tempPiece.moved<1) {
         					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
         					endTurn(numPlayers);
         					if(numPlayers==2){
         						turnSeed=1;
@@ -2993,6 +3641,11 @@ public class Game extends JPanel{
         					else {
         						turnSeed=3;
         					}
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3001,7 +3654,10 @@ public class Game extends JPanel{
         			}
         			if(tempImg==Player2.PieceImages[3]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[3].move) {
+        					if (noOtherActions(tempPiece, Player2) && tempPiece.moved<1) {
         					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
         					endTurn(numPlayers);
         					if(numPlayers==2){
         						turnSeed=1;
@@ -3009,6 +3665,11 @@ public class Game extends JPanel{
         					else {
         						turnSeed=3;
         					}
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3017,7 +3678,10 @@ public class Game extends JPanel{
         			}
         			if(tempImg==Player2.PieceImages[4]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[4].move) {
+        					if (noOtherActions(tempPiece, Player2) && tempPiece.moved<1) {
         					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
         					endTurn(numPlayers);
         					if(numPlayers==2){
         						turnSeed=1;
@@ -3025,6 +3689,11 @@ public class Game extends JPanel{
         					else {
         						turnSeed=3;
         					}
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3039,9 +3708,17 @@ public class Game extends JPanel{
         				 if (whosTurn(numPlayers) == 3) {
         				 if(tempImg==Player3.PieceImages[0]) {
              				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[0].move) {
-            					swapImage(currentButton, tempImg);
+             					if (noOtherActions(tempPiece, Player3) && tempPiece.moved<1) {
+             					swapImage(currentButton, tempImg);
+             					tempPiece.moved++;
+            					if(tempPiece.tookAction==1) {
             					endTurn(numPlayers); //prints out turn ended & next player
             					turnSeed=4; //set next to player 4
+            					}
+             					}//end of action check
+             					else{
+            		   				System.out.println("Only one piece may move and act once each turn");
+            		   			}
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3050,9 +3727,17 @@ public class Game extends JPanel{
              			}
         				 if(tempImg==Player3.PieceImages[1]) {
               				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[1].move) {
-            					swapImage(currentButton, tempImg);
+              					if (noOtherActions(tempPiece, Player3) && tempPiece.moved<1) {
+              					swapImage(currentButton, tempImg);
+              					tempPiece.moved++;
+            					if(tempPiece.tookAction==1) {
             					endTurn(numPlayers);
             					turnSeed=4;
+            					}
+              					}//end of action check
+              					else{
+            		   				System.out.println("Only one piece may move and act once each turn");
+            		   			}
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3061,9 +3746,17 @@ public class Game extends JPanel{
               			}
         				 if(tempImg==Player3.PieceImages[2]) {
               				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[2].move) {
-            					swapImage(currentButton, tempImg);
+              					if (noOtherActions(tempPiece, Player3) && tempPiece.moved<1) {
+              					swapImage(currentButton, tempImg);
+              					tempPiece.moved++;
+            					if(tempPiece.tookAction==1) {
             					endTurn(numPlayers);
             					turnSeed=4;
+            					}
+              					}//end of action check
+              					else{
+            		   				System.out.println("Only one piece may move and act once each turn");
+            		   			}
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3072,9 +3765,17 @@ public class Game extends JPanel{
               			}
         				 if(tempImg==Player3.PieceImages[3]) {
               				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[3].move) {
-            					swapImage(currentButton, tempImg);
+              					if (noOtherActions(tempPiece, Player3) && tempPiece.moved<1) {
+              					swapImage(currentButton, tempImg);
+              					tempPiece.moved++;
+            					if(tempPiece.tookAction==1) {
             					endTurn(numPlayers);
             					turnSeed=4;
+            					}
+              					}//end of action check
+              					else{
+            		   				System.out.println("Only one piece may move and act once each turn");
+            		   			}
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3082,9 +3783,17 @@ public class Game extends JPanel{
             				}
               			} if(tempImg==Player3.PieceImages[4]) {
              				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[4].move) {
-            					swapImage(currentButton, tempImg);
+             					if (noOtherActions(tempPiece, Player3) && tempPiece.moved<1) {
+             					swapImage(currentButton, tempImg);
+             					tempPiece.moved++;
+            					if(tempPiece.tookAction==1) {
             					endTurn(numPlayers);
             					turnSeed=4;
+            					}
+             					}//end of action check
+             					else{
+            		   				System.out.println("Only one piece may move and act once each turn");
+            		   			}
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3098,9 +3807,17 @@ public class Game extends JPanel{
         				 if (whosTurn(numPlayers) == 4) {
               			 if(tempImg==Player4.PieceImages[0]) {
               				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[0].move) {
-            					swapImage(currentButton, tempImg);
+              					if (noOtherActions(tempPiece, Player4) && tempPiece.moved<1) {
+              					swapImage(currentButton, tempImg);
+              					tempPiece.moved++;
+            					if(tempPiece.tookAction==1) {
             					endTurn(numPlayers); //prints out turn ended & next player
             					turnSeed=1; //sets next to player 1
+            					}
+              					}//end of action check
+              					else{
+            		   				System.out.println("Only one piece may move and act once each turn");
+            		   			}
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3109,9 +3826,17 @@ public class Game extends JPanel{
               			}
        					 if(tempImg==Player4.PieceImages[1]) {
                				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[1].move) {
-            					swapImage(currentButton, tempImg);
+               					if (noOtherActions(tempPiece, Player4) && tempPiece.moved<1) {
+               					swapImage(currentButton, tempImg);
+               					tempPiece.moved++;
+            					if(tempPiece.tookAction==1) {
             					endTurn(numPlayers);
             					turnSeed=1;
+            					}
+               					}//end of action check
+               					else{
+            		   				System.out.println("Only one piece may move and act once each turn");
+            		   			}
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3120,9 +3845,17 @@ public class Game extends JPanel{
        					 }
        					 if(tempImg==Player4.PieceImages[2]) {
                 				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[2].move) {
+                					if (noOtherActions(tempPiece, Player4) && tempPiece.moved<1) {
                 					swapImage(currentButton, tempImg);
+                					tempPiece.moved++;
+                					if(tempPiece.tookAction==1) {
                 					endTurn(numPlayers);
                 					turnSeed=1;
+                					}
+                					}//end of action check
+                					else{
+                		   				System.out.println("Only one piece may move and act once each turn");
+                		   			}
                 				}
                 				else {
                 					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3131,9 +3864,17 @@ public class Game extends JPanel{
         					 }
        					 if(tempImg==Player4.PieceImages[3]) {
                 				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[3].move) {
+                					if (noOtherActions(tempPiece, Player4) && tempPiece.moved<1) {
                 					swapImage(currentButton, tempImg);
+                					tempPiece.moved++;
+                					if(tempPiece.tookAction==1) {
                 					endTurn(numPlayers);
                 					turnSeed=1;
+                					}
+                					}//end of action check
+                					else{
+                		   				System.out.println("Only one piece may move and act once each turn");
+                		   			}
                 				}
                 				else {
                 					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -3142,9 +3883,17 @@ public class Game extends JPanel{
         					 }
        					 if(tempImg==Player4.PieceImages[4]) {
                 				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[4].move) {
+                					if (noOtherActions(tempPiece, Player4) && tempPiece.moved<1) {
                 					swapImage(currentButton, tempImg);
+                					tempPiece.moved++;
+                					if(tempPiece.tookAction==1) {
                 					endTurn(numPlayers);
                 					turnSeed=1;
+                					}
+                					}//end of action check
+                					else{
+                		   				System.out.println("Only one piece may move and act once each turn");
+                		   			}
                 				}
                 				else {
                 					System.out.println("That is an invalid move, it exceeds that piece's movement range");

@@ -11,6 +11,8 @@ public abstract class Piece { //generic game piece class with stats all pieces w
 	int crit;
 	int move;
 	int team;//each piece knows what team it is a part of
+	int tookAction=0;//these keep track of what actions a piece has taken during a turn
+	int moved=0;
 	
 	int getMaxHp() {
 		return maxHp;
