@@ -24,8 +24,39 @@ public class Game extends JPanel{
     public static JButton heal =new JButton("Heal"); 
 	public static JButton cancel =new JButton("Cancel Action");
 	
-	//will need something outside of this GUI to keep track of game mode
-	//so can determine player order etc
+	public static void endTurn(int numPlayers) {
+    	int currTurn=whosTurn(numPlayers);
+    	if(numPlayers==2){
+    		if(currTurn==1){
+    			System.out.println("Player " + currTurn + "'s turn has ended"); //tell user who's turn ended
+    			System.out.println("It is Player 2's turn"); //tell user who's turn it is
+    		}
+    		if(currTurn==2){
+    			System.out.println("Player " + currTurn + "'s turn has ended");
+    			System.out.println("It is Player 1's turn");
+    		}
+    	}//end of if numPlayers==2
+    	else{
+    	if(currTurn==1){
+    		System.out.println("Player " + currTurn + "'s turn has ended");
+    		
+    		System.out.println("It is Player 2's turn");
+    	}
+    	else if(currTurn==2){
+    		System.out.println("Player " + currTurn + "'s turn has ended");
+    		System.out.println("It is Player 3's turn");
+    	}
+   
+    	else if(currTurn==3) {
+    		System.out.println("Player " + currTurn + "'s turn has ended");
+    		System.out.println("It is Player 4's turn"); 
+    	}
+    	else {
+    		System.out.println("Player " + currTurn + "'s turn has ended");
+    		System.out.println("It is Player 1's turn");
+    	}
+   } //end of if 4 players
+    }
 	
 	public static int whosTurn(int numPlayers) {//this function determines who's turn it is based on the number of players
 		if (numPlayers == 2) {
@@ -420,8 +451,6 @@ public class Game extends JPanel{
 		frame1.dispose(); //get rid of previous gui and create new one
 		JButton teams[]= new JButton[4];
 		  frame2.setLayout(new GridLayout(4, 0));
-		  turnSeed = genTurnSeed(numPlayers);
-		  System.out.println("Player " + turnSeed + " will be going first");
 		
 		  //will have to keep track of num of players after each click, after there's no more players to select team go to next screen
 		   class buttonClicked implements ActionListener{
@@ -537,6 +566,8 @@ public class Game extends JPanel{
         frame3.setLayout(new GridLayout(0, 10));
         //JButton tile[] = new JButton[100];
         JButton tile[][] = new JButton[10][10]; //tile is now a matrix
+        turnSeed = genTurnSeed(numPlayers);
+		System.out.println("Player " + turnSeed + " will be going first");
         
         class healGamePiece implements ActionListener{
         	JButton currentButton=null;
@@ -569,10 +600,14 @@ public class Game extends JPanel{
    					if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the maximum hp
    						targetPiece.currHp=targetPiece.getMaxHp();
    						System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   						endTurn(numPlayers); //prints out turn ended & next player
+   						turnSeed=2; //set the player to player 2
    					}
    					else {
    						System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
-   						}
+   						endTurn(numPlayers);
+   						turnSeed=2;	
+   					}
    				}
    				else {
    					System.out.println("Player 1's " + targetPiece.name + " is already at full health");
@@ -590,10 +625,14 @@ public class Game extends JPanel{
    						if(targetPiece.currHp> targetPiece.getMaxHp()) {
    							targetPiece.currHp=targetPiece.getMaxHp();
    							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   							endTurn(numPlayers);
+   							turnSeed=2;
    						}
    							
    						else {
    							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   							endTurn(numPlayers);
+   							turnSeed=2;
    						}
    					}
    				else {
@@ -617,9 +656,23 @@ public class Game extends JPanel{
    						if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
    							targetPiece.currHp=targetPiece.getMaxHp();
    							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   						endTurn(numPlayers); //prints out turn ended & next player
+   						if(numPlayers==2) { //if only 2 players, set next to player 1
+   							turnSeed=1;
+   							}
+   						else {
+   							turnSeed=3; //if 4 players, player 3 will go next
+   							}
    						}
    						else {
    							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   							endTurn(numPlayers);
+   	   						if(numPlayers==2) {
+   	   							turnSeed=1;
+   	   							}
+   	   						else {
+   	   							turnSeed=3;
+   	   							}
    						}
    					}
    			else {
@@ -637,9 +690,23 @@ public class Game extends JPanel{
    						if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
    							targetPiece.currHp=targetPiece.getMaxHp();
    							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   							endTurn(numPlayers);
+   	   						if(numPlayers==2) {
+   	   							turnSeed=1;
+   	   							}
+   	   						else {
+   	   							turnSeed=3;
+   	   							}
    						}	
    						else {
    							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   							endTurn(numPlayers);
+   	   						if(numPlayers==2) {
+   	   							turnSeed=1;
+   	   							}
+   	   						else {
+   	   							turnSeed=3;
+   	   							}
    						}
    					}
    					else {
@@ -664,10 +731,14 @@ public class Game extends JPanel{
            					if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
            						targetPiece.currHp=targetPiece.getMaxHp();
            						System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+           					endTurn(numPlayers); //prints out turn ended & next player
+           					turnSeed=4; //sets next player to player 4
            					}
            							
            					else {
            						System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           						endTurn(numPlayers);
+               					turnSeed=4;
            					}
            				}
            			else {
@@ -686,10 +757,14 @@ public class Game extends JPanel{
            					if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
            						targetPiece.currHp=targetPiece.getMaxHp();
            						System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+           						endTurn(numPlayers);
+               					turnSeed=4;
            					}
            							
            					else {
            						System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           						endTurn(numPlayers);
+               					turnSeed=4;
            					}
            				}
            				else {
@@ -713,9 +788,13 @@ public class Game extends JPanel{
            					if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
            						targetPiece.currHp=targetPiece.getMaxHp();
            						System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           						endTurn(numPlayers);//prints out turn ended & next player
+               					turnSeed=1; //sets next player to player 1
            					}
            					else {
            						System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           						endTurn(numPlayers);
+               					turnSeed=1;
            					}
            				}
            				else {
@@ -734,9 +813,13 @@ public class Game extends JPanel{
            						if(targetPiece.currHp> targetPiece.getMaxHp()) {//don't want negative numbers for hp
            							targetPiece.currHp=targetPiece.getMaxHp();
            							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+           							endTurn(numPlayers);
+                   					turnSeed=1;
            						}
            						else {
            							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           							endTurn(numPlayers);
+                   					turnSeed=1;
            						}
            					}
            					else {
@@ -782,9 +865,13 @@ public class Game extends JPanel{
        							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
        								targetPiece.currHp=targetPiece.getMaxHp();
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							endTurn(numPlayers); //prints out turn ended & next player
+       							turnSeed=2; //sets next player to player 2
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       							endTurn(numPlayers);
+       							turnSeed=2;
        							}
        							}
        							else {
@@ -817,10 +904,14 @@ public class Game extends JPanel{
        							if(targetPiece.currHp> targetPiece.getMaxHp()) {
        								targetPiece.currHp=targetPiece.getMaxHp();
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       								endTurn(numPlayers);
+           							turnSeed=2;
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+       							turnSeed=2;
+       							}
        							}
        							else {
        								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
@@ -856,11 +947,25 @@ public class Game extends JPanel{
        							if(targetPiece.currHp> targetPiece.getMaxHp()) {
        								targetPiece.currHp=targetPiece.getMaxHp();
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       							endTurn(numPlayers); //prints out turn ended & next player
+       							if(numPlayers==2){ //if 2 players, set next to player 1
+       								turnSeed=1;
+       							}
+       							else { //if 4 players, set next to player 3
+       								turnSeed=3; 
+       							}
        							}
        							
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+       							if(numPlayers==2){
+       								turnSeed=1;
+       							}
+       							else {
+       								turnSeed=3;
+       							}
+       							}
        						}
        							else {
        								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
@@ -891,11 +996,25 @@ public class Game extends JPanel{
        							if(targetPiece.currHp> targetPiece.getMaxHp()) {
        								targetPiece.currHp=targetPiece.getMaxHp();
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       								endTurn(numPlayers);
+           							if(numPlayers==2){
+           								turnSeed=1;
+           							}
+           							else {
+           								turnSeed=3;
+           							}
        							}
        							
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+       							if(numPlayers==2){
+       								turnSeed=1;
+       							}
+       							else {
+       								turnSeed=3;
+       							}
+       							}
        						}
        							else {
        								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
@@ -932,10 +1051,14 @@ public class Game extends JPanel{
                							if(targetPiece.currHp> targetPiece.getMaxHp()) {
                								targetPiece.currHp=targetPiece.getMaxHp();
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               							endTurn(numPlayers); //prints out turn ended & next player
+               							turnSeed=4; //sets next player to player 4
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+               							turnSeed=4;
+               							}
                					}
                							else {
                								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
@@ -966,11 +1089,15 @@ public class Game extends JPanel{
                							if(targetPiece.currHp> targetPiece.getMaxHp()) {
                								targetPiece.currHp=targetPiece.getMaxHp();
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								endTurn(numPlayers);
+                   							turnSeed=4;
                							}
                							
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+               							turnSeed=4;
+               							}
                						}
                							else {
                								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
@@ -1006,11 +1133,15 @@ public class Game extends JPanel{
                							if(targetPiece.currHp> targetPiece.getMaxHp()) {
                								targetPiece.currHp=targetPiece.getMaxHp();
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+               								endTurn(numPlayers); //prints out turn ended & next player
+                   							turnSeed=1; //sets next player to player 1
                							}
                						
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+               							turnSeed=1;
+               							}
                						}
                							else {
                								System.out.println("Player 4's " + targetPiece.name + "is already at full health");
@@ -1041,10 +1172,14 @@ public class Game extends JPanel{
                							if(targetPiece.currHp> targetPiece.getMaxHp()) {
                								targetPiece.currHp=targetPiece.getMaxHp();
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+               								endTurn(numPlayers);
+                   							turnSeed=1;
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+               							turnSeed=1;
+               							}
                						}
                						}
                					}
@@ -1109,17 +1244,15 @@ public class Game extends JPanel{
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);//make attack
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
-       								/*try {
-       								currentButton.setIcon(null); //sets the tile with the image null
-       								currentButton.revalidate(); //resets and updates button
-       								}
-       								catch (Exception ee) {}
-       							*/ //dont try this way it destroys the program 
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers); //prints out turn ended & next player
+       								turnSeed=2; //sets next to player 2
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       							endTurn(numPlayers);
+   								turnSeed=2;
        							}
        							}
        					}
@@ -1133,9 +1266,13 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							endTurn(numPlayers);
+   								turnSeed=2;
        							}
        						}
        					}
@@ -1148,9 +1285,13 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        								}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							endTurn(numPlayers);
+   								turnSeed=2;
        							}
        						}
        					}
@@ -1178,9 +1319,13 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							endTurn(numPlayers);
+   								turnSeed=2;
        							}
        						}
        					}
@@ -1194,9 +1339,13 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        								}
        							else { 
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        						}
        					}
@@ -1209,9 +1358,13 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							endTurn(numPlayers);
+   								turnSeed=2;
        							}
        							}
        					}
@@ -1239,10 +1392,14 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								turnSeed=2;
+       							}
        						}
        					}
        					if (numPlayers ==4) {
@@ -1255,10 +1412,14 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								turnSeed=2;
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -1270,10 +1431,14 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								turnSeed=2;
+       							}
        						}
        					}
        					}
@@ -1300,10 +1465,14 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								turnSeed=2;
+       							}
        						}
        					}
        					if (numPlayers ==4) {
@@ -1316,10 +1485,14 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								turnSeed=2;
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -1331,10 +1504,14 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								turnSeed=2;
+       							}
        						}
        					}
        					}
@@ -1362,10 +1539,14 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								turnSeed=2;
+       							}
        						}
        					}
        					if (numPlayers ==4) {
@@ -1378,10 +1559,14 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								turnSeed=2;
+       							}
        							}
        					}
        					for(int i=0; i<5; i++) {
@@ -1393,10 +1578,14 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								turnSeed=2;
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								turnSeed=2;
+       							}
        						}
        					}
        					}
@@ -1428,10 +1617,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers); //prints out turn ended & next player
+       								if(numPlayers==2){ //if 2 players, set next to player 1
+       								turnSeed=1;	
+       								}
+       								else { //if 4 players, set next to player 3
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
@@ -1444,10 +1647,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -1459,10 +1676,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					}
@@ -1489,10 +1720,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
@@ -1505,10 +1750,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -1520,10 +1779,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					}
@@ -1550,10 +1823,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
@@ -1566,10 +1853,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -1581,10 +1882,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					}
@@ -1611,10 +1926,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
@@ -1627,10 +1956,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -1642,10 +1985,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					}
@@ -1672,10 +2029,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
@@ -1688,8 +2059,22 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
        						}
        					}
        					for(int i=0; i<5; i++) {
@@ -1701,10 +2086,24 @@ public class Game extends JPanel{
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
        								removeImage(currentButton);
+       								endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
        							}
        							else {
        							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-       						}
+       							endTurn(numPlayers);
+   								if(numPlayers==2){
+   								turnSeed=1;	
+   								}
+   								else {
+   									turnSeed=3;
+   								}
+       							}
        						}
        					}
        					}
@@ -1737,10 +2136,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers); //prints out turn ended & next player
+               								turnSeed=4; //set next to player 4
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1752,10 +2155,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1767,10 +2174,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
            				}
@@ -1796,10 +2207,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1811,10 +2226,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1826,10 +2245,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                					}
                						}	
            				}
@@ -1855,10 +2278,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1870,10 +2297,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1885,10 +2316,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
            				}
@@ -1914,10 +2349,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                					}
                					}
                					for(int i=0; i<5; i++) {
@@ -1929,10 +2368,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1944,10 +2387,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
            				}
@@ -1974,10 +2421,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -1989,10 +2440,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                							}
                					}
                					for(int i=0; i<5; i++) {
@@ -2004,10 +2459,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=4;
                							}
                							else {
                							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=4;
+               							}
                						}
                					}
            				}
@@ -2038,10 +2497,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers); //prints out turn ended & next player
+               								turnSeed=1; //sets next to player 1
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2053,10 +2516,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2068,10 +2535,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
            				}
@@ -2097,10 +2568,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2112,10 +2587,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2127,10 +2606,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
            				}
@@ -2157,10 +2640,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2172,10 +2659,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2187,10 +2678,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                				}
@@ -2216,10 +2711,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2231,10 +2730,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2246,10 +2749,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                				}
@@ -2275,10 +2782,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2290,10 +2801,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
@@ -2305,10 +2820,14 @@ public class Game extends JPanel{
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
                								removeImage(currentButton);
+               								endTurn(numPlayers);
+               								turnSeed=1;
                							}
                							else {
                							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
-               						}
+               							endTurn(numPlayers);
+           								turnSeed=1;
+               							}
                						}
                					}
                				}
@@ -2375,7 +2894,8 @@ public class Game extends JPanel{
         			if(tempImg==Player1.PieceImages[0])	{//pieces can move 3, 4, 5, or 6 tiles
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].move) {
         					swapImage(currentButton, tempImg);
-        					
+        					endTurn(numPlayers); //prints out turn ended & next player
+								turnSeed=2; //sets next to player 2
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2385,6 +2905,8 @@ public class Game extends JPanel{
         			if(tempImg==Player1.PieceImages[1]) {
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[1].move) {
         					swapImage(currentButton, tempImg);
+        					endTurn(numPlayers);
+							turnSeed=2;
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2394,6 +2916,8 @@ public class Game extends JPanel{
         			if(tempImg==Player1.PieceImages[2]) {
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[2].move) {
         					swapImage(currentButton, tempImg);
+        					endTurn(numPlayers);
+							turnSeed=2;
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2403,6 +2927,8 @@ public class Game extends JPanel{
         			if(tempImg==Player1.PieceImages[3]) {
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].move) {
         					swapImage(currentButton, tempImg);
+        					endTurn(numPlayers);
+							turnSeed=2;
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2412,6 +2938,8 @@ public class Game extends JPanel{
         			if(tempImg==Player1.PieceImages[4]) {
         				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].move) {
         					swapImage(currentButton, tempImg);
+        					endTurn(numPlayers);
+							turnSeed=2;
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2426,6 +2954,13 @@ public class Game extends JPanel{
         			if(tempImg==Player2.PieceImages[0]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[0].move) {
         					swapImage(currentButton, tempImg);
+        					endTurn(numPlayers); //prints out turn ended & next player
+        					if(numPlayers==2){ //if 2 players, set next to player 1
+        						turnSeed=1;
+        					}
+        					else { //if 4 players, set next to player 3
+        						turnSeed=3;
+        					}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2435,6 +2970,13 @@ public class Game extends JPanel{
         			if(tempImg==Player2.PieceImages[1]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[1].move) {
         					swapImage(currentButton, tempImg);
+        					endTurn(numPlayers);
+        					if(numPlayers==2){
+        						turnSeed=1;
+        					}
+        					else {
+        						turnSeed=3;
+        					}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2444,6 +2986,13 @@ public class Game extends JPanel{
         			if(tempImg==Player2.PieceImages[2]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[2].move) {
         					swapImage(currentButton, tempImg);
+        					endTurn(numPlayers);
+        					if(numPlayers==2){
+        						turnSeed=1;
+        					}
+        					else {
+        						turnSeed=3;
+        					}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2453,6 +3002,13 @@ public class Game extends JPanel{
         			if(tempImg==Player2.PieceImages[3]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[3].move) {
         					swapImage(currentButton, tempImg);
+        					endTurn(numPlayers);
+        					if(numPlayers==2){
+        						turnSeed=1;
+        					}
+        					else {
+        						turnSeed=3;
+        					}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2462,6 +3018,13 @@ public class Game extends JPanel{
         			if(tempImg==Player2.PieceImages[4]) {
         				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[4].move) {
         					swapImage(currentButton, tempImg);
+        					endTurn(numPlayers);
+        					if(numPlayers==2){
+        						turnSeed=1;
+        					}
+        					else {
+        						turnSeed=3;
+        					}
         				}
         				else {
         					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2477,6 +3040,8 @@ public class Game extends JPanel{
         				 if(tempImg==Player3.PieceImages[0]) {
              				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[0].move) {
             					swapImage(currentButton, tempImg);
+            					endTurn(numPlayers); //prints out turn ended & next player
+            					turnSeed=4; //set next to player 4
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2486,6 +3051,8 @@ public class Game extends JPanel{
         				 if(tempImg==Player3.PieceImages[1]) {
               				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[1].move) {
             					swapImage(currentButton, tempImg);
+            					endTurn(numPlayers);
+            					turnSeed=4;
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2495,6 +3062,8 @@ public class Game extends JPanel{
         				 if(tempImg==Player3.PieceImages[2]) {
               				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[2].move) {
             					swapImage(currentButton, tempImg);
+            					endTurn(numPlayers);
+            					turnSeed=4;
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2504,6 +3073,8 @@ public class Game extends JPanel{
         				 if(tempImg==Player3.PieceImages[3]) {
               				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[3].move) {
             					swapImage(currentButton, tempImg);
+            					endTurn(numPlayers);
+            					turnSeed=4;
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2512,6 +3083,8 @@ public class Game extends JPanel{
               			} if(tempImg==Player3.PieceImages[4]) {
              				if (destinationYCoord <= pieceYCoord+Player3.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player3.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player3.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player3.playersTeam.teamPieces[4].move) {
             					swapImage(currentButton, tempImg);
+            					endTurn(numPlayers);
+            					turnSeed=4;
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2526,6 +3099,8 @@ public class Game extends JPanel{
               			 if(tempImg==Player4.PieceImages[0]) {
               				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[0].move) {
             					swapImage(currentButton, tempImg);
+            					endTurn(numPlayers); //prints out turn ended & next player
+            					turnSeed=1; //sets next to player 1
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2535,6 +3110,8 @@ public class Game extends JPanel{
        					 if(tempImg==Player4.PieceImages[1]) {
                				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[1].move) {
             					swapImage(currentButton, tempImg);
+            					endTurn(numPlayers);
+            					turnSeed=1;
             				}
             				else {
             					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2544,6 +3121,8 @@ public class Game extends JPanel{
        					 if(tempImg==Player4.PieceImages[2]) {
                 				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[2].move) {
                 					swapImage(currentButton, tempImg);
+                					endTurn(numPlayers);
+                					turnSeed=1;
                 				}
                 				else {
                 					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2553,6 +3132,8 @@ public class Game extends JPanel{
        					 if(tempImg==Player4.PieceImages[3]) {
                 				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[3].move) {
                 					swapImage(currentButton, tempImg);
+                					endTurn(numPlayers);
+                					turnSeed=1;
                 				}
                 				else {
                 					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2562,6 +3143,8 @@ public class Game extends JPanel{
        					 if(tempImg==Player4.PieceImages[4]) {
                 				if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[4].move) {
                 					swapImage(currentButton, tempImg);
+                					endTurn(numPlayers);
+                					turnSeed=1;
                 				}
                 				else {
                 					System.out.println("That is an invalid move, it exceeds that piece's movement range");
@@ -2671,15 +3254,36 @@ public class Game extends JPanel{
         }
         class endturnAction implements ActionListener{ //placeholder for endturn
         	public void actionPerformed (ActionEvent e) {
-        		if ((turnNumber + turnSeed)%numPlayers == 0) {
-        			System.out.println("Player " + numPlayers + "'s turn ending, it is now Player 1's turn");
+        		int currTurn=whosTurn(numPlayers);
+        		endTurn(numPlayers); //prints out turn ended & next player
+        		if(numPlayers==2) {
+        			if(currTurn==1){ //have to update variable so next player can go
+        				turnSeed=2;
+        			}
+        			else {
+        				turnSeed=1;
+        			}
         		}
-        		else {
-        			System.out.println("Player " + ((turnNumber + turnSeed)%numPlayers) + "'s turn ending, it is now Player " + (((turnNumber + turnSeed)%numPlayers)+1) + "'s turn");
+        	else {
+        		if(currTurn==1){
+            		turnSeed=2;
+            	}
+            	else if(currTurn==2){
+            		turnSeed=3;
+            	}
+           
+            	else if(currTurn==3) {
+            		turnSeed=4;
+            
+            	}
+            	else {
+            		turnSeed=1;
+            		
+            	}	
         		}
-        		turnNumber++;
         	}
         }
+        	
         concede.addActionListener(new concedeAction()); //add action listeners to menu bar
         key.addActionListener(new keyAction());
         endturn.addActionListener(new endturnAction());
