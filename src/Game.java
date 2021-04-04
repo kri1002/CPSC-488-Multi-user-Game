@@ -142,6 +142,132 @@ public class Game extends JPanel{
 		lastButtonPressed.revalidate(); //resets and updates button
 		currentButton.revalidate(); 
 	}
+	
+	public static void removeAllImages(int numPlayers, JButton tile[][]) {
+		int currTurn=whosTurn(numPlayers);
+		JButton currentButton;
+    	if(currTurn==1){
+    		for (int i=0; i<tile.length; i++) {//go through all the buttons and remove player 1's pieces
+		 		for(int j=0; j<tile[i].length; j++) {
+		 			currentButton=tile[i][j];
+		 			Icon tempImg = currentButton.getIcon();
+		 			if(tempImg==Player1.PieceImages[0]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player1.PieceImages[1]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player1.PieceImages[2]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player1.PieceImages[3]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}	
+		 			if(tempImg==Player1.PieceImages[4]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}	
+		 		}
+		 			}//end of second for loop
+    		Player1.piecesLeft=0; //set pieces left to 0
+			System.out.println("Player 1 has conceded and lost the game"); //tell user who conceded
+    	}
+    	else if(currTurn==2){
+    		for (int i=0; i<tile.length; i++) {//go through all the buttons and remove player 1's pieces
+		 		for(int j=0; j<tile[i].length; j++) {
+		 			currentButton=tile[i][j];
+		 			Icon tempImg = currentButton.getIcon();
+		 			if(tempImg==Player2.PieceImages[0]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player2.PieceImages[1]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player2.PieceImages[2]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player2.PieceImages[3]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}	
+		 			if(tempImg==Player2.PieceImages[4]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}	
+		 		}
+		 			}//end of second for loop
+    		Player2.piecesLeft=0; //set pieces left to 0
+			System.out.println("Player 2 has conceded and lost the game"); //tell user who conceded
+    	}
+    	else if(currTurn==3) {
+    		for (int i=0; i<tile.length; i++) {//go through all the buttons and remove player 1's pieces
+		 		for(int j=0; j<tile[i].length; j++) {
+		 			currentButton=tile[i][j];
+		 			Icon tempImg = currentButton.getIcon();
+		 			if(tempImg==Player3.PieceImages[0]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player3.PieceImages[1]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player3.PieceImages[2]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player3.PieceImages[3]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}	
+		 			if(tempImg==Player3.PieceImages[4]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}	
+		 		}
+		 			}//end of second for loop
+    		Player3.piecesLeft=0; //set pieces left to 0
+			System.out.println("Player 3 has conceded and lost the game"); //tell user who conceded
+    	}
+    	else {
+    		for (int i=0; i<tile.length; i++) {//go through all the buttons and remove player 1's pieces
+		 		for(int j=0; j<tile[i].length; j++) {
+		 			currentButton=tile[i][j];
+		 			Icon tempImg = currentButton.getIcon();
+		 			if(tempImg==Player4.PieceImages[0]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player4.PieceImages[1]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player4.PieceImages[2]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}
+		 			if(tempImg==Player4.PieceImages[3]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}	
+		 			if(tempImg==Player4.PieceImages[4]) {
+		 				currentButton.setIcon(null);
+		 				currentButton.revalidate();
+		 			}	
+		 		}
+		 			}//end of second for loop
+    		Player4.piecesLeft=0; //set pieces left to 0
+			System.out.println("Player 4 has conceded and lost the game"); //tell user who conceded
+    	}
+	}
+	
 	public static void removeImage(JButton currentButton) {
 		for (int i=0; i<5; i++) {
 			if (currentButton.getIcon() == Player1.PieceImages[i]) {
@@ -3993,12 +4119,48 @@ public class Game extends JPanel{
         
         class concedeAction implements ActionListener{ //allow "exit" to close program on click
     		public void actionPerformed (ActionEvent e) {
-    			System.exit(0);
+    			int currTurn=whosTurn(numPlayers);
+    			removeAllImages(numPlayers, tile); 
+    			endTurn(numPlayers); //prints out turn ended & next player
+    			
+    			if(numPlayers==2) {
+        			if(currTurn==1){ //have to update variable so next player can go
+        				turnSeed=2;
+        			}
+        			else {
+        				turnSeed=1;
+        			}
+        		}
+        	else {
+        		if(currTurn==1){
+            		turnSeed=2;
+            	}
+            	else if(currTurn==2){
+            		turnSeed=3;
+            	}
+           
+            	else if(currTurn==3) {
+            		turnSeed=4;
+            
+            	}
+            	else {
+            		turnSeed=1;
+            		
+            	}		
+    			}
+    			
     		}
-    	}
+        }
+    			
         class keyAction implements ActionListener{ //placeholder for key window 
         	public void actionPerformed (ActionEvent e) {
-        		System.out.println("Placeholder for key");
+        		JOptionPane.showMessageDialog(frame3,
+        			    "Player 1 is blue \n"
+        			    		+ "Player 2 is red \n"
+        			    		+ "Player 3 is green \n"
+        			    		+ "Player 4 is yellow \n",    
+        			    "Key",
+        			    JOptionPane.PLAIN_MESSAGE);
         	}
         }
         class endturnAction implements ActionListener{ //placeholder for endturn
@@ -4032,7 +4194,8 @@ public class Game extends JPanel{
         		}
         	}
         }
-        	
+        
+  
         concede.addActionListener(new concedeAction()); //add action listeners to menu bar
         key.addActionListener(new keyAction());
         endturn.addActionListener(new endturnAction());
