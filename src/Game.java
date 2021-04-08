@@ -15,6 +15,7 @@ public class Game extends JPanel{
  	public static int destinationYCoord;
  	public static int turnSeed;//the player who is going first
  	public static int turnNumber = 0;//the current number of elapsed turns
+ 	public static int gameModeSelected; //keeps track of gameMode, will be used to make teams in 2v2
 	public static Player Player1 = new Player(1);//players are now generated at the start of the game class so they can be referenced anywhere
 	public static Player Player2 = new Player(2);
 	public static Player Player3 = new Player(3);
@@ -23,6 +24,124 @@ public class Game extends JPanel{
     public static JButton attack =new JButton("Attack");
     public static JButton heal =new JButton("Heal"); 
 	public static JButton cancel =new JButton("Cancel Action");
+	String [] names = new String[0];
+	public static String[] team1 = new String[2];
+	public static String[] team2= new String[2];
+	
+	public static void set2v2Teams(int gameModeSelected, int numPlayers){ //groups players together in strings
+		int randomPlayer1;
+		int randomPlayer2;
+		
+		if(gameModeSelected==2) {
+			Random playerGen =new Random();
+			randomPlayer1=playerGen.nextInt(numPlayers)+1;
+			Random playerGen2 =new Random();
+			randomPlayer2=playerGen2.nextInt(numPlayers)+1;
+			if(randomPlayer1!=randomPlayer2) {
+				if(randomPlayer1==1) {
+					team1[0]="Player 1";
+					if(randomPlayer2==2) {
+						team1[1]="Player 2";
+						team2[0]="Player 3";
+						team2[1]="Player 4";
+					}
+					else if(randomPlayer2==3) {
+						team1[1]="Player 3";
+						team2[0]="Player 2";
+						team2[1]="Player 4";
+					}
+					else {
+					team1[1]="Player 4";
+					team2[0]="Player 2";
+					team2[1]="Player 3";	
+					}
+				}
+				else if(randomPlayer1==2){
+					team1[0]="Player 2";
+					if(randomPlayer2==1) {
+						team1[1]="Player 1";
+						team2[0]="Player 3";
+						team2[1]="Player 4";
+					}
+					else if(randomPlayer2==3) {
+						team1[1]="Player 3";
+						team2[0]="Player 1";
+						team2[1]="Player 4";
+					}
+					else {
+					team1[1]="Player 4";
+					team2[0]="Player 1";
+					team2[1]="Player 3";	
+					}	
+				}
+				else if(randomPlayer1==3){
+					team1[0]="Player 3";
+					if(randomPlayer2==1) {
+						team1[1]="Player 1";
+						team2[0]="Player 2";
+						team2[1]="Player 4";
+					}
+					else if(randomPlayer2==2) {
+						team1[1]="Player 2";
+						team2[0]="Player 1";
+						team2[1]="Player 4";
+					}
+					else {
+					team1[1]="Player 4";
+					team2[0]="Player 1";
+					team2[1]="Player 2";	
+					}
+				}
+				else {
+					team1[0]="Player 4";
+					if(randomPlayer2==1) {
+						team1[1]="Player 1";
+						team2[0]="Player 2";
+						team2[1]="Player 3";
+					}
+					else if(randomPlayer2==2) {
+						team1[1]="Player 2";
+						team2[0]="Player 1";
+						team2[1]="Player 3";
+					}
+					else {
+					team1[1]="Player 3";
+					team2[0]="Player 1";
+					team2[1]="Player 2";	
+					}	
+				}
+			}//end of if generated nums aren't equal
+			
+			else{ 
+				if(randomPlayer1==1) {
+				team1[0]="Player 1";
+				team1[1]="Player 2";
+				team2[0]="Player 3";
+				team2[1]="Player 4";
+				}
+				else if(randomPlayer1==2) {
+					team1[0]="Player 2";
+					team1[1]="Player 1";
+					team2[0]="Player 3";
+					team2[1]="Player 4";
+					}
+				else if(randomPlayer1==3) {
+					team1[0]="Player 3";
+					team1[1]="Player 2";
+					team2[0]="Player 1";
+					team2[1]="Player 4";
+					}
+				else {
+					team1[0]="Player 4";
+					team1[1]="Player 2";
+					team2[0]="Player 3";
+					team2[1]="Player 4";
+			}
+			}
+			System.out.println("Team 1 is " + team1[0] + " and " + team1[1]);
+			System.out.println("Team 2 is " + team2[0] + " and " + team2[1]);
+		}//end of if right gameMode
+	}
 	
 	public static boolean noOtherActions(Piece testPiece, Player turnPlayer) {//check if the passes player has any othe pieces that have acted this turn
 		int checkVal=0;
@@ -563,21 +682,25 @@ public class Game extends JPanel{
 	        		 if(currentButton==gameMode[0]) {
 	        			 System.out.println("1 Player vs 1 Player game mode selected");
 	        			  numPlayers= 2; 
+	        			  gameModeSelected=0;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        			  }
 	        		 else if(currentButton==gameMode[1]) {
 	        			 System.out.println("1 Player vs 1 Computer Player game mode selected");
 	        			 numPlayers= 2;
+	        			 gameModeSelected=1;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }
 	        		 else if(currentButton==gameMode[2]) {
 	        			System.out.println("Two-Versus-Two Team Battle game mode selected");
 	        			numPlayers=4;
+	        			gameModeSelected=2;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }
 	        		 else {
 	        			 System.out.println("4 Player Free-for-All Game game mode selected");
 	        			 numPlayers=4;
+	        			 gameModeSelected=3;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }	
 	        	 }
@@ -723,7 +846,8 @@ public class Game extends JPanel{
         JButton tile[][] = new JButton[10][10]; //tile is now a matrix
         turnSeed = genTurnSeed(numPlayers);
 		System.out.println("Player " + turnSeed + " will be going first");
-        
+        set2v2Teams(gameModeSelected, numPlayers);
+		
         class healGamePiece implements ActionListener{
         	JButton currentButton=null;
         	Piece tempPiece;
