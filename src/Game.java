@@ -16,6 +16,8 @@ public class Game extends JPanel{
  	public static int turnSeed;//the player who is going first
  	public static int turnNumber = 0;//the current number of elapsed turns
  	public static int gameModeSelected; //keeps track of gameMode, will be used to make teams in 2v2
+ 	public static int playersLeft;//number of players who still have pieces
+ 	public static int holdTurn=0;//var to help skip the turns of players who do not have pieces left
 	public static Player Player1 = new Player(1);//players are now generated at the start of the game class so they can be referenced anywhere
 	public static Player Player2 = new Player(2);
 	public static Player Player3 = new Player(3);
@@ -27,6 +29,7 @@ public class Game extends JPanel{
 	String [] names = new String[0];
 	public static String[] team1 = new String[2];
 	public static String[] team2= new String[2];
+	
 	
 	public static void set2v2Teams(int gameModeSelected, int numPlayers){ //groups players together in strings
 		int randomPlayer1;
@@ -178,30 +181,95 @@ public class Game extends JPanel{
     		if(currTurn==1){
     			System.out.println("Player " + currTurn + "'s turn has ended"); //tell user who's turn ended
     			System.out.println("It is Player 2's turn"); //tell user who's turn it is
+    			turnSeed=2;
     		}
     		if(currTurn==2){
     			System.out.println("Player " + currTurn + "'s turn has ended");
     			System.out.println("It is Player 1's turn");
+    			turnSeed=1;
     		}
     	}//end of if numPlayers==2
     	else{
     	if(currTurn==1){
-    		System.out.println("Player " + currTurn + "'s turn has ended");
-    		
-    		System.out.println("It is Player 2's turn");
+    		if (Player2.piecesLeft>0) {//if player 1 has pieces
+    			if(holdTurn==0) {//if it isnt searching for a turn to go to from a skipped player's turn
+    				System.out.println("Player " + currTurn + "'s turn has ended");
+    			}
+    			else {//if it had to skip 1 or more players turns
+    				System.out.println("Player " + holdTurn + "'s turn has ended");
+    			}
+    			System.out.println("It is Player 2's turn");
+    			turnSeed=2;//increment turn
+    			holdTurn=0;//reset holdTurn
+    		}
+    		else {//a players turn needs to be skipped
+    			if(holdTurn==0) {
+    				holdTurn=1;//keep track of the last player who has pieces
+    			}
+    			turnSeed=2;//increment turn seed
+    			endTurn(numPlayers);//call end turn recursively until a player with pieces can be found
+    		}
     	}
     	else if(currTurn==2){
-    		System.out.println("Player " + currTurn + "'s turn has ended");
-    		System.out.println("It is Player 3's turn");
+    		if (Player3.piecesLeft>0) {
+    			if(holdTurn==0) {
+    				System.out.println("Player " + currTurn + "'s turn has ended");
+    			}
+    			else {
+    				System.out.println("Player " + holdTurn + "'s turn has ended");
+    			}
+    			System.out.println("It is Player 3's turn");
+    			turnSeed=3;
+    			holdTurn=0;
+    		}
+    		else {
+    			if(holdTurn==0) {
+    				holdTurn=2;
+    			}
+    			turnSeed=3;
+    			endTurn(numPlayers);
+    		}
     	}
    
     	else if(currTurn==3) {
-    		System.out.println("Player " + currTurn + "'s turn has ended");
-    		System.out.println("It is Player 4's turn"); 
+    		if (Player4.piecesLeft>0) {
+    			if(holdTurn==0) {
+    				System.out.println("Player " + currTurn + "'s turn has ended");
+    			}
+    			else {
+    				System.out.println("Player " + holdTurn + "'s turn has ended");
+    			}
+    			System.out.println("It is Player 4's turn"); 
+    			turnSeed=4;
+    			holdTurn=0;
+    		}
+    		else {
+    			if(holdTurn==0) {
+    				holdTurn=3;
+    			}
+    			turnSeed=4;
+    			endTurn(numPlayers);
+    		}
     	}
     	else {
-    		System.out.println("Player " + currTurn + "'s turn has ended");
-    		System.out.println("It is Player 1's turn");
+    		if(Player1.piecesLeft>0) {
+    			if(holdTurn==0) {
+    				System.out.println("Player " + currTurn + "'s turn has ended");
+    			}
+    			else {
+    				System.out.println("Player " + holdTurn + "'s turn has ended");
+    			}
+				System.out.println("It is Player 1's turn");
+    			turnSeed=1;
+    			holdTurn=0;
+    		}
+    		else {
+    			if(holdTurn==0) {
+    				holdTurn=4;
+    			}
+    			turnSeed=1;
+    			endTurn(numPlayers);
+    		}
     	}
    } //end of if 4 players
     }
@@ -262,7 +330,7 @@ public class Game extends JPanel{
 		currentButton.revalidate(); 
 	}
 	
-	public static void removeAllImages(int numPlayers, JButton tile[][]) {
+	public static void removeAllImages(int numPlayers, JButton tile[][], JFrame currFrame) {
 		int currTurn=whosTurn(numPlayers);
 		JButton currentButton;
     	if(currTurn==1){
@@ -294,6 +362,7 @@ public class Game extends JPanel{
 		 			}//end of second for loop
     		Player1.piecesLeft=0; //set pieces left to 0
 			System.out.println("Player 1 has conceded and lost the game"); //tell user who conceded
+			playersLeft--;//decrement playersLeft since a player lost
     	}
     	else if(currTurn==2){
     		for (int i=0; i<tile.length; i++) {//go through all the buttons and remove player 1's pieces
@@ -324,6 +393,7 @@ public class Game extends JPanel{
 		 			}//end of second for loop
     		Player2.piecesLeft=0; //set pieces left to 0
 			System.out.println("Player 2 has conceded and lost the game"); //tell user who conceded
+			playersLeft--;
     	}
     	else if(currTurn==3) {
     		for (int i=0; i<tile.length; i++) {//go through all the buttons and remove player 1's pieces
@@ -354,6 +424,8 @@ public class Game extends JPanel{
 		 			}//end of second for loop
     		Player3.piecesLeft=0; //set pieces left to 0
 			System.out.println("Player 3 has conceded and lost the game"); //tell user who conceded
+			playersLeft--;
+			
     	}
     	else {
     		for (int i=0; i<tile.length; i++) {//go through all the buttons and remove player 1's pieces
@@ -384,10 +456,34 @@ public class Game extends JPanel{
 		 			}//end of second for loop
     		Player4.piecesLeft=0; //set pieces left to 0
 			System.out.println("Player 4 has conceded and lost the game"); //tell user who conceded
+			playersLeft--;
     	}
+    	if (playersLeft==1) {//if theres only 1 player left
+    		JOptionPane.showMessageDialog(currFrame, "The Game is is over. Closing game...", "Game Over", JOptionPane.PLAIN_MESSAGE);
+			//Display message that the game is ended^
+    		System.exit(0);//exit program
+    		/*int newGameVar=JOptionPane.showConfirmDialog(currFrame, "This game has ended. Would you like to play again?"); 
+    		if (newGameVar==JOptionPane.YES_OPTION) {
+    			System.out.println("Playing Again...");
+    			currFrame.dispose();
+    			JFrame frame1= new JFrame();
+    	    	JFrame frame2= new JFrame();
+    	    	JFrame frame3= new JFrame();
+    	    	createGui1(frame1, frame2, frame3);
+    			
+    		}
+    		else if (newGameVar==JOptionPane.NO_OPTION) {
+    			System.out.println("Not Playing Again, Closing Game...");
+    			System.exit(0);
+    		}
+    		else {
+    			System.out.println("Not Playing Again, Closing Game...");
+    			System.exit(0);
+    		}*/
+		}
 	}
 	
-	public static void removeImage(JButton currentButton) {
+	public static void removeImage(JButton currentButton, JFrame currFrame) {
 		for (int i=0; i<5; i++) {
 			if (currentButton.getIcon() == Player1.PieceImages[i]) {
 				Player1.piecesLeft--;
@@ -399,6 +495,7 @@ public class Game extends JPanel{
 				}
 				else {
 					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[i].name + " has been defeated!  Player 1 has lost the game!");
+					playersLeft--;//decrement playersLeft since a player lost
 				}
 				
 			}
@@ -412,6 +509,7 @@ public class Game extends JPanel{
 				}
 				else {
 					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[i].name + " has been defeated!  Player 2 has lost the game!");
+					playersLeft--;
 				}
 			}
 			if (currentButton.getIcon() == Player3.PieceImages[i]) {
@@ -424,6 +522,7 @@ public class Game extends JPanel{
 				}
 				else {
 					System.out.println("Player 3's " + Player3.playersTeam.teamPieces[i].name + " has been defeated!  Player 3 has lost the game!");
+					playersLeft--;
 				}
 			}
 			if (currentButton.getIcon() == Player4.PieceImages[i]) {
@@ -436,16 +535,40 @@ public class Game extends JPanel{
 				}
 				else {
 					System.out.println("Player 4's " + Player4.playersTeam.teamPieces[i].name + " has been defeated!  Player 4 has lost the game!");
+					playersLeft--;
 				}
 			}
 		}
 		currentButton.setIcon(null);
 		currentButton.revalidate();
+		if (playersLeft==1) {//if only 1 player is left
+			JOptionPane.showMessageDialog(currFrame, "The Game is is over. Closing game...", "Game Over", JOptionPane.PLAIN_MESSAGE);
+			//Display message that the game is ended^
+			System.exit(0);//exit program
+    		/*int newGameVar=JOptionPane.showConfirmDialog(currFrame, "This game has ended. Would you like to play again?"); 
+    		if (newGameVar==JOptionPane.YES_OPTION) {
+    			System.out.println("Playing Again...");
+    			currFrame.dispose();
+    			JFrame frame1= new JFrame();
+    	    	JFrame frame2= new JFrame();
+    	    	JFrame frame3= new JFrame();
+    	    	createGui1(frame1, frame2, frame3);
+    			
+    		}
+    		else if (newGameVar==JOptionPane.NO_OPTION) {
+    			System.out.println("Not Playing Again, Closing Game...");
+    			System.exit(0);
+    		}
+    		else {
+    			System.out.println("Not Playing Again, Closing Game...");
+    			System.exit(0);
+    		}*/
+		}
 	}
 	
 	public static void setCoordinates(JButton currentButton, int numPlayers, JButton tile[][] ) {//set the coordinate of current clicked game piece and output what piece it is
 		 if(currentButton.getIcon()==Player1.PieceImages[0]) {
-			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[0].name);
+			 //System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[0].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -457,7 +580,7 @@ public class Game extends JPanel{
     		 }
 		 }
 		 if(currentButton.getIcon()==Player1.PieceImages[1]) {
-			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[1].name);
+			 //System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[1].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -468,7 +591,7 @@ public class Game extends JPanel{
     		 }
 		 }
 		 if(currentButton.getIcon()==Player1.PieceImages[2]) {
-			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[2].name);
+			 //System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[2].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -479,7 +602,7 @@ public class Game extends JPanel{
     		 }
 		 }
 		 if(currentButton.getIcon()==Player1.PieceImages[3]) {
-			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[3].name);
+			 //System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[3].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -490,7 +613,7 @@ public class Game extends JPanel{
     		 }
 		 }
 		 if(currentButton.getIcon()==Player1.PieceImages[4]) {
-			 System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[4].name);
+			 //System.out.println("This is player 1's " + Player1.playersTeam.teamPieces[4].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -501,7 +624,7 @@ public class Game extends JPanel{
     		 }
 		 }
 		 if(currentButton.getIcon()==Player2.PieceImages[0]) {
-			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[0].name);
+			 //System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[0].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -512,7 +635,7 @@ public class Game extends JPanel{
     		 }
 		 }
 		 if(currentButton.getIcon()==Player2.PieceImages[1]) {
-			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[1].name);
+			 //System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[1].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -523,7 +646,7 @@ public class Game extends JPanel{
     		 }
 		 }
 		 if(currentButton.getIcon()==Player2.PieceImages[2]) {
-			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[2].name);
+			 //System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[2].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -534,7 +657,7 @@ public class Game extends JPanel{
     		 }
 		 }
 		 if(currentButton.getIcon()==Player2.PieceImages[3]) {
-			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[3].name);
+			 //System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[3].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -545,7 +668,7 @@ public class Game extends JPanel{
     		 }
 		 }
 		 if(currentButton.getIcon()==Player2.PieceImages[4]) {
-			 System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[4].name);
+			 //System.out.println("This is player 2's " + Player2.playersTeam.teamPieces[4].name);
 			 for (int i=0; i<tile.length; i++) {
     			 for(int j=0; j<tile[i].length; j++) {
     				 if (currentButton == tile[i][j]) {
@@ -557,7 +680,7 @@ public class Game extends JPanel{
 		 }
 		 if(numPlayers==4) {
 			 if(currentButton.getIcon()==Player3.PieceImages[0]) {
-			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[0].name);
+			 //System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[0].name);
 			 	for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -568,7 +691,7 @@ public class Game extends JPanel{
 			 	}
 			 }
 			 if(currentButton.getIcon()==Player3.PieceImages[1]) {
-			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[1].name);
+			 //System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[1].name);
 			 	for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -579,7 +702,7 @@ public class Game extends JPanel{
 			 	}
 			 }
 			 if(currentButton.getIcon()==Player3.PieceImages[2]) {
-			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[2].name);
+			 //System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[2].name);
 				for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -590,7 +713,7 @@ public class Game extends JPanel{
 			 	}
 			 }
 			 if(currentButton.getIcon()==Player3.PieceImages[3]) {
-			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[3].name);
+			 //System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[3].name);
 				for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -601,7 +724,7 @@ public class Game extends JPanel{
 			 	}
 			 }
 			 if(currentButton.getIcon()==Player3.PieceImages[4]) {
-			 System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[4].name);
+			 //System.out.println("This is player 3's " + Player3.playersTeam.teamPieces[4].name);
 				for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -612,7 +735,7 @@ public class Game extends JPanel{
 			 	}
 			 }
 			 if(currentButton.getIcon()==Player4.PieceImages[0]) {
-			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[0].name);
+			 //System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[0].name);
 				for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -623,7 +746,7 @@ public class Game extends JPanel{
 			 	}
 			 }
 			 if(currentButton.getIcon()==Player4.PieceImages[1]) {
-			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[1].name);
+			 //System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[1].name);
 				for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -634,7 +757,7 @@ public class Game extends JPanel{
 			 	}
 			 }
 			 if(currentButton.getIcon()==Player4.PieceImages[2]) {
-			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[2].name);
+			 //System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[2].name);
 				for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -645,7 +768,7 @@ public class Game extends JPanel{
 			 	}
 			 }
 			 if(currentButton.getIcon()==Player4.PieceImages[3]) {
-			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[3].name);
+			 //System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[3].name);
 				for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -656,7 +779,7 @@ public class Game extends JPanel{
 			 	}
 			 }
 			 if(currentButton.getIcon()==Player4.PieceImages[4]) {
-			 System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[4].name);
+			 //System.out.println("This is player 4's " + Player4.playersTeam.teamPieces[4].name);
 				for (int i=0; i<tile.length; i++) {
 			 		for(int j=0; j<tile[i].length; j++) {
 			 			if (currentButton == tile[i][j]) {
@@ -682,24 +805,28 @@ public class Game extends JPanel{
 	        		 if(currentButton==gameMode[0]) {
 	        			 System.out.println("1 Player vs 1 Player game mode selected");
 	        			  numPlayers= 2; 
+	        			  playersLeft = 2;
 	        			  gameModeSelected=0;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        			  }
 	        		 else if(currentButton==gameMode[1]) {
 	        			 System.out.println("1 Player vs 1 Computer Player game mode selected");
 	        			 numPlayers= 2;
+	        			 playersLeft = 2;
 	        			 gameModeSelected=1;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }
 	        		 else if(currentButton==gameMode[2]) {
 	        			System.out.println("Two-Versus-Two Team Battle game mode selected");
 	        			numPlayers=4;
+	        			playersLeft = 4;
 	        			gameModeSelected=2;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }
 	        		 else {
 	        			 System.out.println("4 Player Free-for-All Game game mode selected");
 	        			 numPlayers=4;
+	        			 playersLeft = 4;
 	        			 gameModeSelected=3;
 	        			  createGui2(frame1, frame2, frame3, numPlayers);
 	        		 }	
@@ -727,6 +854,7 @@ public class Game extends JPanel{
 	
 	public static void createGui2(JFrame frame1, JFrame frame2, JFrame frame3, int numPlayers) {//team selection
 		frame1.dispose(); //get rid of previous gui and create new one
+		timesClicked=0;
 		JButton teams[]= new JButton[4];
 		  frame2.setLayout(new GridLayout(4, 0));
 		
@@ -1686,7 +1814,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
        								if(Player1.playersTeam.teamPieces[0].moved==1) {
        									endTurn(numPlayers); //prints out turn ended & next player
            								turnSeed=2; //sets next to player 2
@@ -1711,7 +1839,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[0].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -1735,7 +1863,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[0].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -1779,7 +1907,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[1].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -1804,7 +1932,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[1].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -1828,7 +1956,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[1].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -1872,7 +2000,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[2].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -1897,7 +2025,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[2].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -1921,7 +2049,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[2].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -1965,7 +2093,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[3].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -1990,7 +2118,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[3].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -2014,7 +2142,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[3].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -2059,7 +2187,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[4].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -2084,7 +2212,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[4].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -2108,7 +2236,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player1.playersTeam.teamPieces[4].moved==1) {
        									endTurn(numPlayers);
        									turnSeed=2;
@@ -2157,7 +2285,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[0].moved==1) {
        									endTurn(numPlayers); //prints out turn ended & next player
        									if(numPlayers==2){ //if 2 players, set next to player 1
@@ -2192,7 +2320,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[0].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2226,7 +2354,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[0].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2280,7 +2408,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[1].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2315,7 +2443,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[1].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2349,7 +2477,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[1].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2403,7 +2531,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[2].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2438,7 +2566,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[2].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2472,7 +2600,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[2].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2526,7 +2654,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[3].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2561,7 +2689,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[3].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2595,7 +2723,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[3].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2649,7 +2777,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[4].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2684,7 +2812,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[4].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2716,7 +2844,7 @@ public class Game extends JPanel{
        							if(targetPiece.currHp<1) {//don't want negative numbers for hp
        								targetPiece.currHp=0;
        								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-       								removeImage(currentButton);
+       								removeImage(currentButton, frame3);
        								if(Player2.playersTeam.teamPieces[4].moved==1) {
        								endTurn(numPlayers);
        								if(numPlayers==2){
@@ -2776,7 +2904,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers); //prints out turn ended & next player
                								turnSeed=4; //set next to player 4
@@ -2800,7 +2928,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -2824,7 +2952,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -2867,7 +2995,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -2891,7 +3019,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -2915,7 +3043,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -2958,7 +3086,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -2982,7 +3110,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -3006,7 +3134,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -3049,7 +3177,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -3073,7 +3201,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -3097,7 +3225,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -3141,7 +3269,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -3165,7 +3293,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -3189,7 +3317,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player3.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=4;
@@ -3237,7 +3365,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers); //prints out turn ended & next player
                								turnSeed=1; //sets next to player 1
@@ -3261,7 +3389,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3285,7 +3413,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[0].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3328,7 +3456,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3352,7 +3480,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3376,7 +3504,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[1].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3420,7 +3548,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3444,7 +3572,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3468,7 +3596,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[2].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3511,7 +3639,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3535,7 +3663,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3559,7 +3687,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[3].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3602,7 +3730,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3626,7 +3754,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -3650,7 +3778,7 @@ public class Game extends JPanel{
                							if(targetPiece.currHp<1) {//don't want negative numbers for hp
                								targetPiece.currHp=0;
                								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
-               								removeImage(currentButton);
+               								removeImage(currentButton, frame3);
                								if(Player4.playersTeam.teamPieces[4].moved==1) {
                								endTurn(numPlayers);
                								turnSeed=1;
@@ -4244,7 +4372,7 @@ public class Game extends JPanel{
         class concedeAction implements ActionListener{ //allow "exit" to close program on click
     		public void actionPerformed (ActionEvent e) {
     			int currTurn=whosTurn(numPlayers);
-    			removeAllImages(numPlayers, tile); 
+    			removeAllImages(numPlayers, tile, frame3); 
     			endTurn(numPlayers); //prints out turn ended & next player
     			
     			if(numPlayers==2) {
@@ -4282,7 +4410,12 @@ public class Game extends JPanel{
         			    "Player 1 is blue \n"
         			    		+ "Player 2 is red \n"
         			    		+ "Player 3 is green \n"
-        			    		+ "Player 4 is yellow \n",    
+        			    		+ "Player 4 is yellow \n"
+        			    		+ "A Warrior's token is a circle \n"
+        			    		+ "A Ranger's token is a square \n"
+        			    		+ "A Rogue's token is a triangle \n"
+        			    		+ "A healer's token is a star \n"
+        			    		+ "A Damage Mage's token is a pentagon \n",    
         			    "Key",
         			    JOptionPane.PLAIN_MESSAGE);
         	}
@@ -4291,7 +4424,7 @@ public class Game extends JPanel{
         	public void actionPerformed (ActionEvent e) {
         		int currTurn=whosTurn(numPlayers);
         		endTurn(numPlayers); //prints out turn ended & next player
-        		if(numPlayers==2) {
+        		/*if(numPlayers==2) {
         			if(currTurn==1){ //have to update variable so next player can go
         				turnSeed=2;
         			}
@@ -4315,7 +4448,7 @@ public class Game extends JPanel{
             		turnSeed=1;
             		
             	}	
-        		}
+        		}*/
         	}
         }
         
