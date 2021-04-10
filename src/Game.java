@@ -30,6 +30,416 @@ public class Game extends JPanel{
 	public static String[] team1 = new String[2];
 	public static String[] team2= new String[2];
 	
+	public static void attack2v2(Icon tempImg, int numPlayers, JButton currentButton, JFrame frame3, int i) {
+		Piece targetPiece;//alias for piece being attacked
+		if(tempImg==Player1.PieceImages[0]) {
+		if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+					if(team1[0]=="Player 1" || team1[1]=="Player 1") {		
+						if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+							System.out.println("Cannot attack your teammate's game pieces");	
+						}
+						else {
+							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+  							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+  							Player1.playersTeam.teamPieces[0].attack(targetPiece);//make attack
+  							Player1.playersTeam.teamPieces[0].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+  								if(Player1.playersTeam.teamPieces[0].moved==1) {
+  									endTurn(numPlayers); //prints out turn ended & next player
+      								turnSeed=2; //sets next to player 2
+  								}
+  							}
+  							else {
+  							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+  							if(Player1.playersTeam.teamPieces[0].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}
+						}
+						}//end of if player 1 team 1
+					else if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+						if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+							System.out.println("Cannot attack your teammate's game piece");
+						}
+						else {
+							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+  							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+  							Player1.playersTeam.teamPieces[0].attack(targetPiece);//make attack
+  							Player1.playersTeam.teamPieces[0].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+  								if(Player1.playersTeam.teamPieces[0].moved==1) {
+  									endTurn(numPlayers); //prints out turn ended & next player
+      								turnSeed=2; //sets next to player 2
+  								}
+  							}
+  							else {
+  							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+  							if(Player1.playersTeam.teamPieces[0].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}
+						}
+					}//end of else if player 1 team 2	
+		}
+		
+		else if(currentButton.getIcon()==Player3.PieceImages[i]) {
+					if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+						if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+							System.out.println("Cannot attack your teammate's game pieces");
+						}
+						else {
+							targetPiece = Player3.playersTeam.teamPieces[i];
+  							int tempHp = targetPiece.getCurrHp();
+  							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+  							Player1.playersTeam.teamPieces[0].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);
+  								if(Player1.playersTeam.teamPieces[0].moved==1) {
+  									endTurn(numPlayers);
+  									turnSeed=2;
+  								}
+  							}
+  							else {
+  							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+  							if(Player1.playersTeam.teamPieces[0].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}	
+						}
+					}//end of if p1 in t1
+					else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+						if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+							System.out.println("Cannot attack your teammate's game pieces");
+						}
+						else {
+							targetPiece = Player3.playersTeam.teamPieces[i];
+  							int tempHp = targetPiece.getCurrHp();
+  							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+  							Player1.playersTeam.teamPieces[0].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);
+  								if(Player1.playersTeam.teamPieces[0].moved==1) {
+  									endTurn(numPlayers);
+  									turnSeed=2;
+  								}
+  							}
+  							else {
+  							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+  							if(Player1.playersTeam.teamPieces[0].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}	
+						}
+					}//end of if p1 in t2
+		}
+		
+		else if(currentButton.getIcon()==Player4.PieceImages[i]) {
+			if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+					if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+						System.out.println("Cannot attack your teammate's game pieces");
+					}
+					else {
+						targetPiece = Player4.playersTeam.teamPieces[i];
+							int tempHp = targetPiece.getCurrHp();
+							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+							Player1.playersTeam.teamPieces[0].tookAction++;
+							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+								targetPiece.currHp=0;
+								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+								removeImage(currentButton, frame3);
+								if(Player1.playersTeam.teamPieces[0].moved==1) {
+									endTurn(numPlayers);
+									turnSeed=2;
+								}
+								}
+							else {
+							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+							if(Player1.playersTeam.teamPieces[0].moved==1) {
+								endTurn(numPlayers);
+								turnSeed=2;
+							}
+							}
+					}
+				}//end of if p1 in t1
+				else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+					if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+						System.out.println("Cannot attack your teammate's game pieces");
+					}
+					else {
+						targetPiece = Player4.playersTeam.teamPieces[i];
+							int tempHp = targetPiece.getCurrHp();
+							Player1.playersTeam.teamPieces[0].attack(targetPiece);
+							Player1.playersTeam.teamPieces[0].tookAction++;
+							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+								targetPiece.currHp=0;
+								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+								removeImage(currentButton, frame3);
+								if(Player1.playersTeam.teamPieces[0].moved==1) {
+									endTurn(numPlayers);
+									turnSeed=2;
+								}
+								}
+							else {
+							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+							if(Player1.playersTeam.teamPieces[0].moved==1) {
+								endTurn(numPlayers);
+								turnSeed=2;
+							}
+							}	
+					}
+				}//end of if p1 in t2
+		}
+		}//end if tempimg p1[0]
+		
+		else if(tempImg==Player1.PieceImages[1]) {
+			if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+			if(team1[0]=="Player 1" || team1[1]=="Player 1") {		
+					if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+						System.out.println("Cannot attack your teammate's game pieces");	
+					}
+					else {
+						targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+							Player1.playersTeam.teamPieces[1].attack(targetPiece);//make attack
+							Player1.playersTeam.teamPieces[1].tookAction++;
+							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+								targetPiece.currHp=0;
+								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+								if(Player1.playersTeam.teamPieces[1].moved==1) {
+									endTurn(numPlayers); //prints out turn ended & next player
+  								turnSeed=2; //sets next to player 2
+								}
+							}
+							else {
+							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+							if(Player1.playersTeam.teamPieces[1].moved==1) {
+								endTurn(numPlayers);
+								turnSeed=2;
+							}
+							}
+					}
+					}//end of if player 1 team 1
+				else if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+					if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+						System.out.println("Cannot attack your teammate's game piece");
+					}
+					else {
+						targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+							Player1.playersTeam.teamPieces[1].attack(targetPiece);//make attack
+							Player1.playersTeam.teamPieces[1].tookAction++;
+							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+								targetPiece.currHp=0;
+								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+								if(Player1.playersTeam.teamPieces[1].moved==1) {
+									endTurn(numPlayers); //prints out turn ended & next player
+  								turnSeed=2; //sets next to player 2
+								}
+							}
+							else {
+							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+							if(Player1.playersTeam.teamPieces[1].moved==1) {
+								endTurn(numPlayers);
+								turnSeed=2;
+							}
+							}
+					}
+				}//end of else if player 1 team 2
+		}
+			else if(currentButton.getIcon()==Player3.PieceImages[i]) {
+				if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+						if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+							System.out.println("Cannot attack your teammate's game pieces");
+						}
+						else {
+							targetPiece = Player3.playersTeam.teamPieces[i];
+  							int tempHp = targetPiece.getCurrHp();
+  							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+  							Player1.playersTeam.teamPieces[1].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);
+  								if(Player1.playersTeam.teamPieces[1].moved==1) {
+  									endTurn(numPlayers);
+  									turnSeed=2;
+  								}
+  							}
+  							else {
+  							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+  							if(Player1.playersTeam.teamPieces[1].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}	
+						}
+					}//end of if p1 in t1
+					else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+						if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+							System.out.println("Cannot attack your teammate's game pieces");
+						}
+						else {
+							targetPiece = Player3.playersTeam.teamPieces[i];
+  							int tempHp = targetPiece.getCurrHp();
+  							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+  							Player1.playersTeam.teamPieces[1].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);
+  								if(Player1.playersTeam.teamPieces[1].moved==1) {
+  									endTurn(numPlayers);
+  									turnSeed=2;
+  								}
+  							}
+  							else {
+  							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+  							if(Player1.playersTeam.teamPieces[1].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}	
+						}
+					}//end of if p1 in t2
+			}	
+			else if(currentButton.getIcon()==Player4.PieceImages[i]) {
+				if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+						if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+							System.out.println("Cannot attack your teammate's game pieces");
+						}
+						else {
+							targetPiece = Player4.playersTeam.teamPieces[i];
+  							int tempHp = targetPiece.getCurrHp();
+  							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+  							Player1.playersTeam.teamPieces[1].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);
+  								if(Player1.playersTeam.teamPieces[1].moved==1) {
+  									endTurn(numPlayers);
+  									turnSeed=2;
+  								}
+  								}
+  							else {
+  							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+  							if(Player1.playersTeam.teamPieces[1].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}
+						}
+					}//end of if p1 in t1
+					
+					else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+						if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+							System.out.println("Cannot attack your teammate's game pieces");
+						}
+						else {
+							targetPiece = Player4.playersTeam.teamPieces[i];
+  							int tempHp = targetPiece.getCurrHp();
+  							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+  							Player1.playersTeam.teamPieces[1].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);
+  								if(Player1.playersTeam.teamPieces[1].moved==1) {
+  									endTurn(numPlayers);
+  									turnSeed=2;
+  								}
+  								}
+  							else {
+  							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+  							if(Player1.playersTeam.teamPieces[1].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}	
+						}
+					}//end of if p1 in t2			
+			}
+			
+		}//end of tempimg =p1[1]
+		else if(tempImg==Player1.PieceImages[2]) {
+			if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+				if(team1[0]=="Player 1" || team1[1]=="Player 1") {		
+						if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+							System.out.println("Cannot attack your teammate's game pieces");	
+						}
+						else {
+							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+  							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+  							Player1.playersTeam.teamPieces[2].attack(targetPiece);//make attack
+  							Player1.playersTeam.teamPieces[2].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+  								if(Player1.playersTeam.teamPieces[2].moved==1) {
+  									endTurn(numPlayers); //prints out turn ended & next player
+      								turnSeed=2; //sets next to player 2
+  								}
+  							}
+  							else {
+  							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+  							if(Player1.playersTeam.teamPieces[2].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}
+						}
+						}//end of if player 1 team 1
+					else if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+						if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+							System.out.println("Cannot attack your teammate's game piece");
+						}
+						else {
+							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+  							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+  							Player1.playersTeam.teamPieces[2].attack(targetPiece);//make attack
+  							Player1.playersTeam.teamPieces[2].tookAction++;
+  							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+  								targetPiece.currHp=0;
+  								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+  								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+  								if(Player1.playersTeam.teamPieces[2].moved==1) {
+  									endTurn(numPlayers); //prints out turn ended & next player
+      								turnSeed=2; //sets next to player 2
+  								}
+  							}
+  							else {
+  							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+  							if(Player1.playersTeam.teamPieces[2].moved==1) {
+  								endTurn(numPlayers);
+  								turnSeed=2;
+  							}
+  							}
+						}
+						
+					}//end of else if player 1 team 2
+				
+			}
+				
+		}
+		
+	}
 	
 	public static void set2v2Teams(int gameModeSelected, int numPlayers){ //groups players together in strings
 		int randomPlayer1;
@@ -3388,6 +3798,10 @@ public class Game extends JPanel{
        					Piece targetPiece;//alias for piece being attacked
        					for(int i=0; i<5; i++) {//find piece being attacked, searches all 3 opposing teams for a match
        						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       							if(gameModeSelected==2) {
+       							attack2v2(tempImg, numPlayers, currentButton, frame3, i);
+       							}//end of if 2v2 game mode
+       							else {
        							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
        							int tempHp = targetPiece.getCurrHp();//save hp it currently has
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);//make attack
@@ -3409,10 +3823,15 @@ public class Game extends JPanel{
        							}
        							}
        							}
+       						}
        					}
        					if(numPlayers == 4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								attack2v2(tempImg, numPlayers, currentButton, frame3, i);
+       							}//end of if 2v2
+       							else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);
@@ -3433,10 +3852,15 @@ public class Game extends JPanel{
        								turnSeed=2;
        							}
        							}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								attack2v2(tempImg, numPlayers, currentButton, frame3, i);
+       							}//end of if 2v2
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[0].attack(targetPiece);
@@ -3457,11 +3881,12 @@ public class Game extends JPanel{
        								turnSeed=2;
        							}
        							}
+       							}
        						}
        					}
        					}
        				}
-       				else {
+       				 else {
        					System.out.println("That is an invalid attack, cannot attack your own game pieces");
        				}
        				}//end of action check
@@ -3481,6 +3906,10 @@ public class Game extends JPanel{
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       							attack2v2(tempImg, numPlayers, currentButton, frame3, i);	
+       							}//end of if 2v2
+       							else {
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
@@ -3501,11 +3930,16 @@ public class Game extends JPanel{
        								turnSeed=2;
        							}
        							}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       							attack2v2(tempImg, numPlayers, currentButton, frame3, i);
+       							}//end of if 2v2
+       							else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
@@ -3527,9 +3961,15 @@ public class Game extends JPanel{
        								}
        							}
        						}
+       						}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								attack2v2(tempImg, numPlayers, currentButton, frame3, i);
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[1].attack(targetPiece);
@@ -3550,6 +3990,7 @@ public class Game extends JPanel{
        								turnSeed=2;
        							}
        							}
+       						}
        							}
        					}
        					}
@@ -3574,6 +4015,10 @@ public class Game extends JPanel{
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								attack2v2(tempImg, numPlayers, currentButton, frame3, i);
+       							}//end of if 2v2
+       							else {
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
@@ -3595,10 +4040,68 @@ public class Game extends JPanel{
        							}
        							}
        						}
+       						}
        					}
        					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       						if(gameModeSelected==2) {
+       							if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+   									if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+   										System.out.println("Cannot attack your teammate's game pieces");
+   									}
+   									else {
+   										targetPiece = Player3.playersTeam.teamPieces[i];
+   		       							int tempHp = targetPiece.getCurrHp();
+   		       							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+   		       							Player1.playersTeam.teamPieces[2].tookAction++;
+   		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+   		       								targetPiece.currHp=0;
+   		       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   		       								removeImage(currentButton, frame3);
+   		       								if(Player1.playersTeam.teamPieces[2].moved==1) {
+   		       									endTurn(numPlayers);
+   		       									turnSeed=2;
+   		       								}
+   		       							}
+   		       							else {
+   		       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   		       							if(Player1.playersTeam.teamPieces[2].moved==1) {
+   		       								endTurn(numPlayers);
+   		       								turnSeed=2;
+   		       							}
+   		       							}	
+   									}
+   								}//end of if p1 in t1
+   								else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+   									if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+   										System.out.println("Cannot attack your teammate's game pieces");
+   									}
+   									else {
+   										targetPiece = Player3.playersTeam.teamPieces[i];
+   		       							int tempHp = targetPiece.getCurrHp();
+   		       							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+   		       							Player1.playersTeam.teamPieces[2].tookAction++;
+   		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+   		       								targetPiece.currHp=0;
+   		       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   		       								removeImage(currentButton, frame3);
+   		       								if(Player1.playersTeam.teamPieces[2].moved==1) {
+   		       									endTurn(numPlayers);
+   		       									turnSeed=2;
+   		       								}
+   		       							}
+   		       							else {
+   		       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   		       							if(Player1.playersTeam.teamPieces[2].moved==1) {
+   		       								endTurn(numPlayers);
+   		       								turnSeed=2;
+   		       							}
+   		       							}	
+   									}
+   								}//end of if p1 in t2
+       						}//end of if 2v2
+       						else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
@@ -3620,9 +4123,67 @@ public class Game extends JPanel{
        							}
        							}
        						}
+       						}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+       									if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[2].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[2].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       								}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[2].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}
+       									}
+       								}//end of if p1 in t1
+       								else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+       									if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[2].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[2].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       								}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[2].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}	
+       									}
+       								}//end of if p1 in t2	
+       							}//end of if 2v2
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[2].attack(targetPiece);
@@ -3643,6 +4204,7 @@ public class Game extends JPanel{
        								turnSeed=2;
        							}
        							}
+       						}
        						}
        					}
        					}
@@ -3667,6 +4229,63 @@ public class Game extends JPanel{
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 1" || team1[1]=="Player 1") {		
+       									if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       										System.out.println("Cannot attack your teammate's game pieces");	
+       									}
+       									else {
+       										targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       		       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       		       							Player1.playersTeam.teamPieces[3].attack(targetPiece);//make attack
+       		       							Player1.playersTeam.teamPieces[3].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+       		       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		           								turnSeed=2; //sets next to player 2
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       		       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}
+       									}
+       									}//end of if player 1 team 1
+       								else if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+       									if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+       										System.out.println("Cannot attack your teammate's game piece");
+       									}
+       									else {
+       										targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       		       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       		       							Player1.playersTeam.teamPieces[3].attack(targetPiece);//make attack
+       		       							Player1.playersTeam.teamPieces[3].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+       		       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		           								turnSeed=2; //sets next to player 2
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       		       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}
+       									}
+       								}//end of else if player 1 team 2
+       							}//end of if 2v2
+       							else {
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
@@ -3688,10 +4307,68 @@ public class Game extends JPanel{
        							}
        							}
        						}
+       						}
        					}
        					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+       									if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player3.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[3].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}	
+       									}
+       								}//end of if p1 in t1
+       								else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+       									if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player3.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[3].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}	
+       									}
+       								}//end of if p1 in t2	
+       							}//end of if 2v2
+       							else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
@@ -3712,10 +4389,68 @@ public class Game extends JPanel{
        								turnSeed=2;
        							}
        							}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+       									if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[3].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       								}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}
+       									}
+       								}
+       								else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+       									if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[3].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       								}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}	
+       									}
+       								}//end of if p1 in t2		
+       							}//end of if 2v2
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[3].attack(targetPiece);
@@ -3736,6 +4471,7 @@ public class Game extends JPanel{
        								turnSeed=2;
        							}
        							}
+       						}
        						}
        					}
        					}
@@ -3761,6 +4497,64 @@ public class Game extends JPanel{
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 1" || team1[1]=="Player 1") {		
+       									if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       										System.out.println("Cannot attack your teammate's game pieces");	
+       									}
+       									else {
+       										targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       		       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       		       							Player1.playersTeam.teamPieces[4].attack(targetPiece);//make attack
+       		       							Player1.playersTeam.teamPieces[4].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+       		       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		           								turnSeed=2; //sets next to player 2
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       		       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}
+       									}
+       									}//end of if player 1 team 1
+       								else if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+       									if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+       										System.out.println("Cannot attack your teammate's game piece");
+       									}
+       									else {
+       										targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       		       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       		       							Player1.playersTeam.teamPieces[4].attack(targetPiece);//make attack
+       		       							Player1.playersTeam.teamPieces[4].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+       		       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		           								turnSeed=2; //sets next to player 2
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       		       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}
+       									}
+       								}//end of else if player 1 team 2	
+       							}//end of of2v2
+       							
+       							else {
        							targetPiece = Player2.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
@@ -3782,10 +4576,69 @@ public class Game extends JPanel{
        							}
        							}
        						}
+       						}
        					}
        					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+       									if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player3.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[4].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}	
+       									}
+       								}//end of if p1 in t1
+       								else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+       									if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player3.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[4].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}	
+       									}
+       								}//end of if p1 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
@@ -3806,10 +4659,70 @@ public class Game extends JPanel{
        								turnSeed=2;
        							}
        							}
+       						}
        							}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+       									if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[4].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       								}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}
+       									}
+       								}//end of if p1 in t1
+       								
+       								else if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+       									if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+       		       							Player1.playersTeam.teamPieces[4].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       									endTurn(numPlayers);
+       		       									turnSeed=2;
+       		       								}
+       		       								}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								turnSeed=2;
+       		       							}
+       		       							}	
+       									}
+       								}//end of if p1 in t2		
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player1.playersTeam.teamPieces[4].attack(targetPiece);
@@ -3830,6 +4743,7 @@ public class Game extends JPanel{
        								turnSeed=2;
        							}
        							}
+       						}
        						}
        					}
        					}
@@ -3859,6 +4773,88 @@ public class Game extends JPanel{
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player1.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[0].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[0].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		       									if(numPlayers==2){ //if 2 players, set next to player 1
+       		       										turnSeed=1;	
+       		       									}
+       		       									else { //if 4 players, set next to player 3
+       		       									turnSeed=3;
+       		       									}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[0].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       									}
+       								}//end of if p2 in t1
+       									
+       									
+       								else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       									if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player1.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[0].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[0].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		       									if(numPlayers==2){ //if 2 players, set next to player 1
+       		       										turnSeed=1;	
+       		       									}
+       		       									else { //if 4 players, set next to player 3
+       		       									turnSeed=3;
+       		       									}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[0].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       										
+       									}
+       									
+       								}//end of if p2 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
@@ -3889,11 +4885,89 @@ public class Game extends JPanel{
    								}
        							}
        							}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       							if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       							if(team1[0]=="Player 3" || team1[1]=="Player 3"){
+       								System.out.println("Cannot attack your teammate's game pieces");
+       							}
+       							else {
+       								targetPiece = Player3.playersTeam.teamPieces[i];
+           							int tempHp = targetPiece.getCurrHp();
+           							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+           							Player2.playersTeam.teamPieces[0].tookAction++;
+           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+           								targetPiece.currHp=0;
+           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+           								removeImage(currentButton, frame3);
+           								if(Player2.playersTeam.teamPieces[0].moved==1) {
+           								endTurn(numPlayers);
+           								if(numPlayers==2){
+           								turnSeed=1;	
+           								}
+           								else {
+           									turnSeed=3;
+           								}
+           								}
+           							}
+           							else {
+           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           							if(Player2.playersTeam.teamPieces[0].moved==1) {
+           							endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
+           							}
+           							}
+       							}
+       							}//end of if p1 in t1
+       							else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       								if(team2[0]=="Player 3" || team2[1]=="Player 3"){
+       									System.out.println("Cannot attack your teammate's game pieces");
+       								}
+       								else {	targetPiece = Player3.playersTeam.teamPieces[i];
+           							int tempHp = targetPiece.getCurrHp();
+           							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+           							Player2.playersTeam.teamPieces[0].tookAction++;
+           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+           								targetPiece.currHp=0;
+           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+           								removeImage(currentButton, frame3);
+           								if(Player2.playersTeam.teamPieces[0].moved==1) {
+           								endTurn(numPlayers);
+           								if(numPlayers==2){
+           								turnSeed=1;	
+           								}
+           								else {
+           									turnSeed=3;
+           								}
+           								}
+           							}
+           							else {
+           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+           							if(Player2.playersTeam.teamPieces[0].moved==1) {
+           							endTurn(numPlayers);
+       								if(numPlayers==2){
+       								turnSeed=1;	
+       								}
+       								else {
+       									turnSeed=3;
+       								}
+           							}
+           							}	
+       								}
+       							}//end of if p2 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
@@ -3925,9 +4999,91 @@ public class Game extends JPanel{
        							}
        							}
        						}
+       						}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       									if(team1[0]=="Player 4" || team1[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {	
+       									targetPiece = Player4.playersTeam.teamPieces[i];
+       	       							int tempHp = targetPiece.getCurrHp();
+       	       							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       	       							Player2.playersTeam.teamPieces[0].tookAction++;
+       	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	       								targetPiece.currHp=0;
+       	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	       								removeImage(currentButton, frame3);
+       	       								if(Player2.playersTeam.teamPieces[0].moved==1) {
+       	       								endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	       								}
+       	       							}
+       	       							else {
+       	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	       							if(Player2.playersTeam.teamPieces[0].moved==1) {
+       	       							endTurn(numPlayers);
+       	   								if(numPlayers==2){
+       	   								turnSeed=1;	
+       	   								}
+       	   								else {
+       	   									turnSeed=3;
+       	   								}
+       	       							}
+       	       							}
+       										
+       									}
+       								}//end if p2 in t1
+       								else if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+       									if(team2[0]=="Player 4" || team2[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game piece");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[0].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[0].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[0].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								if(numPlayers==2){
+       		       								turnSeed=1;	
+       		       								}
+       		       								else {
+       		       									turnSeed=3;
+       		       								}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[0].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       										
+       									}
+       									
+       								}// end of if p2 in t2
+       							}//end of if 2v2 
+       					
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[0].attack(targetPiece);
@@ -3956,6 +5112,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        							}
        						}
@@ -3982,6 +5139,85 @@ public class Game extends JPanel{
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player1.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[1].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[1].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		       									if(numPlayers==2){ //if 2 players, set next to player 1
+       		       										turnSeed=1;	
+       		       									}
+       		       									else { //if 4 players, set next to player 3
+       		       									turnSeed=3;
+       		       									}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[1].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       									}
+       								}//end of if p2 in t1
+       	
+       								else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       									if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player1.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[1].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[1].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		       									if(numPlayers==2){ //if 2 players, set next to player 1
+       		       										turnSeed=1;	
+       		       									}
+       		       									else { //if 4 players, set next to player 3
+       		       									turnSeed=3;
+       		       									}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[1].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       									}
+       								}//end of if p2 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
@@ -4012,11 +5248,89 @@ public class Game extends JPanel{
    								}
        							}
        							}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       	       							if(team1[0]=="Player 3" || team1[1]=="Player 3"){
+       	       								System.out.println("Cannot attack your teammate's game pieces");
+       	       							}
+       	       							else {
+       	       								targetPiece = Player3.playersTeam.teamPieces[i];
+       	           							int tempHp = targetPiece.getCurrHp();
+       	           							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       	           							Player2.playersTeam.teamPieces[1].tookAction++;
+       	           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	           								targetPiece.currHp=0;
+       	           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	           								removeImage(currentButton, frame3);
+       	           								if(Player2.playersTeam.teamPieces[1].moved==1) {
+       	           								endTurn(numPlayers);
+       	           								if(numPlayers==2){
+       	           								turnSeed=1;	
+       	           								}
+       	           								else {
+       	           									turnSeed=3;
+       	           								}
+       	           								}
+       	           							}
+       	           							else {
+       	           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	           							if(Player2.playersTeam.teamPieces[1].moved==1) {
+       	           							endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	           							}
+       	           							}
+       	       							}
+       	       							}//end of if p1 in t1
+       	       							else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       	       								if(team2[0]=="Player 3" || team2[1]=="Player 3"){
+       	       									System.out.println("Cannot attack your teammate's game pieces");
+       	       								}
+       	       								else {	targetPiece = Player3.playersTeam.teamPieces[i];
+       	           							int tempHp = targetPiece.getCurrHp();
+       	           							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       	           							Player2.playersTeam.teamPieces[1].tookAction++;
+       	           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	           								targetPiece.currHp=0;
+       	           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	           								removeImage(currentButton, frame3);
+       	           								if(Player2.playersTeam.teamPieces[1].moved==1) {
+       	           								endTurn(numPlayers);
+       	           								if(numPlayers==2){
+       	           								turnSeed=1;	
+       	           								}
+       	           								else {
+       	           									turnSeed=3;
+       	           								}
+       	           								}
+       	           							}
+       	           							else {
+       	           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	           							if(Player2.playersTeam.teamPieces[1].moved==1) {
+       	           							endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	           							}
+       	           							}	
+       	       								}
+       	       							}//end of if p2 in t2
+       							}//end of if 2v2
+ 
+       							else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
@@ -4047,10 +5361,92 @@ public class Game extends JPanel{
    								}
        							}
        							}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       									if(team1[0]=="Player 4" || team1[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {	
+       									targetPiece = Player4.playersTeam.teamPieces[i];
+       	       							int tempHp = targetPiece.getCurrHp();
+       	       							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       	       							Player2.playersTeam.teamPieces[1].tookAction++;
+       	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	       								targetPiece.currHp=0;
+       	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	       								removeImage(currentButton, frame3);
+       	       								if(Player2.playersTeam.teamPieces[1].moved==1) {
+       	       								endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	       								}
+       	       							}
+       	       							else {
+       	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	       							if(Player2.playersTeam.teamPieces[1].moved==1) {
+       	       							endTurn(numPlayers);
+       	   								if(numPlayers==2){
+       	   								turnSeed=1;	
+       	   								}
+       	   								else {
+       	   									turnSeed=3;
+       	   								}
+       	       							}
+       	       							}
+       										
+       									}
+       								}//end if p2 in t1
+       								else if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+       									if(team2[0]=="Player 4" || team2[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game piece");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[1].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[1].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[1].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								if(numPlayers==2){
+       		       								turnSeed=1;	
+       		       								}
+       		       								else {
+       		       									turnSeed=3;
+       		       								}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[1].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       										
+       									}
+       									
+       								}// end of if p2 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[1].attack(targetPiece);
@@ -4079,6 +5475,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        							}
        						}
@@ -4105,6 +5502,85 @@ public class Game extends JPanel{
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       						if(gameModeSelected==2)	{
+       							if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+   									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+   										System.out.println("Cannot attack your teammate's game pieces");
+   									}
+   									else {
+   										targetPiece = Player1.playersTeam.teamPieces[i];
+   		       							int tempHp = targetPiece.getCurrHp();
+   		       							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+   		       							Player2.playersTeam.teamPieces[2].tookAction++;
+   		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+   		       								targetPiece.currHp=0;
+   		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   		       								removeImage(currentButton, frame3);
+   		       								if(Player2.playersTeam.teamPieces[2].moved==1) {
+   		       									endTurn(numPlayers); //prints out turn ended & next player
+   		       									if(numPlayers==2){ //if 2 players, set next to player 1
+   		       										turnSeed=1;	
+   		       									}
+   		       									else { //if 4 players, set next to player 3
+   		       									turnSeed=3;
+   		       									}
+   		       								}
+   		       							}
+   		       							else {
+   		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   		       							if(Player2.playersTeam.teamPieces[2].moved==1) {
+   		       							endTurn(numPlayers);
+   		   								if(numPlayers==2){
+   		   								turnSeed=1;	
+   		   								}
+   		   								else {
+   		   									turnSeed=3;
+   		   								}
+   		       							}
+   		       							}
+   									}
+   								}//end of if p2 in t1
+   	
+   								else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+   									if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+   										System.out.println("Cannot attack your teammate's game pieces");
+   									}
+   									else {
+   										targetPiece = Player1.playersTeam.teamPieces[i];
+   		       							int tempHp = targetPiece.getCurrHp();
+   		       							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+   		       							Player2.playersTeam.teamPieces[2].tookAction++;
+   		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+   		       								targetPiece.currHp=0;
+   		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   		       								removeImage(currentButton, frame3);
+   		       								if(Player2.playersTeam.teamPieces[2].moved==1) {
+   		       									endTurn(numPlayers); //prints out turn ended & next player
+   		       									if(numPlayers==2){ //if 2 players, set next to player 1
+   		       										turnSeed=1;	
+   		       									}
+   		       									else { //if 4 players, set next to player 3
+   		       									turnSeed=3;
+   		       									}
+   		       								}
+   		       							}
+   		       							else {
+   		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+   		       							if(Player2.playersTeam.teamPieces[2].moved==1) {
+   		       							endTurn(numPlayers);
+   		   								if(numPlayers==2){
+   		   								turnSeed=1;	
+   		   								}
+   		   								else {
+   		   									turnSeed=3;
+   		   								}
+   		       							}
+   		       							}
+   									}
+   								}//end of if p2 in t2
+       						}//end of if 2v2
+       						
+       						else {
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
@@ -4136,10 +5612,88 @@ public class Game extends JPanel{
        							}
        							}
        						}
+       						}
        					}
        					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       	       							if(team1[0]=="Player 3" || team1[1]=="Player 3"){
+       	       								System.out.println("Cannot attack your teammate's game pieces");
+       	       							}
+       	       							else {
+       	       								targetPiece = Player3.playersTeam.teamPieces[i];
+       	           							int tempHp = targetPiece.getCurrHp();
+       	           							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       	           							Player2.playersTeam.teamPieces[2].tookAction++;
+       	           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	           								targetPiece.currHp=0;
+       	           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	           								removeImage(currentButton, frame3);
+       	           								if(Player2.playersTeam.teamPieces[2].moved==1) {
+       	           								endTurn(numPlayers);
+       	           								if(numPlayers==2){
+       	           								turnSeed=1;	
+       	           								}
+       	           								else {
+       	           									turnSeed=3;
+       	           								}
+       	           								}
+       	           							}
+       	           							else {
+       	           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	           							if(Player2.playersTeam.teamPieces[2].moved==1) {
+       	           							endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	           							}
+       	           							}
+       	       							}
+       	       							}//end of if p1 in t1
+       	       							else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       	       								if(team2[0]=="Player 3" || team2[1]=="Player 3"){
+       	       									System.out.println("Cannot attack your teammate's game pieces");
+       	       								}
+       	       								else {	targetPiece = Player3.playersTeam.teamPieces[i];
+       	           							int tempHp = targetPiece.getCurrHp();
+       	           							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       	           							Player2.playersTeam.teamPieces[2].tookAction++;
+       	           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	           								targetPiece.currHp=0;
+       	           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	           								removeImage(currentButton, frame3);
+       	           								if(Player2.playersTeam.teamPieces[2].moved==1) {
+       	           								endTurn(numPlayers);
+       	           								if(numPlayers==2){
+       	           								turnSeed=1;	
+       	           								}
+       	           								else {
+       	           									turnSeed=3;
+       	           								}
+       	           								}
+       	           							}
+       	           							else {
+       	           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	           							if(Player2.playersTeam.teamPieces[2].moved==1) {
+       	           							endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	           							}
+       	           							}	
+       	       								}
+       	       							}//end of if p2 in t2
+       							}//end of if 2v2
+       								
+       							else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
@@ -4170,10 +5724,92 @@ public class Game extends JPanel{
    								}
        							}
        							}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       									if(team1[0]=="Player 4" || team1[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {	
+       									targetPiece = Player4.playersTeam.teamPieces[i];
+       	       							int tempHp = targetPiece.getCurrHp();
+       	       							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       	       							Player2.playersTeam.teamPieces[2].tookAction++;
+       	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	       								targetPiece.currHp=0;
+       	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	       								removeImage(currentButton, frame3);
+       	       								if(Player2.playersTeam.teamPieces[2].moved==1) {
+       	       								endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	       								}
+       	       							}
+       	       							else {
+       	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	       							if(Player2.playersTeam.teamPieces[2].moved==1) {
+       	       							endTurn(numPlayers);
+       	   								if(numPlayers==2){
+       	   								turnSeed=1;	
+       	   								}
+       	   								else {
+       	   									turnSeed=3;
+       	   								}
+       	       							}
+       	       							}
+       										
+       									}
+       								}//end if p2 in t1
+       								else if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+       									if(team2[0]=="Player 4" || team2[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game piece");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[2].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[2].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[2].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								if(numPlayers==2){
+       		       								turnSeed=1;	
+       		       								}
+       		       								else {
+       		       									turnSeed=3;
+       		       								}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[2].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       										
+       									}
+       									
+       								}// end of if p2 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[2].attack(targetPiece);
@@ -4202,6 +5838,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        							}
        						}
@@ -4228,6 +5865,85 @@ public class Game extends JPanel{
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player1.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[3].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		       									if(numPlayers==2){ //if 2 players, set next to player 1
+       		       										turnSeed=1;	
+       		       									}
+       		       									else { //if 4 players, set next to player 3
+       		       									turnSeed=3;
+       		       									}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       									}
+       								}//end of if p2 in t1
+       	
+       								else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       									if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player1.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[3].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		       									if(numPlayers==2){ //if 2 players, set next to player 1
+       		       										turnSeed=1;	
+       		       									}
+       		       									else { //if 4 players, set next to player 3
+       		       									turnSeed=3;
+       		       									}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       									}
+       								}//end of if p2 in t2
+       							}//end if 2v2
+       							
+       							else {
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
@@ -4258,11 +5974,89 @@ public class Game extends JPanel{
    								}
        							}
        							}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       	       							if(team1[0]=="Player 3" || team1[1]=="Player 3"){
+       	       								System.out.println("Cannot attack your teammate's game pieces");
+       	       							}
+       	       							else {
+       	       								targetPiece = Player3.playersTeam.teamPieces[i];
+       	           							int tempHp = targetPiece.getCurrHp();
+       	           							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       	           							Player2.playersTeam.teamPieces[3].tookAction++;
+       	           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	           								targetPiece.currHp=0;
+       	           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	           								removeImage(currentButton, frame3);
+       	           								if(Player2.playersTeam.teamPieces[3].moved==1) {
+       	           								endTurn(numPlayers);
+       	           								if(numPlayers==2){
+       	           								turnSeed=1;	
+       	           								}
+       	           								else {
+       	           									turnSeed=3;
+       	           								}
+       	           								}
+       	           							}
+       	           							else {
+       	           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	           							if(Player2.playersTeam.teamPieces[3].moved==1) {
+       	           							endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	           							}
+       	           							}
+       	       							}
+       	       							}//end of if p1 in t1
+       	       							else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       	       								if(team2[0]=="Player 3" || team2[1]=="Player 3"){
+       	       									System.out.println("Cannot attack your teammate's game pieces");
+       	       								}
+       	       								else {	targetPiece = Player3.playersTeam.teamPieces[i];
+       	           							int tempHp = targetPiece.getCurrHp();
+       	           							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       	           							Player2.playersTeam.teamPieces[3].tookAction++;
+       	           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	           								targetPiece.currHp=0;
+       	           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	           								removeImage(currentButton, frame3);
+       	           								if(Player2.playersTeam.teamPieces[3].moved==1) {
+       	           								endTurn(numPlayers);
+       	           								if(numPlayers==2){
+       	           								turnSeed=1;	
+       	           								}
+       	           								else {
+       	           									turnSeed=3;
+       	           								}
+       	           								}
+       	           							}
+       	           							else {
+       	           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	           							if(Player2.playersTeam.teamPieces[3].moved==1) {
+       	           							endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	           							}
+       	           							}	
+       	       								}
+       	       							}//end of if p2 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
@@ -4293,10 +6087,92 @@ public class Game extends JPanel{
    								}
        							}
        							}
+       							}
        						}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       									if(team1[0]=="Player 4" || team1[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {	
+       									targetPiece = Player4.playersTeam.teamPieces[i];
+       	       							int tempHp = targetPiece.getCurrHp();
+       	       							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       	       							Player2.playersTeam.teamPieces[3].tookAction++;
+       	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	       								targetPiece.currHp=0;
+       	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	       								removeImage(currentButton, frame3);
+       	       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+       	       								endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	       								}
+       	       							}
+       	       							else {
+       	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+       	       							endTurn(numPlayers);
+       	   								if(numPlayers==2){
+       	   								turnSeed=1;	
+       	   								}
+       	   								else {
+       	   									turnSeed=3;
+       	   								}
+       	       							}
+       	       							}
+       										
+       									}
+       								}//end if p2 in t1
+       								else if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+       									if(team2[0]=="Player 4" || team2[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game piece");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[3].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[3].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								if(numPlayers==2){
+       		       								turnSeed=1;	
+       		       								}
+       		       								else {
+       		       									turnSeed=3;
+       		       								}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       										
+       									}
+       									
+       								}// end of if p2 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[3].attack(targetPiece);
@@ -4325,6 +6201,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        							}
        						}
@@ -4351,6 +6228,85 @@ public class Game extends JPanel{
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player1.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[4].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		       									if(numPlayers==2){ //if 2 players, set next to player 1
+       		       										turnSeed=1;	
+       		       									}
+       		       									else { //if 4 players, set next to player 3
+       		       									turnSeed=3;
+       		       									}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       									}
+       								}//end of if p2 in t1
+       	
+       								else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       									if(team2[0]=="Player 1" || team2[1]=="Player 1"){
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {
+       										targetPiece = Player1.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[4].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+       		       									endTurn(numPlayers); //prints out turn ended & next player
+       		       									if(numPlayers==2){ //if 2 players, set next to player 1
+       		       										turnSeed=1;	
+       		       									}
+       		       									else { //if 4 players, set next to player 3
+       		       									turnSeed=3;
+       		       									}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       									}
+       								}//end of if p2 in t2
+       							}//end of if 2v2
+       						
+       							else {
        							targetPiece = Player1.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
@@ -4381,11 +6337,89 @@ public class Game extends JPanel{
    								}
        							}
        							}
+       							}
        						}
        					}
        					if (numPlayers ==4) {
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       	       							if(team1[0]=="Player 3" || team1[1]=="Player 3"){
+       	       								System.out.println("Cannot attack your teammate's game pieces");
+       	       							}
+       	       							else {
+       	       								targetPiece = Player3.playersTeam.teamPieces[i];
+       	           							int tempHp = targetPiece.getCurrHp();
+       	           							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       	           							Player2.playersTeam.teamPieces[4].tookAction++;
+       	           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	           								targetPiece.currHp=0;
+       	           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	           								removeImage(currentButton, frame3);
+       	           								if(Player2.playersTeam.teamPieces[4].moved==1) {
+       	           								endTurn(numPlayers);
+       	           								if(numPlayers==2){
+       	           								turnSeed=1;	
+       	           								}
+       	           								else {
+       	           									turnSeed=3;
+       	           								}
+       	           								}
+       	           							}
+       	           							else {
+       	           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	           							if(Player2.playersTeam.teamPieces[4].moved==1) {
+       	           							endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	           							}
+       	           							}
+       	       							}
+       	       							}//end of if p1 in t1
+       	       							else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       	       								if(team2[0]=="Player 3" || team2[1]=="Player 3"){
+       	       									System.out.println("Cannot attack your teammate's game pieces");
+       	       								}
+       	       								else {	targetPiece = Player3.playersTeam.teamPieces[i];
+       	           							int tempHp = targetPiece.getCurrHp();
+       	           							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       	           							Player2.playersTeam.teamPieces[4].tookAction++;
+       	           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	           								targetPiece.currHp=0;
+       	           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	           								removeImage(currentButton, frame3);
+       	           								if(Player2.playersTeam.teamPieces[4].moved==1) {
+       	           								endTurn(numPlayers);
+       	           								if(numPlayers==2){
+       	           								turnSeed=1;	
+       	           								}
+       	           								else {
+       	           									turnSeed=3;
+       	           								}
+       	           								}
+       	           							}
+       	           							else {
+       	           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	           							if(Player2.playersTeam.teamPieces[4].moved==1) {
+       	           							endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	           							}
+       	           							}	
+       	       								}
+       	       							}//end of if p2 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player3.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
@@ -4404,6 +6438,7 @@ public class Game extends JPanel{
        								}
        								}
        							}
+       							else {
        							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
        							if(Player2.playersTeam.teamPieces[4].moved==1) {
        							endTurn(numPlayers);
@@ -4414,10 +6449,91 @@ public class Game extends JPanel{
    									turnSeed=3;
    								}
        							}
+       							}
+       						}
        						}
        					}
        					for(int i=0; i<5; i++) {
        						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+       							if(gameModeSelected==2) {
+       								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       									if(team1[0]=="Player 4" || team1[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game pieces");
+       									}
+       									else {	
+       									targetPiece = Player4.playersTeam.teamPieces[i];
+       	       							int tempHp = targetPiece.getCurrHp();
+       	       							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       	       							Player2.playersTeam.teamPieces[4].tookAction++;
+       	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       	       								targetPiece.currHp=0;
+       	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	       								removeImage(currentButton, frame3);
+       	       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+       	       								endTurn(numPlayers);
+       	       								if(numPlayers==2){
+       	       								turnSeed=1;	
+       	       								}
+       	       								else {
+       	       									turnSeed=3;
+       	       								}
+       	       								}
+       	       							}
+       	       							else {
+       	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       	       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+       	       							endTurn(numPlayers);
+       	   								if(numPlayers==2){
+       	   								turnSeed=1;	
+       	   								}
+       	   								else {
+       	   									turnSeed=3;
+       	   								}
+       	       							}
+       	       							}
+       										
+       									}
+       								}//end if p2 in t1
+       								else if(team2[0]=="Player 2" || team2[1]=="Player 2"){
+       									if(team2[0]=="Player 4" || team2[1]=="Player 4"){
+       										System.out.println("Cannot attack your teammate's game piece");
+       									}
+       									else {
+       										targetPiece = Player4.playersTeam.teamPieces[i];
+       		       							int tempHp = targetPiece.getCurrHp();
+       		       							Player2.playersTeam.teamPieces[4].attack(targetPiece);
+       		       							Player2.playersTeam.teamPieces[4].tookAction++;
+       		       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+       		       								targetPiece.currHp=0;
+       		       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       		       								removeImage(currentButton, frame3);
+       		       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+       		       								endTurn(numPlayers);
+       		       								if(numPlayers==2){
+       		       								turnSeed=1;	
+       		       								}
+       		       								else {
+       		       									turnSeed=3;
+       		       								}
+       		       								}
+       		       							}
+       		       							else {
+       		       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+       		       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+       		       							endTurn(numPlayers);
+       		   								if(numPlayers==2){
+       		   								turnSeed=1;	
+       		   								}
+       		   								else {
+       		   									turnSeed=3;
+       		   								}
+       		       							}
+       		       							}
+       									}
+       								}// end of if p2 in t2
+       							}//end of if 2v2
+       							
+       							else {
        							targetPiece = Player4.playersTeam.teamPieces[i];
        							int tempHp = targetPiece.getCurrHp();
        							Player2.playersTeam.teamPieces[4].attack(targetPiece);
@@ -4446,6 +6562,7 @@ public class Game extends JPanel{
    								else {
    									turnSeed=3;
    								}
+       							}
        							}
        							}
        						}
@@ -4478,6 +6595,65 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+               									System.out.println("Cannot attack your teammate's game pieces");
+               								}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[0].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[0].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[0].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of if p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[0].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[0].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[0].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}
+               							}//end of if 2v2
+               							
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
@@ -4498,10 +6674,69 @@ public class Game extends JPanel{
            								turnSeed=4;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               							if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+               									System.out.println("Cannot attack your teammate's game pieces");
+               								}
+               								else {
+               									targetPiece = Player2.playersTeam.teamPieces[i];
+                       							int tempHp = targetPiece.getCurrHp();
+                       							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+                       							Player3.playersTeam.teamPieces[0].tookAction++;
+                       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                       								targetPiece.currHp=0;
+                       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                       								removeImage(currentButton, frame3);
+                       								if(Player3.playersTeam.teamPieces[0].moved==1) {
+                       								endTurn(numPlayers);
+                       								turnSeed=4;
+                       								}
+                       							}
+                       							else {
+                       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                       							if(Player3.playersTeam.teamPieces[0].moved==1) {
+                       							endTurn(numPlayers);
+                   								turnSeed=4;
+                       							}
+                       							}
+               								}
+               							}//end of if p3 in t1
+               							else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               								if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+               									System.out.println("Cannot attack your teammate's game pieces");
+               								}
+               								else {
+               									targetPiece = Player2.playersTeam.teamPieces[i];
+                       							int tempHp = targetPiece.getCurrHp();
+                       							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+                       							Player3.playersTeam.teamPieces[0].tookAction++;
+                       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                       								targetPiece.currHp=0;
+                       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                       								removeImage(currentButton, frame3);
+                       								if(Player3.playersTeam.teamPieces[0].moved==1) {
+                       								endTurn(numPlayers);
+                       								turnSeed=4;
+                       								}
+                       							}
+                       							else {
+                       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                       							if(Player3.playersTeam.teamPieces[0].moved==1) {
+                       							endTurn(numPlayers);
+                   								turnSeed=4;
+                       							}
+                       							}
+               								}
+               							} //end of if p3 in t2		
+               							}//end of if 2v2
+               							
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
@@ -4522,10 +6757,70 @@ public class Game extends JPanel{
            								turnSeed=4;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[0].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[0].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[0].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[0].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[0].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[0].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[0].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t2	
+               							}//end of if 2v2
+               							
+               							else {
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[0].attack(targetPiece);
@@ -4544,6 +6839,7 @@ public class Game extends JPanel{
                							if(Player3.playersTeam.teamPieces[0].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                							}
                						}
@@ -4569,6 +6865,65 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+               									System.out.println("Cannot attack your teammate's game pieces");
+               								}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of if p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}	
+               							}//end of if 2v2
+               							
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
@@ -4589,10 +6944,69 @@ public class Game extends JPanel{
            								turnSeed=4;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+                   								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                   									targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+                   								}
+                   							}//end of if p3 in t1
+                   							else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+                   								if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                   									targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+                   								}
+                   							} //end of if p3 in t2	
+               							}//end of 2v2
+               						
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
@@ -4613,10 +7027,70 @@ public class Game extends JPanel{
            								turnSeed=4;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t2	
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[1].attack(targetPiece);
@@ -4635,6 +7109,7 @@ public class Game extends JPanel{
                							if(Player3.playersTeam.teamPieces[1].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                							}
                					}
@@ -4660,6 +7135,65 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+               									System.out.println("Cannot attack your teammate's game pieces");
+               								}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of if p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}	
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
@@ -4680,10 +7214,69 @@ public class Game extends JPanel{
            								turnSeed=4;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+                   								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                   									targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+                   								}
+                   							}//end of if p3 in t1
+                   							else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+                   								if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                   									targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+                   								}
+                   							} //end of if p3 in t2	
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
@@ -4704,10 +7297,70 @@ public class Game extends JPanel{
            								turnSeed=4;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t2	
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[2].attack(targetPiece);
@@ -4726,6 +7379,7 @@ public class Game extends JPanel{
                							if(Player3.playersTeam.teamPieces[2].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                							}
                						}
@@ -4751,6 +7405,65 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+               									System.out.println("Cannot attack your teammate's game pieces");
+               								}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of if p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}	
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
@@ -4771,10 +7484,69 @@ public class Game extends JPanel{
            								turnSeed=4;
                							}
                							}
+               							}
                					}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+                   								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                   									targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+                   								}
+                   							}//end of if p3 in t1
+                   							else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+                   								if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                   									targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+                   								}
+                   							} //end of if p3 in t2	
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
@@ -4795,10 +7567,70 @@ public class Game extends JPanel{
            								turnSeed=4;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t2		
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[3].attack(targetPiece);
@@ -4817,6 +7649,7 @@ public class Game extends JPanel{
                							if(Player3.playersTeam.teamPieces[3].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                							}
                						}
@@ -4843,6 +7676,65 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1"){
+               									System.out.println("Cannot attack your teammate's game pieces");
+               								}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of if p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=4; //set next to player 4
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}	
+               							}//end of 2v2
+               					
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
@@ -4863,10 +7755,69 @@ public class Game extends JPanel{
            								turnSeed=4;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+                   								if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                   									targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+                   								}
+                   							}//end of if p3 in t1
+                   							else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+                   								if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                   									targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+                   								}
+                   							} //end of if p3 in t2	
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
@@ -4888,9 +7839,69 @@ public class Game extends JPanel{
                							}
                							}
                							}
+               						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player4.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               									if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t1
+               								
+               								else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+               										targetPiece = Player4.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player3.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player3.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=4;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player3.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=4;
+                           							}
+                           							}
+               									}
+               								}//end of p3 in t2	
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player4.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player3.playersTeam.teamPieces[4].attack(targetPiece);
@@ -4909,6 +7920,7 @@ public class Game extends JPanel{
                							if(Player3.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=4;
+               							}
                							}
                							}
                						}
@@ -4939,6 +7951,65 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[0].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[0].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[0].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+               									}
+               								}//end of p4 in t1
+               								
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[0].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[0].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[0].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of p4 in t2
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
@@ -4959,10 +8030,70 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[0].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[0].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[0].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[0].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[0].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[0].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of if p4 in t2
+               								
+               							}//end of 2v2
+               							
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
@@ -4983,10 +8114,69 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               						if(gameModeSelected==2) {
+               							if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+               								System.out.println("Cannot attack your teammate's game pieces");
+               								}
+               								else {
+                       							targetPiece = Player3.playersTeam.teamPieces[i];
+                       							int tempHp = targetPiece.getCurrHp();
+                       							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+                       							Player4.playersTeam.teamPieces[0].tookAction++;
+                       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                       								targetPiece.currHp=0;
+                       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                       								removeImage(currentButton, frame3);
+                       								if(Player4.playersTeam.teamPieces[0].moved==1) {
+                       								endTurn(numPlayers);
+                       								turnSeed=1;
+                       								}
+                       							}
+                       							else {
+                       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                       							if(Player4.playersTeam.teamPieces[0].moved==1) {
+                       							endTurn(numPlayers);
+                   								turnSeed=1;
+                       							}
+                       							}
+               								}
+               							}//end of p4 in t1
+               							else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               								if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+               									System.out.println("Cannot attack your teammate's game pieces");
+               								}
+               								else {
+                       							targetPiece = Player3.playersTeam.teamPieces[i];
+                       							int tempHp = targetPiece.getCurrHp();
+                       							Player4.playersTeam.teamPieces[0].attack(targetPiece);
+                       							Player4.playersTeam.teamPieces[0].tookAction++;
+                       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                       								targetPiece.currHp=0;
+                       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                       								removeImage(currentButton, frame3);
+                       								if(Player4.playersTeam.teamPieces[0].moved==1) {
+                       								endTurn(numPlayers);
+                       								turnSeed=1;
+                       								}
+                       							}
+                       							else {
+                       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                       							if(Player4.playersTeam.teamPieces[0].moved==1) {
+                       							endTurn(numPlayers);
+                   								turnSeed=1;
+                       							}
+                       							}
+               								}
+               							}//end of p4 in t2	
+               						}//end of if 2v2
+               							
+               						else {
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[0].attack(targetPiece);
@@ -5005,6 +8195,7 @@ public class Game extends JPanel{
                							if(Player4.playersTeam.teamPieces[0].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                							}
                						}
@@ -5030,6 +8221,65 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+               									}
+               								}//end of p4 in t1
+               								
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of p4 in t2	
+               							}//end of 2v2
+               						
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
@@ -5050,10 +8300,69 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of if p4 in t2
+               							}//end of 2v2
+               						
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
@@ -5074,10 +8383,69 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+                   								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+                   								System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                           							targetPiece = Player3.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+                   								}
+                   							}//end of p4 in t1
+                   							else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+                   								if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                           							targetPiece = Player3.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[1].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[1].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[1].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+                   								}
+                   							}//end of p4 in t2	
+               							}//end if 2v2
+               							
+               							else {
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[1].attack(targetPiece);
@@ -5096,6 +8464,7 @@ public class Game extends JPanel{
                							if(Player4.playersTeam.teamPieces[1].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                							}
                						}
@@ -5122,6 +8491,65 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+               									}
+               								}//end of p4 in t1
+               								
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of p4 in t2	
+               							}//end if 2v2
+               							
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
@@ -5142,10 +8570,69 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of if p4 in t2
+               							}//end 2v2
+               							
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
@@ -5166,10 +8653,69 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+                   								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+                   								System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                           							targetPiece = Player3.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+                   								}
+                   							}//end of p4 in t1
+                   							else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+                   								if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                           							targetPiece = Player3.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[2].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[2].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[2].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+                   								}
+                   							}//end of p4 in t2	
+               							}//end if 2v2
+               							
+               							else {
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[2].attack(targetPiece);
@@ -5188,6 +8734,7 @@ public class Game extends JPanel{
                							if(Player4.playersTeam.teamPieces[2].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                							}
                						}
@@ -5213,6 +8760,65 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+               									}
+               								}//end of p4 in t1
+               								
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of p4 in t2		
+               							}//end if 2v2
+               							
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
@@ -5233,10 +8839,69 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of if p4 in t2
+               							}
+               							
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
@@ -5257,10 +8922,69 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+                   								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+                   								System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                           							targetPiece = Player3.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+                   								}
+                   							}//end of p4 in t1
+                   							else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+                   								if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                           							targetPiece = Player3.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[3].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[3].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[3].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+                   								}
+                   							}//end of p4 in t2	
+               							}//end if 2v2
+               							
+               							else {
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[3].attack(targetPiece);
@@ -5279,6 +9003,7 @@ public class Game extends JPanel{
                							if(Player4.playersTeam.teamPieces[3].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                							}
                						}
@@ -5304,6 +9029,66 @@ public class Game extends JPanel{
                					Piece targetPiece;
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 1" || team1[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+               									}
+               								}//end of p4 in t1
+               								
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 1" || team2[1]=="Player 1") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player1.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers); //prints out turn ended & next player
+                           								turnSeed=1; //sets next to player 1
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of p4 in t2		
+               
+               							}//end if 2v2
+               							
+               							else {
                							targetPiece = Player1.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
@@ -5324,10 +9109,69 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+               									if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}
+               								else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+               									if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+               										System.out.println("Cannot attack your teammate's game pieces");
+               									}
+               									else {
+                           							targetPiece = Player2.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}	
+               									}
+               								}//end of if p4 in t2
+               							}
+               							
+               							else {
                							targetPiece = Player2.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
@@ -5348,10 +9192,69 @@ public class Game extends JPanel{
            								turnSeed=1;
                							}
                							}
+               							}
                						}
                					}
                					for(int i=0; i<5; i++) {
                						if(currentButton.getIcon()==Player3.PieceImages[i]) {
+               							if(gameModeSelected==2) {
+               								if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+                   								if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+                   								System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                           							targetPiece = Player3.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+                   								}
+                   							}//end of p4 in t1
+                   							else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+                   								if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+                   									System.out.println("Cannot attack your teammate's game pieces");
+                   								}
+                   								else {
+                           							targetPiece = Player3.playersTeam.teamPieces[i];
+                           							int tempHp = targetPiece.getCurrHp();
+                           							Player4.playersTeam.teamPieces[4].attack(targetPiece);
+                           							Player4.playersTeam.teamPieces[4].tookAction++;
+                           							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+                           								targetPiece.currHp=0;
+                           								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+                           								removeImage(currentButton, frame3);
+                           								if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           								endTurn(numPlayers);
+                           								turnSeed=1;
+                           								}
+                           							}
+                           							else {
+                           							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+                           							if(Player4.playersTeam.teamPieces[4].moved==1) {
+                           							endTurn(numPlayers);
+                       								turnSeed=1;
+                           							}
+                           							}
+                   								}
+                   							}//end of p4 in t2	
+               							}//end if 2v2
+               							
+               							else {
                							targetPiece = Player3.playersTeam.teamPieces[i];
                							int tempHp = targetPiece.getCurrHp();
                							Player4.playersTeam.teamPieces[4].attack(targetPiece);
@@ -5370,6 +9273,7 @@ public class Game extends JPanel{
                							if(Player4.playersTeam.teamPieces[4].moved==1) {
                							endTurn(numPlayers);
            								turnSeed=1;
+               							}
                							}
                							}
                						}
