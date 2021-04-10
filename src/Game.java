@@ -1072,7 +1072,7 @@ public class Game extends JPanel{
    			}
    			
    			if (whosTurn(numPlayers) == 2) {
-   			if(tempImg==Player2.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer") {
+   			if(tempImg==Player2.PieceImages[3] && Player2.playersTeam.teamPieces[3].name == "Healer") {
    				if (noOtherActions(Player2.playersTeam.teamPieces[3], Player2) && Player2.playersTeam.teamPieces[3].tookAction<1) {
    					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[3].name + " is healing itself");
    					Piece targetPiece;
@@ -1321,7 +1321,6 @@ public class Game extends JPanel{
    				} //end of if players =4
        		}
        	}//end of self healing
-       			
        			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
        				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()!=null){//if both tiles have an icon 
        					 setCoordinates(lastButtonPressed, numPlayers, tile); //set coords had to be moved
@@ -1335,7 +1334,7 @@ public class Game extends JPanel{
             			 	}
        						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
        						 tempPiece = findPiece(tempImg);
-       				
+       			
        			if (whosTurn(numPlayers) == 1) {
        			if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name =="Healer"){//checks 3& 4 bc teams only set those as healers & make sure it is a healer
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].range) {
@@ -1373,6 +1372,204 @@ public class Game extends JPanel{
        					}
        					}
        				}
+       				else if(gameModeSelected==2) {
+       					if(team1[0]=="Player 1" || team1[1]=="Player 1") {//if player 1 is in team 1
+   	       					if(team1[0]=="Player 2"||team1[1]=="Player 2") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}
+   	       							
+   	       					}//end of if player 2
+   	       					else if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of if player 3
+   	       					else if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       						
+   	       					}//end of heal player 4
+   	       					
+   	       				}//end of if player 1 is in team 1
+       					else if(team2[0]=="Player 1" || team2[1] =="Player 1") { //if player 1 is in team 2
+   	       				if(team2[0]=="Player 2"||team2[1]=="Player 2") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}
+   	       							
+   	       					}//end of if player 2
+   	       					else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of if player 3
+   	       					else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       						
+   	       					}	
+   	       				
+   	       				}//end of if player 1 is in team 2	
+       				}//end of if gameMode 2
        				else {
        					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
        				}
@@ -1389,7 +1586,7 @@ public class Game extends JPanel{
        			if(tempImg==Player1.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer"){
        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].range) {
        				if (noOtherActions(Player1.playersTeam.teamPieces[4], Player1) && Player1.playersTeam.teamPieces[4].tookAction<1) {
-       				if(currentButton.getIcon()==Player1.PieceImages[0] && currentButton.getIcon()==Player1.PieceImages[1] && currentButton.getIcon()==Player1.PieceImages[2] && currentButton.getIcon()==Player1.PieceImages[3]){
+       				if(currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] || currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[3]){
        					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[2].name + " is healing");
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
@@ -1422,6 +1619,204 @@ public class Game extends JPanel{
        						}
        					}
        				}
+       				else if(gameModeSelected==2) {
+       					if(team1[0]=="Player 1" || team1[1]=="Player 1") {//if player 1 is in team 1
+   	       					if(team1[0]=="Player 2"||team1[1]=="Player 2") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}
+   	       							
+   	       					}//end of if player 2
+   	       					else if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of if player 3
+   	       					else if(team1[0]=="Player 4" || team1[1]=="Player 4") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       						
+   	       					}//end of heal player 4
+   	       					
+   	       				}//end of if player 1 is in team 1
+       					else if(team2[0]=="Player 1" || team2[1] =="Player 1") { //if player 1 is in team 2
+   	       				if(team2[0]=="Player 2"||team2[1]=="Player 2") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}
+   	       							
+   	       					}//end of if player 2
+   	       					else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of if player 3
+   	       					else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player1.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player1.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       						
+   	       					}	
+   	       				
+   	       				}//end of if player 1 is in team 2
+       				}//end of if 2v2 game mode check
        				else{
        					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
        				}
@@ -1440,10 +1835,10 @@ public class Game extends JPanel{
        			}
 
        			if (whosTurn(numPlayers) == 2) {
-       			if(tempImg==Player2.PieceImages[3] && Player1.playersTeam.teamPieces[3].name == "Healer") {
+       			if(tempImg==Player2.PieceImages[3] && Player2.playersTeam.teamPieces[3].name == "Healer") {
        				if (destinationYCoord <= pieceYCoord+Player2.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player2.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player2.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player2.playersTeam.teamPieces[3].range) {
        				if (noOtherActions(Player2.playersTeam.teamPieces[3], Player2) && Player2.playersTeam.teamPieces[3].tookAction<1) {
-       				if (currentButton.getIcon()==Player2.PieceImages[0] || currentButton.getIcon()==Player2.PieceImages[1] || currentButton.getIcon()!=Player2.PieceImages[2] || currentButton.getIcon()!=Player2.PieceImages[4]) {
+       				if (currentButton.getIcon()==Player2.PieceImages[0] || currentButton.getIcon()==Player2.PieceImages[1] || currentButton.getIcon()==Player2.PieceImages[2] || currentButton.getIcon()==Player2.PieceImages[4]) {
        					System.out.println("Player 2's " + Player2.playersTeam.teamPieces[3].name + " is healing");
        					Piece targetPiece;
        					for(int i=0; i<5; i++) {
@@ -1485,6 +1880,203 @@ public class Game extends JPanel{
        							}
        						}
        					}
+       				}
+       					
+       				else if(gameModeSelected==2) {
+       					if(team1[0]=="Player 2" || team1[1]=="Player 2") {//if player 2 is in team 1
+   	       					if(team1[0]=="Player 1"||team1[1]=="Player 1") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}
+   	       							
+   	       					}//end of if player 1
+   	       					else if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of if player 3
+   	       					else if(team1[0]=="Player 4" || team1[1]=="Player 4"){
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       						
+   	       					}//end of heal player 4
+   	       					
+   	       				}//end of if player 1 is in team 1
+   	       				else if(team2[0]=="Player 2" || team2[1] =="Player 2") { //if player 2 is in team 2
+   	       				if(team2[0]=="Player 1"||team2[1]=="Player 1") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}
+   	       							
+   	       					}//end of if player 1
+   	       					else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of if player 3
+   	       					else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[3].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[3].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[3].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of else if	
+   	       				}//end of if player 2 is in team 2	
        				}
        				else {
        					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
@@ -1545,6 +2137,202 @@ public class Game extends JPanel{
        					}
        					}
        				}
+       				else if(gameModeSelected==2) {
+       					if(team1[0]=="Player 2" || team1[1]=="Player 2") {//if player 2 is in team 1
+   	       					if(team1[0]=="Player 1"||team1[1]=="Player 1") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}
+   	       							
+   	       					}//end of if player 1
+   	       					else if(team1[0]=="Player 3" || team1[1]=="Player 3") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of if player 3
+   	       					else if(team1[0]=="Player 4" || team1[1]=="Player 4"){
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       						
+   	       					}//end of heal player 4
+   	       					
+   	       				}//end of if player 2 is in team 1
+   	       				else if(team2[0]=="Player 2" || team2[1] =="Player 2") { //if player 2 is in team 2
+   	       				if(team2[0]=="Player 1"||team2[1]=="Player 1") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}
+   	       							
+   	       					}//end of if player 1
+   	       					else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of if player 3
+   	       					else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+   	       					Piece targetPiece;//alias for piece being healed
+   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+   	       							if(tempHp != targetPiece.getMaxHp()){
+   	       							Player2.playersTeam.teamPieces[4].heal(targetPiece);//heal
+   	       							Player2.playersTeam.teamPieces[4].tookAction++;
+   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+   	       								targetPiece.currHp=targetPiece.getMaxHp();
+   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+   	       								if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       								endTurn(numPlayers); //prints out turn ended & next player
+   	       								turnSeed=2; //sets next player to player 2
+   	       								}
+   	       							}
+   	       							else {
+   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+   	       							if(Player2.playersTeam.teamPieces[4].moved==1) {
+   	       							endTurn(numPlayers);
+   	       							turnSeed=2;
+   	       							}
+   	       							}
+   	       							}
+   	       							else {
+   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+   	       							}
+   	       						}
+   	       					}	
+   	       					}//end of else if	
+   	       				}//end of if player 2 is in team 2 	     
+       				}//end of 2v2 game mode check
        				else {
        					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
        				}
@@ -1599,7 +2387,205 @@ public class Game extends JPanel{
                						}
                					}
            				}
-           				else {
+       						else if(gameModeSelected==2) {
+       							if(team1[0]=="Player 3" || team1[1]=="Player 3") {//if player 3 is in team 1
+       	   	       					if(team1[0]=="Player 1"||team1[1]=="Player 1") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}
+       	   	       							
+       	   	       					}//end of if player 1
+       	   	       					else if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       					}//end of if player 3
+       	   	       					else if(team1[0]=="Player 4" || team1[1]=="Player 4"){
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       						
+       	   	       					}//end of heal player 4
+       	   	       					
+       	   	       				}//end of if player 1 is in team 1
+       	   	       				else if(team2[0]=="Player 3" || team2[1] =="Player 3") { //if player 3 is in team 2
+       	   	       				if(team2[0]=="Player 1"||team2[1]=="Player 1") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}
+       	   	       							
+       	   	       					}//end of if player 1
+       	   	       					else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       					}//end of if player 2
+       	   	       					else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       						
+       	   	       					}//end of else if	
+       	   	       				
+       	   	       				}//end of if player 3 is in team 2	
+       						}  						
+       					else {
            					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
            				}
        					}//end of action check
@@ -1648,6 +2634,204 @@ public class Game extends JPanel{
                					}
                					}
            				}
+       						else if(gameModeSelected==2) {
+       							if(team1[0]=="Player 3" || team1[1]=="Player 3") {//if player 3 is in team 1
+       	   	       					if(team1[0]=="Player 1"||team1[1]=="Player 1") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}
+       	   	       							
+       	   	       					}//end of if player 1
+       	   	       					else if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       					}//end of if player 3
+       	   	       					else if(team1[0]=="Player 4" || team1[1]=="Player 4"){
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       						
+       	   	       					}//end of heal player 4
+       	   	       					
+       	   	       				}//end of if player 1 is in team 1
+       	   	       				else if(team2[0]=="Player 3" || team2[1] =="Player 3") { //if player 3 is in team 2
+       	   	       				if(team2[0]=="Player 1"||team2[1]=="Player 1") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}
+       	   	       							
+       	   	       					}//end of if player 1
+       	   	       					else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       					}//end of if player 2
+       	   	       					else if(team2[0]=="Player 4" || team2[1]=="Player 4") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player4.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player4.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player3.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player3.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 4's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player3.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 4's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       						
+       	   	       					}//end of else if	
+       	   	       				
+       	   	       				}//end of if player 3 is in team 2	
+       						}	
            				else {
            					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
            				}
@@ -1702,6 +2886,204 @@ public class Game extends JPanel{
                					}
                					}
                				}
+      						else if(gameModeSelected==2) {
+      							if(team1[0]=="Player 4" || team1[1]=="Player 4") {//if player 4 is in team 1
+       	   	       					if(team1[0]=="Player 1"||team1[1]=="Player 1") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}
+       	   	       							
+       	   	       					}//end of if player 1
+       	   	       					else if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       					}//end of if player 2
+       	   	       					else if(team1[0]=="Player 3" || team1[1]=="Player 3"){
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       						
+       	   	       					}//end of heal player 3
+       	   	       					
+       	   	       				}//end of if player 1 is in team 1
+       	   	       				else if(team2[0]=="Player 4" || team2[1] =="Player 4") { //if player 4 is in team 2
+       	   	       				if(team2[0]=="Player 1"||team2[1]=="Player 1") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}
+       	   	       							
+       	   	       					}//end of if player 1
+       	   	       					else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       					}//end of if player 2
+       	   	       					else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[3].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[3].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[3].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       						
+       	   	       					}//end of else if	
+       	   	       				
+       	   	       				}//end of if player 4 is in team 2		
+      						}
                				else {
                					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
                				} 
@@ -1715,7 +3097,7 @@ public class Game extends JPanel{
       						}
        					 }
       					 
-      					 if(tempImg==Player4.PieceImages[4]) {
+      					 if(tempImg==Player4.PieceImages[4] && Player4.playersTeam.teamPieces[4].name=="Healer"){
       						if (destinationYCoord <= pieceYCoord+Player4.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player4.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player4.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player4.playersTeam.teamPieces[4].range) {
       						if (noOtherActions(Player4.playersTeam.teamPieces[4], Player4) && Player4.playersTeam.teamPieces[4].tookAction<1) {
       						if (currentButton.getIcon()==Player4.PieceImages[0] || currentButton.getIcon()==Player4.PieceImages[1] || currentButton.getIcon()==Player4.PieceImages[2] || currentButton.getIcon()==Player4.PieceImages[3]){
@@ -1747,7 +3129,205 @@ public class Game extends JPanel{
                						}
                					}
                				}
-               				else {
+      						else if(gameModeSelected==2) {
+      							if(team1[0]=="Player 4" || team1[1]=="Player 4") {//if player 4 is in team 1
+       	   	       					if(team1[0]=="Player 1"||team1[1]=="Player 1") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}
+       	   	       							
+       	   	       					}//end of if player 1
+       	   	       					else if(team1[0]=="Player 2" || team1[1]=="Player 2") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       					}//end of if player 2
+       	   	       					else if(team1[0]=="Player 3" || team1[1]=="Player 3"){
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       						
+       	   	       					}//end of heal player 3
+       	   	       					
+       	   	       				}//end of if player 1 is in team 1
+       	   	       				else if(team2[0]=="Player 4" || team2[1] =="Player 4") { //if player 4 is in team 2
+       	   	       				if(team2[0]=="Player 1"||team2[1]=="Player 1") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}
+       	   	       							
+       	   	       					}//end of if player 1
+       	   	       					else if(team2[0]=="Player 2" || team2[1]=="Player 2") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 2's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       					}//end of if player 2
+       	   	       					else if(team2[0]=="Player 3" || team2[1]=="Player 3") {
+       	   	       					Piece targetPiece;//alias for piece being healed
+       	   	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+       	   	       						if(currentButton.getIcon()==Player3.PieceImages[i]) {//if found here
+       	   	       							targetPiece = Player3.playersTeam.teamPieces[i];//set target piece to alias the found piece
+       	   	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+       	   	       							if(tempHp != targetPiece.getMaxHp()){
+       	   	       							Player4.playersTeam.teamPieces[4].heal(targetPiece);//heal
+       	   	       							Player4.playersTeam.teamPieces[4].tookAction++;
+       	   	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+       	   	       								targetPiece.currHp=targetPiece.getMaxHp();
+       	   	       								System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+       	   	       								if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       								endTurn(numPlayers); //prints out turn ended & next player
+       	   	       								turnSeed=2; //sets next player to player 2
+       	   	       								}
+       	   	       							}
+       	   	       							else {
+       	   	       							System.out.println("Player 3's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+       	   	       							if(Player4.playersTeam.teamPieces[4].moved==1) {
+       	   	       							endTurn(numPlayers);
+       	   	       							turnSeed=2;
+       	   	       							}
+       	   	       							}
+       	   	       							}
+       	   	       							else {
+       	   	       								System.out.println("Player 3's " + targetPiece.name + " is already at full health");
+       	   	       							}
+       	   	       						}
+       	   	       					}	
+       	   	       						
+       	   	       					}//end of else if	
+       	   	       				
+       	   	       				}//end of if player 4 is in team 2	
+      						}
+      						else {
                					System.out.println("That is an invalid heal, cannot heal the other team's game pieces");
                				}
       						}//end of action check
@@ -1765,6 +3345,7 @@ public class Game extends JPanel{
        					}
 
        			 }//end of if numPlayers ==4
+       			
        					currentButton=null; //resets the ActionListener
        					}
        			 }
