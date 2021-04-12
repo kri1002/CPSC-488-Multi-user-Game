@@ -10104,11 +10104,11 @@ public class Game extends JPanel{
         			    		+ "Player 2 is red \n"
         			    		+ "Player 3 is green \n"
         			    		+ "Player 4 is yellow \n"
-        			    		+ "A Warrior's token is a circle \n"
-        			    		+ "A Ranger's token is a square \n"
-        			    		+ "A Rogue's token is a triangle \n"
-        			    		+ "A healer's token is a star \n"
-        			    		+ "A Damage Mage's token is a pentagon \n",    
+        			    		+ "A Warrior's token is a circle. Range:1, Move:3\n"
+        			    		+ "A Ranger's token is a square. Range:4, Move:5\n"
+        			    		+ "A Rogue's token is a triangle. Range:1, Move:6\n"
+        			    		+ "A healer's token is a star. Range:3, Move:4\n"
+        			    		+ "A Damage Mage's token is a pentagon. Range:3, Move:4\n",    
         			    "Key",
         			    JOptionPane.PLAIN_MESSAGE);
         	}
