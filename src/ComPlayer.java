@@ -1,3 +1,4 @@
+import javax.swing.Icon;
 import javax.swing.JButton;
 
 public class ComPlayer extends Player{//inherits from player
@@ -11,11 +12,14 @@ public class ComPlayer extends Player{//inherits from player
 	public Piece bestMovePiece;//place to hold the best piece to move
 	public int bestXCoord;//coords of the best place to move
 	public int bestYCoord;
+	public int startXCoord; //coords of piece start location so can keep track to move piece
+	public int startYCoord;
 	
 	public ComPlayer(int playerNum) {//same constructor as before
 		super(playerNum);
 		this.playerNum=playerNum;
 	}
+	
 	
 	public void findPieceLocs (JButton[][] tile) {
 		for (int i=0; i<tile.length; i++) {//This loop gets the coords of each piece the comPlayer has
@@ -43,6 +47,24 @@ public class ComPlayer extends Player{//inherits from player
 			 }
 		}
 	}
+
+	
+	public void makeMove(JButton[][]tile, int turnSeed) {//similar to swapImg in Game.java
+		tile[startYCoord][startXCoord].setIcon(null); //sets tile with original piece null
+		tile[bestYCoord][bestXCoord].setIcon(tile[startYCoord][startXCoord].getIcon()); //move piece icon to best x & y
+		tile[startYCoord][startXCoord].revalidate(); //reset & update tiles
+		tile[bestYCoord][bestXCoord].revalidate();
+		
+		//sets turn to other player after moving piece
+		//will have to move where this is done if get to computer attacking
+		if(turnSeed==1) {
+			turnSeed=2;
+		}
+		else if(turnSeed==2){
+			turnSeed=1;
+		}
+		}
+	
 	
 	public void findMove (JButton[][] tile) {
 		moveFinder1 = new Swarm(this.playersTeam.teamPieces[0], pieceXCoords[0], pieceYCoords[0]);//initialize the swarms
@@ -61,30 +83,40 @@ public class ComPlayer extends Player{//inherits from player
 			bestMovePiece = moveFinder1.swarmPoint;//set it as the best piece to move
 			bestXCoord = moveFinder1.bestPart.partXCoord;//set its best coords to move to
 			bestYCoord = moveFinder1.bestPart.partYCoord;
+			startXCoord = pieceXCoords[0];
+			startYCoord = pieceYCoords[0];
 		}
 		if (moveFinder2.bestFitness >= moveFinder1.bestFitness && moveFinder2.bestFitness >= moveFinder3.bestFitness
 				&& moveFinder2.bestFitness >= moveFinder4.bestFitness && moveFinder2.bestFitness >= moveFinder5.bestFitness) {
 			bestMovePiece = moveFinder2.swarmPoint;
 			bestXCoord = moveFinder2.bestPart.partXCoord;
 			bestYCoord = moveFinder2.bestPart.partYCoord;
+			startXCoord = pieceXCoords[1];
+			startYCoord = pieceYCoords[1];
 		}
 		if (moveFinder3.bestFitness >= moveFinder1.bestFitness && moveFinder3.bestFitness >= moveFinder2.bestFitness
 				&& moveFinder3.bestFitness >= moveFinder4.bestFitness && moveFinder3.bestFitness >= moveFinder5.bestFitness) {
 			bestMovePiece = moveFinder3.swarmPoint;
 			bestXCoord = moveFinder3.bestPart.partXCoord;
 			bestYCoord = moveFinder3.bestPart.partYCoord;
+			startXCoord = pieceXCoords[2];
+			startYCoord = pieceYCoords[2];
 		}
 		if (moveFinder4.bestFitness >= moveFinder1.bestFitness && moveFinder4.bestFitness >= moveFinder2.bestFitness
 				&& moveFinder4.bestFitness >= moveFinder3.bestFitness && moveFinder4.bestFitness >= moveFinder5.bestFitness) {
 			bestMovePiece = moveFinder4.swarmPoint;
 			bestXCoord = moveFinder4.bestPart.partXCoord;
 			bestYCoord = moveFinder4.bestPart.partYCoord;
+			startXCoord = pieceXCoords[3];
+			startYCoord = pieceYCoords[3];
 		}
 		if (moveFinder5.bestFitness >= moveFinder1.bestFitness && moveFinder5.bestFitness >= moveFinder2.bestFitness
 				&& moveFinder5.bestFitness >= moveFinder3.bestFitness && moveFinder5.bestFitness >= moveFinder4.bestFitness) {
 			bestMovePiece = moveFinder5.swarmPoint;
 			bestXCoord = moveFinder5.bestPart.partXCoord;
 			bestYCoord = moveFinder5.bestPart.partYCoord;
+			startXCoord = pieceXCoords[4];
+			startYCoord = pieceXCoords[4];
 		}
 	}
 }
