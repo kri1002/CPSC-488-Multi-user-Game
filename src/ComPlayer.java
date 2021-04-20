@@ -1,4 +1,4 @@
-import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class ComPlayer extends Player{//inherits from player
@@ -66,12 +66,12 @@ public class ComPlayer extends Player{//inherits from player
 		}
 	
 	
-	public void findMove (JButton[][] tile) {
-		moveFinder1 = new Swarm(this.playersTeam.teamPieces[0], pieceXCoords[0], pieceYCoords[0]);//initialize the swarms
-		moveFinder2 = new Swarm(this.playersTeam.teamPieces[1], pieceXCoords[1], pieceYCoords[1]);
-		moveFinder3 = new Swarm(this.playersTeam.teamPieces[2], pieceXCoords[2], pieceYCoords[2]);
-		moveFinder4 = new Swarm(this.playersTeam.teamPieces[3], pieceXCoords[3], pieceYCoords[3]);
-		moveFinder5 = new Swarm(this.playersTeam.teamPieces[4], pieceXCoords[4], pieceYCoords[4]);
+	public void findMove (JButton[][] tile, Player opponent) {
+		moveFinder1 = new Swarm(this.playersTeam.teamPieces[0], pieceXCoords[0], pieceYCoords[0], opponent, this.PieceImages, this.playersTeam.teamPieces);//initialize the swarms
+		moveFinder2 = new Swarm(this.playersTeam.teamPieces[1], pieceXCoords[1], pieceYCoords[1], opponent, this.PieceImages, this.playersTeam.teamPieces);
+		moveFinder3 = new Swarm(this.playersTeam.teamPieces[2], pieceXCoords[2], pieceYCoords[2], opponent, this.PieceImages, this.playersTeam.teamPieces);
+		moveFinder4 = new Swarm(this.playersTeam.teamPieces[3], pieceXCoords[3], pieceYCoords[3], opponent, this.PieceImages, this.playersTeam.teamPieces);
+		moveFinder5 = new Swarm(this.playersTeam.teamPieces[4], pieceXCoords[4], pieceYCoords[4], opponent, this.PieceImages, this.playersTeam.teamPieces);
 		moveFinder1.findBestMove(tile);//tell them to find the best move
 		moveFinder2.findBestMove(tile);
 		moveFinder3.findBestMove(tile);
