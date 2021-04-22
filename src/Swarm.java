@@ -20,16 +20,21 @@ public class Swarm {
 		teamPieces = passedPieces;
 	}
 	
-	public void findBestMove(JButton[][] tile) {
-		int bestPartNum=0;//array ID of best particle
-		swarmParts = new Particle[100];//initialize the array of particles
-		for (int i = 0; i < swarmParts.length; i++) {//loop through the array
-			swarmParts[i] = new Particle (swarmStartXCoord, swarmStartYCoord, swarmPoint.range, swarmPoint.name, i, tile, opponent, PieceImages, teamPieces);//construct particle
-			if(swarmParts[i].fitness >= swarmParts[bestPartNum].fitness) {//if it is the most fit
-				bestPartNum = i;//set it as the best
+	public void findBestMove(JButton[][] tile, int pieceFound) {
+		if(pieceFound==1) {
+			int bestPartNum=0;//array ID of best particle
+			swarmParts = new Particle[100];//initialize the array of particles
+			for (int i = 0; i < swarmParts.length; i++) {//loop through the array
+				swarmParts[i] = new Particle (swarmStartXCoord, swarmStartYCoord, swarmPoint.range, swarmPoint.name, i, tile, opponent, PieceImages, teamPieces);//construct particle
+				if(swarmParts[i].fitness >= swarmParts[bestPartNum].fitness) {//if it is the most fit
+					bestPartNum = i;//set it as the best
+				}
 			}
+			bestFitness = swarmParts[bestPartNum].fitness;//set best fitness
+			bestPart = swarmParts[bestPartNum];//set best particle once the loop is done
 		}
-		bestFitness = swarmParts[bestPartNum].fitness;//set best fitness
-		bestPart = swarmParts[bestPartNum];//set best particle once the loop is done
+		else {
+			bestFitness = 0;
+		}
 	}
 }

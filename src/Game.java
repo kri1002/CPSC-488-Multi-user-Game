@@ -10202,7 +10202,7 @@ public class Game extends JPanel{
 	   					 if(whosTurn(numPlayers)==2) {
 							 Player2.findPieceLocs(tile);
 							 Player2.findMove(tile, Player1);
-							 Player2.makeMove(tile, turnSeed);
+							 Player2.makeMove(tile, turnSeed, frame3);
 							 endTurn(numPlayers);
 						 }
 	   						}
@@ -10214,7 +10214,7 @@ public class Game extends JPanel{
 	   					 if(whosTurn(numPlayers)==2) {
 							 Player2.findPieceLocs(tile);
 							 Player2.findMove(tile, Player1);
-							 Player2.makeMove(tile, turnSeed);
+							 Player2.makeMove(tile, turnSeed, frame3);
 							 endTurn(numPlayers);
 						 }
 	   						}
@@ -10247,7 +10247,7 @@ public class Game extends JPanel{
 	   						 if(whosTurn(numPlayers)==2) {
 								 Player2.findPieceLocs(tile);
 								 Player2.findMove(tile, Player1);
-								 Player2.makeMove(tile, turnSeed);
+								 Player2.makeMove(tile, turnSeed, frame3);
 								 endTurn(numPlayers);
 							 }
 	   							}
@@ -10260,7 +10260,7 @@ public class Game extends JPanel{
 	   						 if(whosTurn(numPlayers)==2) {
 								 Player2.findPieceLocs(tile);
 								 Player2.findMove(tile, Player1);
-								 Player2.makeMove(tile, turnSeed);
+								 Player2.makeMove(tile, turnSeed, frame3);
 								 endTurn(numPlayers);
 							 }
 	   							}
@@ -10321,7 +10321,7 @@ public class Game extends JPanel{
 	       							 if(whosTurn(numPlayers)==2) {
 	    								 Player2.findPieceLocs(tile);
 	    								 Player2.findMove(tile, Player1);
-	    								 Player2.makeMove(tile, turnSeed);
+	    								 Player2.makeMove(tile, turnSeed, frame3);
 	    								 endTurn(numPlayers);
 	    							 }
 	       								}
@@ -10333,7 +10333,7 @@ public class Game extends JPanel{
 	       						 if(whosTurn(numPlayers)==2) {
 									 Player2.findPieceLocs(tile);
 									 Player2.findMove(tile, Player1);
-									 Player2.makeMove(tile, turnSeed);
+									 Player2.makeMove(tile, turnSeed, frame3);
 									 endTurn(numPlayers);
 								 }
 	       							}
@@ -10380,7 +10380,7 @@ public class Game extends JPanel{
 	           						 if(whosTurn(numPlayers)==2) {
 	    								 Player2.findPieceLocs(tile);
 	    								 Player2.findMove(tile, Player1);
-	    								 Player2.makeMove(tile, turnSeed);
+	    								 Player2.makeMove(tile, turnSeed, frame3);
 	    								 endTurn(numPlayers);
 	    							 }
 	       								}
@@ -10392,7 +10392,7 @@ public class Game extends JPanel{
 	       						 if(whosTurn(numPlayers)==2) {
 									 Player2.findPieceLocs(tile);
 									 Player2.findMove(tile, Player1);
-									 Player2.makeMove(tile, turnSeed);
+									 Player2.makeMove(tile, turnSeed, frame3);
 									 endTurn(numPlayers);
 								 }
 	       							}
@@ -10479,7 +10479,7 @@ public class Game extends JPanel{
 	           							 if(whosTurn(numPlayers)==2) {
 	        								 Player2.findPieceLocs(tile);
 	        								 Player2.findMove(tile, Player1);
-	        								 Player2.makeMove(tile, turnSeed);
+	        								 Player2.makeMove(tile, turnSeed, frame3);
 	        								 endTurn(numPlayers);
 	        							 }
 	       								}
@@ -10491,7 +10491,7 @@ public class Game extends JPanel{
 	       							 if(whosTurn(numPlayers)==2) {
 	    								 Player2.findPieceLocs(tile);
 	    								 Player2.findMove(tile, Player1);
-	    								 Player2.makeMove(tile, turnSeed);
+	    								 Player2.makeMove(tile, turnSeed, frame3);
 	    								 endTurn(numPlayers);
 	    							 }
 	       							}
@@ -10533,7 +10533,7 @@ public class Game extends JPanel{
 	       								 if(whosTurn(numPlayers)==2) {
 	       									 Player2.findPieceLocs(tile);
 	       									 Player2.findMove(tile, Player1);
-	       									 Player2.makeMove(tile, turnSeed);
+	       									 Player2.makeMove(tile, turnSeed, frame3);
 	       									endTurn(numPlayers);
 	       								 }
 	       								}
@@ -10545,7 +10545,7 @@ public class Game extends JPanel{
 	       							 if(whosTurn(numPlayers)==2) {
 	    								 Player2.findPieceLocs(tile);
 	    								 Player2.findMove(tile, Player1);
-	    								 Player2.makeMove(tile, turnSeed);
+	    								 Player2.makeMove(tile, turnSeed, frame3);
 	    								 endTurn(numPlayers);
 	    							 }
 	       							}
@@ -10587,7 +10587,7 @@ public class Game extends JPanel{
 	       								 if(whosTurn(numPlayers)==2) {
 	       									 Player2.findPieceLocs(tile);
 	       									 Player2.findMove(tile, Player1);
-	       									 Player2.makeMove(tile, turnSeed);
+	       									 Player2.makeMove(tile, turnSeed, frame3);
 	       									endTurn(numPlayers);
 	       								 }
 	       								}
@@ -10599,7 +10599,7 @@ public class Game extends JPanel{
 	       							 if(whosTurn(numPlayers)==2) {
 	    								 Player2.findPieceLocs(tile);
 	    								 Player2.findMove(tile, Player1);
-	    								 Player2.makeMove(tile, turnSeed);
+	    								 Player2.makeMove(tile, turnSeed, frame3);
 	    								 endTurn(numPlayers);
 	    							 }
 	       							}
@@ -10644,7 +10644,7 @@ public class Game extends JPanel{
 	       								 if(whosTurn(numPlayers)==2) {
 	       									 Player2.findPieceLocs(tile);
 	       									 Player2.findMove(tile, Player1);
-	       									 Player2.makeMove(tile, turnSeed);
+	       									 Player2.makeMove(tile, turnSeed, frame3);
 	       								 }
 	       								}
 	       							}
@@ -10655,7 +10655,7 @@ public class Game extends JPanel{
 	       							 if(whosTurn(numPlayers)==2) {
 	    								 Player2.findPieceLocs(tile);
 	    								 Player2.findMove(tile, Player1);
-	    								 Player2.makeMove(tile, turnSeed);
+	    								 Player2.makeMove(tile, turnSeed, frame3);
 	    								 endTurn(numPlayers);
 	    							 }
 	       							}
@@ -10699,7 +10699,7 @@ public class Game extends JPanel{
 	       								 if(whosTurn(numPlayers)==2) {
 	       									 Player2.findPieceLocs(tile);
 	       									 Player2.findMove(tile, Player1);
-	       									 Player2.makeMove(tile, turnSeed);
+	       									 Player2.makeMove(tile, turnSeed, frame3);
 	       								 }
 	       								}
 	       							}
@@ -10710,7 +10710,7 @@ public class Game extends JPanel{
 	       							 if(whosTurn(numPlayers)==2) {
 	    								 Player2.findPieceLocs(tile);
 	    								 Player2.findMove(tile, Player1);
-	    								 Player2.makeMove(tile, turnSeed);
+	    								 Player2.makeMove(tile, turnSeed, frame3);
 	    								 endTurn(numPlayers);
 	    							 }
 	       							}
@@ -10782,7 +10782,7 @@ public class Game extends JPanel{
     								 if(whosTurn(numPlayers)==2) {
     									 Player2.findPieceLocs(tile);
     									 Player2.findMove(tile, Player1);
-    									 Player2.makeMove(tile, turnSeed);
+    									 Player2.makeMove(tile, turnSeed, frame3);
     									 endTurn(numPlayers);
     								 }
         						}
@@ -10806,7 +10806,7 @@ public class Game extends JPanel{
 								 if(whosTurn(numPlayers)==2) {
 									 Player2.findPieceLocs(tile);
 									 Player2.findMove(tile, Player1);
-									 Player2.makeMove(tile, turnSeed);
+									 Player2.makeMove(tile, turnSeed, frame3);
 									 endTurn(numPlayers);
 								 }
         					}
@@ -10830,7 +10830,7 @@ public class Game extends JPanel{
         						 if(whosTurn(numPlayers)==2) {
     								 Player2.findPieceLocs(tile);
     								 Player2.findMove(tile, Player1);
-    								 Player2.makeMove(tile, turnSeed);
+    								 Player2.makeMove(tile, turnSeed, frame3);
     								 endTurn(numPlayers);
     							 }
         					}
@@ -10854,7 +10854,7 @@ public class Game extends JPanel{
         						 if(whosTurn(numPlayers)==2) {
     								 Player2.findPieceLocs(tile);
     								 Player2.findMove(tile, Player1);
-    								 Player2.makeMove(tile, turnSeed);
+    								 Player2.makeMove(tile, turnSeed, frame3);
     								 endTurn(numPlayers);
     							 }
         					}
@@ -10878,7 +10878,7 @@ public class Game extends JPanel{
 							 if(whosTurn(numPlayers)==2) {
 								 Player2.findPieceLocs(tile);
 								 Player2.findMove(tile, Player1);
-								 Player2.makeMove(tile, turnSeed);
+								 Player2.makeMove(tile, turnSeed, frame3);
 								 endTurn(numPlayers);
 						
 							 }
@@ -11024,7 +11024,7 @@ public class Game extends JPanel{
 	        		 if(whosTurn(numPlayers)==2) {
 	        			 Player2.findPieceLocs(tile);
 	        			 Player2.findMove(tile, Player1);
-	        			 Player2.makeMove(tile, turnSeed);
+	        			 Player2.makeMove(tile, turnSeed, frame3);
 	        			 endTurn(numPlayers);
 	        		 }
 	        	}
@@ -11044,7 +11044,7 @@ public class Game extends JPanel{
 	        if(whosTurn(numPlayers)==2) {
 				 Player2.findPieceLocs(tile);
 				 Player2.findMove(tile, Player1);
-				 Player2.makeMove(tile, turnSeed);
+				 Player2.makeMove(tile, turnSeed, frame3);
 				 endTurn(numPlayers);
 			 }
 	        

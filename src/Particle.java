@@ -8,6 +8,12 @@ public class Particle {
 	int partYCoord;
 	ImageIcon[] teamPieceImages;
 	Piece[] teamPieces;
+	Piece bestTarget;
+	int lowestHp=100;
+	int currTarget=0;
+	String bestAction="attack";
+	int targetX;
+	int targetY;
 	
 	Particle (int homeX, int homeY, int range, String pieceName, int partNum, JButton[][] tile, Player passedPlayer, ImageIcon[] passedPieceImages, Piece[] passedPieces){
 		opponent = passedPlayer;
@@ -58,6 +64,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[0].currHp < lowestHp) {
+										currTarget=0;
+										targetY=i;
+										targetX=j;
+									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[1]) {
 									fitness++;
@@ -69,6 +80,11 @@ public class Particle {
 										if (opponent.playersTeam.teamPieces[1].currHp <= 15) {
 											fitness++;
 										}
+									}
+									if (opponent.playersTeam.teamPieces[1].currHp < lowestHp) {
+										currTarget=1;
+										targetY=i;
+										targetX=j;
 									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[2]) {
@@ -82,6 +98,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[2].currHp < lowestHp) {
+										currTarget=2;
+										targetY=i;
+										targetX=j;
+									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[3]) {
 									fitness++;
@@ -93,6 +114,11 @@ public class Particle {
 										if (opponent.playersTeam.teamPieces[3].currHp <= 15) {
 											fitness++;
 										}
+									}
+									if (opponent.playersTeam.teamPieces[3].currHp < lowestHp) {
+										currTarget=3;
+										targetY=i;
+										targetX=j;
 									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[4]) {
@@ -106,6 +132,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[4].currHp < lowestHp) {
+										currTarget=4;
+										targetY=i;
+										targetX=j;
+									}
 								}
 							}//end of else
 						}//end of inner loop
@@ -117,7 +148,8 @@ public class Particle {
 			}
 			else {//if not in range set fitness to worst 
 				fitness=0;
-			}		
+			}
+		bestTarget=opponent.playersTeam.teamPieces[currTarget];
 	}
 	
 	public void assignRangerParticle(int homeX, int homeY, int range, JButton[][] tile, int partNum){
@@ -143,6 +175,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[0].currHp < lowestHp) {
+										currTarget=0;
+										targetY=i;
+										targetX=j;
+									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[1]) {
 									fitness++;
@@ -154,6 +191,11 @@ public class Particle {
 										if (opponent.playersTeam.teamPieces[1].currHp <= 15) {
 											fitness++;
 										}
+									}
+									if (opponent.playersTeam.teamPieces[1].currHp < lowestHp) {
+										currTarget=1;
+										targetY=i;
+										targetX=j;
 									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[2]) {
@@ -167,6 +209,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[2].currHp < lowestHp) {
+										currTarget=2;
+										targetY=i;
+										targetX=j;
+									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[3]) {
 									fitness++;
@@ -178,6 +225,11 @@ public class Particle {
 										if (opponent.playersTeam.teamPieces[3].currHp <= 15) {
 											fitness++;
 										}
+									}
+									if (opponent.playersTeam.teamPieces[3].currHp < lowestHp) {
+										currTarget=3;
+										targetY=i;
+										targetX=j;
 									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[4]) {
@@ -191,6 +243,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[4].currHp < lowestHp) {
+										currTarget=4;
+										targetY=i;
+										targetX=j;
+									}
 								}
 							}//end of else
 						}//end of inner loop
@@ -203,6 +260,7 @@ public class Particle {
 			else {//if not in range set fitness to worst 
 				fitness=0;
 			}		
+		bestTarget=opponent.playersTeam.teamPieces[currTarget];
 	}
 	
 	public void assignRogueParticle(int homeX, int homeY, int range, JButton[][] tile, int partNum){
@@ -228,6 +286,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[0].currHp < lowestHp) {
+										currTarget=0;
+										targetY=i;
+										targetX=j;
+									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[1]) {
 									fitness++;
@@ -239,6 +302,11 @@ public class Particle {
 										if (opponent.playersTeam.teamPieces[1].currHp <= 15) {
 											fitness++;
 										}
+									}
+									if (opponent.playersTeam.teamPieces[1].currHp < lowestHp) {
+										currTarget=1;
+										targetY=i;
+										targetX=j;
 									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[2]) {
@@ -252,6 +320,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[2].currHp < lowestHp) {
+										currTarget=2;
+										targetY=i;
+										targetX=j;
+									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[3]) {
 									fitness++;
@@ -263,6 +336,11 @@ public class Particle {
 										if (opponent.playersTeam.teamPieces[3].currHp <= 15) {
 											fitness++;
 										}
+									}
+									if (opponent.playersTeam.teamPieces[3].currHp < lowestHp) {
+										currTarget=3;
+										targetY=i;
+										targetX=j;
 									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[4]) {
@@ -276,6 +354,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[4].currHp < lowestHp) {
+										currTarget=4;
+										targetY=i;
+										targetX=j;
+									}
 								}
 							}//end of else
 						}//end of inner loop
@@ -287,7 +370,8 @@ public class Particle {
 			}
 			else {//if not in range set fitness to worst 
 				fitness=0;
-			}		
+			}	
+		bestTarget=opponent.playersTeam.teamPieces[currTarget];
 	}
 	
 	public void assignHealerParticle(int homeX, int homeY, int range, JButton[][] tile, int partNum){
@@ -302,47 +386,77 @@ public class Particle {
 							}
 							else {
 								if (tile[i][j].getIcon()==teamPieceImages[0]) {//if the tile has an ally
-									fitness++;//There is an ally within range, add to fitness
+									//fitness++;//There is an ally within range, add to fitness
 									if (teamPieces[0].currHp < teamPieces[0].maxHp) {//if that ally is below full
 										fitness++;//there is an ally withing range that can be healed, add to fitness further
 										if (teamPieces[0].currHp <= 15) {//if that ally is low on health
-											fitness++;//there is an ally within range who is low on health, add to fitness further
+											fitness=fitness+2;//there is an ally within range who is low on health, add to fitness further
+										}
+										if (teamPieces[0].currHp < lowestHp) {
+											currTarget=0;
+											bestAction="heal";
+											targetY=i;
+											targetX=j;
 										}
 									}
 								}
 								if (tile[i][j].getIcon()==teamPieceImages[1]) {
-									fitness++;
+									//fitness++;
 									if (teamPieces[1].currHp < teamPieces[1].maxHp) {
 										fitness++;
 										if (teamPieces[1].currHp <= 15) {
-											fitness++;
+											fitness=fitness+2;
+										}
+										if (teamPieces[1].currHp < lowestHp) {
+											currTarget=1;
+											bestAction="heal";
+											targetY=i;
+											targetX=j;
 										}
 									}
 								}
 								if (tile[i][j].getIcon()==teamPieceImages[2]) {
-									fitness++;
+									//fitness++;
 									if (teamPieces[2].currHp < teamPieces[2].maxHp) {
 										fitness++;
 										if (teamPieces[2].currHp <= 15) {
-											fitness++;
+											fitness=fitness+2;
+										}
+										if (teamPieces[2].currHp < lowestHp) {
+											currTarget=2;
+											bestAction="heal";
+											targetY=i;
+											targetX=j;
 										}
 									}
 								}
 								if (tile[i][j].getIcon()==teamPieceImages[3]) {
-									fitness++;
+									//fitness++;
 									if (teamPieces[3].currHp < teamPieces[3].maxHp) {
 										fitness++;
 										if (teamPieces[3].currHp <= 15) {
-											fitness++;
+											fitness=fitness+2;
+										}
+										if (teamPieces[3].currHp < lowestHp) {
+											currTarget=3;
+											bestAction="heal";
+											targetY=i;
+											targetX=j;
 										}
 									}
 								}
 								if (tile[i][j].getIcon()==teamPieceImages[4]) {
-									fitness++;
+									//fitness++;
 									if (teamPieces[4].currHp < teamPieces[4].maxHp) {
 										fitness++;
 										if (teamPieces[4].currHp <= 15) {
-											fitness++;
+											fitness=fitness+2;
+										}
+										if (teamPieces[4].currHp < lowestHp) {
+											currTarget=4;
+											bestAction="heal";
+											targetY=i;
+											targetX=j;
 										}
 									}
 								}
@@ -360,6 +474,11 @@ public class Particle {
 												fitness++;
 											}
 										}
+										if (opponent.playersTeam.teamPieces[0].currHp < lowestHp) {
+											currTarget=0;
+											targetY=i;
+											targetX=j;
+										}
 									}
 									if (tile[i][j].getIcon()==opponent.PieceImages[1]) {
 										fitness++;
@@ -371,6 +490,11 @@ public class Particle {
 											if (opponent.playersTeam.teamPieces[1].currHp <= 15) {
 												fitness++;
 											}
+										}
+										if (opponent.playersTeam.teamPieces[1].currHp < lowestHp) {
+											currTarget=1;
+											targetY=i;
+											targetX=j;
 										}
 									}
 									if (tile[i][j].getIcon()==opponent.PieceImages[2]) {
@@ -384,6 +508,11 @@ public class Particle {
 												fitness++;
 											}
 										}
+										if (opponent.playersTeam.teamPieces[2].currHp < lowestHp) {
+											currTarget=2;
+											targetY=i;
+											targetX=j;
+										}
 									}
 									if (tile[i][j].getIcon()==opponent.PieceImages[3]) {
 										fitness++;
@@ -395,6 +524,11 @@ public class Particle {
 											if (opponent.playersTeam.teamPieces[3].currHp <= 15) {
 												fitness++;
 											}
+										}
+										if (opponent.playersTeam.teamPieces[3].currHp < lowestHp) {
+											currTarget=3;
+											targetY=i;
+											targetX=j;
 										}
 									}
 									if (tile[i][j].getIcon()==opponent.PieceImages[4]) {
@@ -408,6 +542,11 @@ public class Particle {
 												fitness++;
 											}
 										}
+										if (opponent.playersTeam.teamPieces[4].currHp < lowestHp) {
+											currTarget=4;
+											targetY=i;
+											targetX=j;
+										}
 									}
 								}
 							}//end of else
@@ -420,7 +559,13 @@ public class Particle {
 			}
 			else {//if not in range set fitness to worst 
 				fitness=0;
-			}		
+			}	
+		if(bestAction=="heal") {
+			bestTarget=teamPieces[currTarget];
+		}
+		else {
+			bestTarget=opponent.playersTeam.teamPieces[currTarget];
+		}
 	}
 	
 	public void assignMageParticle(int homeX, int homeY, int range, JButton[][] tile, int partNum){
@@ -446,6 +591,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[0].currHp < lowestHp) {
+										currTarget=0;
+										targetY=i;
+										targetX=j;
+									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[1]) {
 									fitness++;
@@ -457,6 +607,11 @@ public class Particle {
 										if (opponent.playersTeam.teamPieces[1].currHp <= 15) {
 											fitness++;
 										}
+									}
+									if (opponent.playersTeam.teamPieces[1].currHp < lowestHp) {
+										currTarget=1;
+										targetY=i;
+										targetX=j;
 									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[2]) {
@@ -470,6 +625,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[2].currHp < lowestHp) {
+										currTarget=2;
+										targetY=i;
+										targetX=j;
+									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[3]) {
 									fitness++;
@@ -481,6 +641,11 @@ public class Particle {
 										if (opponent.playersTeam.teamPieces[3].currHp <= 15) {
 											fitness++;
 										}
+									}
+									if (opponent.playersTeam.teamPieces[3].currHp < lowestHp) {
+										currTarget=3;
+										targetY=i;
+										targetX=j;
 									}
 								}
 								if (tile[i][j].getIcon()==opponent.PieceImages[4]) {
@@ -494,6 +659,11 @@ public class Particle {
 											fitness++;
 										}
 									}
+									if (opponent.playersTeam.teamPieces[4].currHp < lowestHp) {
+										currTarget=4;
+										targetY=i;
+										targetX=j;
+									}
 								}
 							}//end of else
 						}//end of inner loop
@@ -505,6 +675,7 @@ public class Particle {
 			}
 			else {//if not in range set fitness to worst 
 				fitness=0;
-			}			
+			}	
+		bestTarget=opponent.playersTeam.teamPieces[currTarget];
 	}
 }
