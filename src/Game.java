@@ -19,7 +19,8 @@ public class Game extends JPanel{
  	public static int playersLeft;//number of players who still have pieces
  	public static int holdTurn=0;//var to help skip the turns of players who do not have pieces left
 	public static Player Player1 = new Player(1);//players are now generated at the start of the game class so they can be referenced anywhere
-	public static Player Player2 = new Player(2);
+	//public static Player Player2 = new Player(2);
+	public static ComPlayer Player2= new ComPlayer(2);
 	public static Player Player3 = new Player(3);
 	public static Player Player4 = new Player(4);
 	public static JButton move =new JButton("Move"); //buttons to take actions in the game
@@ -4642,7 +4643,12 @@ public class Game extends JPanel{
 	        			 }
 	        			 if (timesClicked == numPlayers) {//once all players have chosen a team
 	        				 System.out.println("Generating game board and chosen pieces");
+	        				 if(gameModeSelected==1) {
+	        					 createGui4(frame2, frame3, numPlayers); //go to next GUI
+	        				 }
+	        				 else {
 	        				 createGui3(frame2, frame3, numPlayers); //go to next GUI
+	        				 }
 	        			 }
 	        		 }
 	        		 else if(currentButton==teams[1]) {
@@ -4662,7 +4668,12 @@ public class Game extends JPanel{
 	        			 }
 	        			 if (timesClicked == numPlayers) {
 	        				 System.out.println("Generating game board and chosen pieces");
+	        				 if(gameModeSelected==1) {
+	        					 createGui4(frame2, frame3, numPlayers); //go to next GUI
+	        				 }
+	        				 else {
 	        				 createGui3(frame2, frame3, numPlayers);
+	        				 }
 	        			 }
 	        		 }
 	        		 else if(currentButton==teams[2]) {
@@ -4682,7 +4693,12 @@ public class Game extends JPanel{
 	        			 }
 	        			 if (timesClicked == numPlayers) {
 	        				 System.out.println("Generating game board and chosen pieces");
+	        				 if(gameModeSelected==1) {
+	        					 createGui4(frame2, frame3, numPlayers); //go to next GUI
+	        				 }
+	        				 else {
 	        				 createGui3(frame2, frame3, numPlayers);
+	        				 }
 	        			 }
 	        		 }
 	        		 else {
@@ -4702,7 +4718,12 @@ public class Game extends JPanel{
 	        			 }
 	        			 if (timesClicked == numPlayers) {
 	        				 System.out.println("Generating game board and chosen pieces");
+	        				 if(gameModeSelected==1) {
+	        					 createGui4(frame2, frame3, numPlayers); //go to next GUI
+	        				 }
+	        				 else {
 	        				 createGui3(frame2, frame3, numPlayers);
+	        				 }
 	        			 }
 	        		 }
 	        	 	
@@ -10115,37 +10136,10 @@ public class Game extends JPanel{
         }
         class endturnAction implements ActionListener{ //placeholder for endturn
         	public void actionPerformed (ActionEvent e) {
-        		int currTurn=whosTurn(numPlayers);
         		endTurn(numPlayers); //prints out turn ended & next player
-        		/*if(numPlayers==2) {
-        			if(currTurn==1){ //have to update variable so next player can go
-        				turnSeed=2;
-        			}
-        			else {
-        				turnSeed=1;
-        			}
-        		}
-        	else {
-        		if(currTurn==1){
-            		turnSeed=2;
-            	}
-            	else if(currTurn==2){
-            		turnSeed=3;
-            	}
-           
-            	else if(currTurn==3) {
-            		turnSeed=4;
-            
-            	}
-            	else {
-            		turnSeed=1;
-            		
-            	}	
-        		}*/
         	}
         }
         
-  
         concede.addActionListener(new concedeAction()); //add action listeners to menu bar
         key.addActionListener(new keyAction());
         endturn.addActionListener(new endturnAction());
@@ -10161,6 +10155,901 @@ public class Game extends JPanel{
         	Player4.createGamePieces(tile, "Yellow", 7, 8, 9, 19, 29);
         }
 	}
+	
+	public static void createGui4(JFrame frame2, JFrame frame3,int numPlayers) {//if playing against computer player
+		frame2.dispose();
+        frame3.setLayout(new GridLayout(0, 10));
+        //JButton tile[] = new JButton[100];
+        JButton tile[][] = new JButton[10][10]; //tile is now a matrix
+        turnSeed = genTurnSeed(numPlayers);
+		System.out.println("Player " + turnSeed + " will be going first");
+ 
+		 class healGamePiece implements ActionListener{
+	        	JButton currentButton=null;
+	        	Piece tempPiece;
+	        	public void actionPerformed (ActionEvent e) {
+	        		 JButton currentButton= (JButton)e.getSource();
+	       		 if(lastButtonPressed!=null){//if two tiles were clicked
+	       			if(lastButtonPressed ==currentButton) {//if the same tiles clicked
+	       				if(lastButtonPressed.getIcon()!=null && currentButton.getIcon()!=null) {// if both tiles have an icon
+	       				 setCoordinates(lastButtonPressed, numPlayers, tile); //set coords had to be moved
+	   					 for (int i=0; i<tile.length; i++) {
+	        			 		for(int j=0; j<tile[i].length; j++) {
+	        			 			if (currentButton == tile[i][j]) {
+	        			 				destinationYCoord = i;
+	        			 				destinationXCoord = j;
+	        			 			}
+	        			 		}
+	        			 	}
+	   						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
+	   						 tempPiece = findPiece(tempImg);//find the piece that has been clicked
+	   			if (whosTurn(numPlayers) == 1) {//if it is player 1's turn
+	   			if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name =="Healer"){ //check only locations 3 &4 bc teams sets healers to those locations & check to make sure piece is healer
+	   				if (noOtherActions(Player1.playersTeam.teamPieces[3], Player1) && Player1.playersTeam.teamPieces[3].tookAction<1) {
+	   				System.out.println("Player 1's " + Player1.playersTeam.teamPieces[3].name + " is healing itself");//message to user
+	   				Piece targetPiece;//alias for piece being healed
+	   				targetPiece = Player1.playersTeam.teamPieces[3];//set target piece to the healer
+	   				int tempHp = targetPiece.getCurrHp();//save hp it currently has
+	   					
+	   				if(tempHp != targetPiece.getMaxHp()){
+	   				Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal piece
+	   				Player1.playersTeam.teamPieces[3].tookAction++;
+	   					if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the maximum hp
+	   						targetPiece.currHp=targetPiece.getMaxHp();
+	   						System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+	   						if(Player1.playersTeam.teamPieces[3].moved==1) {
+	   						endTurn(numPlayers); //prints out turn ended & next player
+	   					 if(whosTurn(numPlayers)==2) {
+							 Player2.findPieceLocs(tile);
+							 Player2.findMove(tile, Player1);
+							 Player2.makeMove(tile, turnSeed);
+							 endTurn(numPlayers);
+						 }
+	   						}
+	   					}
+	   					else {
+	   						System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+	   						if(Player1.playersTeam.teamPieces[3].moved==1) {
+	   						endTurn(numPlayers);
+	   					 if(whosTurn(numPlayers)==2) {
+							 Player2.findPieceLocs(tile);
+							 Player2.findMove(tile, Player1);
+							 Player2.makeMove(tile, turnSeed);
+							 endTurn(numPlayers);
+						 }
+	   						}
+	   					}
+	   				}
+	   				else {
+	   					System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+	   					}
+	   			}//end of action check
+	   			else{
+	   				System.out.println("Only one piece may move and act once each turn");
+	   			}
+	   			}
+	   			
+	   			if(tempImg==Player1.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer"){
+	   				if (noOtherActions(Player1.playersTeam.teamPieces[4], Player1) && Player1.playersTeam.teamPieces[4].tookAction<1) {
+	   				System.out.println("Player 1's " + Player1.playersTeam.teamPieces[4].name + " is healing itself");
+	   					Piece targetPiece;
+	   					targetPiece = Player1.playersTeam.teamPieces[4];
+	   					int tempHp = targetPiece.getCurrHp();
+	   					
+	   					if(tempHp != targetPiece.getMaxHp()) {
+	   						Player1.playersTeam.teamPieces[4].heal(targetPiece);
+	   						Player1.playersTeam.teamPieces[4].tookAction++;
+	   						if(targetPiece.currHp> targetPiece.getMaxHp()) {
+	   							targetPiece.currHp=targetPiece.getMaxHp();
+	   							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+	   							if(Player1.playersTeam.teamPieces[4].moved==1) {
+	   							endTurn(numPlayers);
+	   						 if(whosTurn(numPlayers)==2) {
+								 Player2.findPieceLocs(tile);
+								 Player2.findMove(tile, Player1);
+								 Player2.makeMove(tile, turnSeed);
+								 endTurn(numPlayers);
+							 }
+	   							}
+	   						}
+	   							
+	   						else {
+	   							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+	   							if(Player1.playersTeam.teamPieces[4].moved==1) {
+	   							endTurn(numPlayers);
+	   						 if(whosTurn(numPlayers)==2) {
+								 Player2.findPieceLocs(tile);
+								 Player2.findMove(tile, Player1);
+								 Player2.makeMove(tile, turnSeed);
+								 endTurn(numPlayers);
+							 }
+	   							}
+	   						}
+	   					}
+	   				else {
+	   					System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+	   					}
+	   			}//end of action check
+	   			else{
+	   	   			System.out.println("Only one piece may move and act once each turn");
+	   	   		}
+	   			}	
+	   			}//end of if it is player 1's turn
+	   			else if(tempPiece.team == 1){//if player 1's piece has been clicked and it is not their turn
+	   				System.out.println("It is not Player 1's turn");//send error message
+	   			}
+	   			
+	   			else if(tempPiece.team == 2){
+	   				System.out.println("It is not Player 2's turn");
+	   			}
+	       		}
+	       	}//end of self healing
+	       			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
+	       				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()!=null){//if both tiles have an icon 
+	       					 setCoordinates(lastButtonPressed, numPlayers, tile); //set coords had to be moved
+	       					 for (int i=0; i<tile.length; i++) {
+	            			 		for(int j=0; j<tile[i].length; j++) {
+	            			 			if (currentButton == tile[i][j]) {
+	            			 				destinationYCoord = i;
+	            			 				destinationXCoord = j;
+	            			 			}
+	            			 		}
+	            			 	}
+	       						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
+	       						 tempPiece = findPiece(tempImg);
+	       			
+	       			if (whosTurn(numPlayers) == 1) {
+	       			if(tempImg==Player1.PieceImages[3] && Player1.playersTeam.teamPieces[3].name =="Healer"){//checks 3& 4 bc teams only set those as healers & make sure it is a healer
+	       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].range) {
+	       					//This checks for the range of the healing piece^
+	       				if (noOtherActions(Player1.playersTeam.teamPieces[3], Player1) && Player1.playersTeam.teamPieces[3].tookAction<1) {
+	       				if (currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] || currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[4]){
+	       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[3].name + " is healing");//message to user
+	       					Piece targetPiece;//alias for piece being healed
+	       					for(int i=0; i<5; i++) {//find piece being healed, searches current team for a match
+	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {//if found here
+	       							targetPiece = Player1.playersTeam.teamPieces[i];//set target piece to alias the found piece
+	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+	       							if(tempHp != targetPiece.getMaxHp()){
+	       							Player1.playersTeam.teamPieces[3].heal(targetPiece);//heal
+	       							Player1.playersTeam.teamPieces[3].tookAction++;
+	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {//can't have hp over the mamximum hp of a piece 
+	       								targetPiece.currHp=targetPiece.getMaxHp();
+	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+	       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+	       								endTurn(numPlayers); //prints out turn ended & next player
+	       							 if(whosTurn(numPlayers)==2) {
+	    								 Player2.findPieceLocs(tile);
+	    								 Player2.findMove(tile, Player1);
+	    								 Player2.makeMove(tile, turnSeed);
+	    								 endTurn(numPlayers);
+	    							 }
+	       								}
+	       							}
+	       							else {
+	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+	       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+	       							endTurn(numPlayers);
+	       						 if(whosTurn(numPlayers)==2) {
+									 Player2.findPieceLocs(tile);
+									 Player2.findMove(tile, Player1);
+									 Player2.makeMove(tile, turnSeed);
+									 endTurn(numPlayers);
+								 }
+	       							}
+	       							}
+	       							}
+	       							else {
+	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+	       							}
+	       					}
+	       					}
+	       				}
+	       				else {
+	       					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
+	       				}
+	       			}//end of action check
+	       				else{
+	       	   				System.out.println("Only one piece may move and act once each turn");
+	       	   			}
+	       			}//end of range check
+	       			else {
+	       				System.out.println("That is an invalid heal, cannot a piece further than you healer's range");
+	       			}
+	       			}
+	       			
+	       			if(tempImg==Player1.PieceImages[4] && Player1.playersTeam.teamPieces[4].name == "Healer"){
+	       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].range) {
+	       				if (noOtherActions(Player1.playersTeam.teamPieces[4], Player1) && Player1.playersTeam.teamPieces[4].tookAction<1) {
+	       				if(currentButton.getIcon()==Player1.PieceImages[0] || currentButton.getIcon()==Player1.PieceImages[1] || currentButton.getIcon()==Player1.PieceImages[2] || currentButton.getIcon()==Player1.PieceImages[3]){
+	       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[2].name + " is healing");
+	       					Piece targetPiece;
+	       					for(int i=0; i<5; i++) {
+	       						if(currentButton.getIcon()==Player1.PieceImages[i]) {
+	       							targetPiece = Player1.playersTeam.teamPieces[i];
+	       							int tempHp = targetPiece.getCurrHp();
+	       							
+	       							if(tempHp != targetPiece.getMaxHp()) {
+	       							Player1.playersTeam.teamPieces[4].heal(targetPiece);
+	       							Player1.playersTeam.teamPieces[4].tookAction++;
+	       							if(targetPiece.currHp> targetPiece.getMaxHp()) {
+	       								targetPiece.currHp=targetPiece.getMaxHp();
+	       								System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+	       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+	       								endTurn(numPlayers);
+	           						 if(whosTurn(numPlayers)==2) {
+	    								 Player2.findPieceLocs(tile);
+	    								 Player2.findMove(tile, Player1);
+	    								 Player2.makeMove(tile, turnSeed);
+	    								 endTurn(numPlayers);
+	    							 }
+	       								}
+	       							}
+	       							else {
+	       							System.out.println("Player 1's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+	       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+	       							endTurn(numPlayers);
+	       						 if(whosTurn(numPlayers)==2) {
+									 Player2.findPieceLocs(tile);
+									 Player2.findMove(tile, Player1);
+									 Player2.makeMove(tile, turnSeed);
+									 endTurn(numPlayers);
+								 }
+	       							}
+	       							}
+	       							}
+	       							else {
+	       								System.out.println("Player 1's " + targetPiece.name + " is already at full health");
+	       							}
+	       						}
+	       					}
+	       				}
+	       				
+	       				else{
+	       					System.out.println("That is an invalid heal, cannot heal other team's game pieces");
+	       				}
+	       				}//end of action check
+	       				else{
+	       	   				System.out.println("Only one piece may move and act once each turn");
+	       	   			}
+	       				}//end of range check
+	       				else {
+	       					System.out.println("That is an invalid heal, cannot heal piece further than healer's range");
+	       				}
+	       			}			 
+	       			}//end of if it is player 1's turn
+	       			else if(tempPiece.team == 1){
+	       				System.out.println("It is not Player 1's turn");
+	       			}
+	       			else if(tempPiece.team == 2){
+	       				System.out.println("It is not Player 2's turn");
+	       			}
+	       					currentButton=null; //resets the ActionListener
+	       					}
+	       			 }
+	       		 }
+	       				lastButtonPressed=currentButton;
+	        	}
+	        }
+		 
+		 class attackGamePiece implements ActionListener{
+	        	JButton currentButton=null;
+	        	Piece tempPiece;
+	        	public void actionPerformed (ActionEvent e) {
+	        		 JButton currentButton= (JButton)e.getSource();
+	        		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
+	        		 //setCoordinates(currentButton, numPlayers, tile);
+	        		 //System.out.println(pieceXCoord);
+	       		 if(lastButtonPressed!=null){//if two tiles were clicked
+	       			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
+	       				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()!=null){//if both tiles have an icon 
+	       					 setCoordinates(lastButtonPressed, numPlayers, tile); //set coords had to be moved
+	       					 for (int i=0; i<tile.length; i++) {
+	            			 		for(int j=0; j<tile[i].length; j++) {
+	            			 			if (currentButton == tile[i][j]) {
+	            			 				destinationYCoord = i;
+	            			 				destinationXCoord = j;
+	            			 			}
+	            			 		}
+	            			 	}
+	       						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
+	       						 Icon tempImg2= currentButton.getIcon();
+	       						 tempPiece = findPiece(tempImg);
+	       			if (whosTurn(numPlayers) == 1) {
+	       			if(tempImg==Player1.PieceImages[0])	{
+	       			//check to make sure piece to be attacked isn't the player's pieces 
+	       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].range) {
+	       					//This checks for the range of the attacking piece^
+	       				if (noOtherActions(Player1.playersTeam.teamPieces[0], Player1) && Player1.playersTeam.teamPieces[0].tookAction<1) {
+	       				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
+	       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[0].name + " attacks!");//message to user
+	       					Piece targetPiece;//alias for piece being attacked
+	       					for(int i=0; i<5; i++) {//find piece being attacked, searches all 3 opposing teams for a match
+	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {//if found here
+	       							targetPiece = Player2.playersTeam.teamPieces[i];//set target piece to alias the found piece
+	       							int tempHp = targetPiece.getCurrHp();//save hp it currently has
+	       							Player1.playersTeam.teamPieces[0].attack(targetPiece);//make attack
+	       							Player1.playersTeam.teamPieces[0].tookAction++;
+	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+	       								targetPiece.currHp=0;
+	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+	       								removeImage(currentButton, frame3);//remove image now needs the frame passed to it as well
+	       								if(Player1.playersTeam.teamPieces[0].moved==1) {
+	       									endTurn(numPlayers); //prints out turn ended & next player
+	           							 if(whosTurn(numPlayers)==2) {
+	        								 Player2.findPieceLocs(tile);
+	        								 Player2.findMove(tile, Player1);
+	        								 Player2.makeMove(tile, turnSeed);
+	        								 endTurn(numPlayers);
+	        							 }
+	       								}
+	       							}
+	       							else {
+	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");//print remaining hp
+	       							if(Player1.playersTeam.teamPieces[0].moved==1) {
+	       								endTurn(numPlayers);
+	       							 if(whosTurn(numPlayers)==2) {
+	    								 Player2.findPieceLocs(tile);
+	    								 Player2.findMove(tile, Player1);
+	    								 Player2.makeMove(tile, turnSeed);
+	    								 endTurn(numPlayers);
+	    							 }
+	       							}
+	       							}
+	       							
+	       						}
+	       					}
+	       				}
+	       				 else {
+	       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+	       				}
+	       				}//end of action check
+	       				else{
+	       	   				System.out.println("Only one piece may move and act once each turn");
+	       	   			}
+	       			}//end of range check
+	       			else {
+	       				System.out.println("That is an invalid attack, cannot a piece further than your piece's range");
+	       			}
+	       			}
+	       			if(tempImg==Player1.PieceImages[1]){
+	       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[1].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[1].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[1].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[1].range) {
+	       				if (noOtherActions(Player1.playersTeam.teamPieces[1], Player1) && Player1.playersTeam.teamPieces[1].tookAction<1) {
+	       				if (currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
+	       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[1].name + " attacks!");
+	       					Piece targetPiece;
+	       					for(int i=0; i<5; i++) {
+	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+	       							targetPiece = Player2.playersTeam.teamPieces[i];
+	       							int tempHp = targetPiece.getCurrHp();
+	       							Player1.playersTeam.teamPieces[1].attack(targetPiece);
+	       							Player1.playersTeam.teamPieces[1].tookAction++;
+	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+	       								targetPiece.currHp=0;
+	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+	       								removeImage(currentButton, frame3);
+	       								if(Player1.playersTeam.teamPieces[1].moved==1) {
+	       									endTurn(numPlayers);
+	       								 if(whosTurn(numPlayers)==2) {
+	       									 Player2.findPieceLocs(tile);
+	       									 Player2.findMove(tile, Player1);
+	       									 Player2.makeMove(tile, turnSeed);
+	       									endTurn(numPlayers);
+	       								 }
+	       								}
+	       							}
+	       							else {
+	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+	       							if(Player1.playersTeam.teamPieces[1].moved==1) {
+	       								endTurn(numPlayers);
+	       							 if(whosTurn(numPlayers)==2) {
+	    								 Player2.findPieceLocs(tile);
+	    								 Player2.findMove(tile, Player1);
+	    								 Player2.makeMove(tile, turnSeed);
+	    								 endTurn(numPlayers);
+	    							 }
+	       							}
+	       							}
+	       							
+	       						}
+	       					}
+	       				}
+	       				else {
+	       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+	       				}
+	       				}//end of action check
+	       				else{
+	       	   				System.out.println("Only one piece may move and act once each turn");
+	       	   			}
+	       				}//end of range check
+	       				else {
+	       					System.out.println("that is an invalid attack, cannot attack piece further than your piece's range");
+	       				}
+	       			}
+	       			if(tempImg==Player1.PieceImages[2]){
+	       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[2].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[2].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[2].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[2].range) {
+	       				if (noOtherActions(Player1.playersTeam.teamPieces[2], Player1) && Player1.playersTeam.teamPieces[2].tookAction<1) {
+	       				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[4]){
+	       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[2].name + " attacks!");
+	       					Piece targetPiece;
+	       					for(int i=0; i<5; i++) {
+	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+	       							targetPiece = Player2.playersTeam.teamPieces[i];
+	       							int tempHp = targetPiece.getCurrHp();
+	       							Player1.playersTeam.teamPieces[2].attack(targetPiece);
+	       							Player1.playersTeam.teamPieces[2].tookAction++;
+	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+	       								targetPiece.currHp=0;
+	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+	       								removeImage(currentButton, frame3);
+	       								if(Player1.playersTeam.teamPieces[2].moved==1) {
+	       									endTurn(numPlayers);
+	       								 if(whosTurn(numPlayers)==2) {
+	       									 Player2.findPieceLocs(tile);
+	       									 Player2.findMove(tile, Player1);
+	       									 Player2.makeMove(tile, turnSeed);
+	       									endTurn(numPlayers);
+	       								 }
+	       								}
+	       							}
+	       							else {
+	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+	       							if(Player1.playersTeam.teamPieces[2].moved==1) {
+	       								endTurn(numPlayers);
+	       							 if(whosTurn(numPlayers)==2) {
+	    								 Player2.findPieceLocs(tile);
+	    								 Player2.findMove(tile, Player1);
+	    								 Player2.makeMove(tile, turnSeed);
+	    								 endTurn(numPlayers);
+	    							 }
+	       							}
+	       							}
+	       						}
+	       					}
+	       				}
+	       				else{
+	       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+	       				}
+	       				}//end of action check
+	       				else{
+	       	   				System.out.println("Only one piece may move and act once each turn");
+	       	   			}
+	       				}//end of range check
+	       				else {
+	       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+	       				}
+	       			}			 
+	       			if(tempImg==Player1.PieceImages[3]) {
+	       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].range) {
+	       				if (noOtherActions(Player1.playersTeam.teamPieces[3], Player1) && Player1.playersTeam.teamPieces[3].tookAction<1) {
+	       				if(currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[0] && currentButton.getIcon()!=Player1.PieceImages[4]) {
+	       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[3].name + " attacks!");
+	       					Piece targetPiece;
+	       					for(int i=0; i<5; i++) {
+	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+	       							if(gameModeSelected==2) {
+	       								attack2v2(tempImg, numPlayers, currentButton, frame3, i);
+	       							}//end of if 2v2
+	       							else {
+	       							targetPiece = Player2.playersTeam.teamPieces[i];
+	       							int tempHp = targetPiece.getCurrHp();
+	       							Player1.playersTeam.teamPieces[3].attack(targetPiece);
+	       							Player1.playersTeam.teamPieces[3].tookAction++;
+	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+	       								targetPiece.currHp=0;
+	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+	       								removeImage(currentButton, frame3);
+	       								if(Player1.playersTeam.teamPieces[3].moved==1) {
+	       									endTurn(numPlayers);
+	       								 if(whosTurn(numPlayers)==2) {
+	       									 Player2.findPieceLocs(tile);
+	       									 Player2.findMove(tile, Player1);
+	       									 Player2.makeMove(tile, turnSeed);
+	       								 }
+	       								}
+	       							}
+	       							else {
+	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+	       							if(Player1.playersTeam.teamPieces[3].moved==1) {
+	       								endTurn(numPlayers);
+	       							 if(whosTurn(numPlayers)==2) {
+	    								 Player2.findPieceLocs(tile);
+	    								 Player2.findMove(tile, Player1);
+	    								 Player2.makeMove(tile, turnSeed);
+	    								 endTurn(numPlayers);
+	    							 }
+	       							}
+	       							}
+	       						}
+	       						}
+	       					}
+	       					
+	       				}
+	       				else{
+	       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+	       				}
+	       				}//end of action check
+	       				else{
+	       	   				System.out.println("Only one piece may move and act once each turn");
+	       	   			}
+	       				}//end of range check
+	       				else {
+	       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+	       				}
+	       			}	
+	       			
+	       			if(tempImg==Player1.PieceImages[4]) {
+	       				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].range && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].range && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].range && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].range) {
+	       				if (noOtherActions(Player1.playersTeam.teamPieces[4], Player1) && Player1.playersTeam.teamPieces[4].tookAction<1) {
+	       				if (currentButton.getIcon()!=Player1.PieceImages[1] && currentButton.getIcon()!=Player1.PieceImages[2] && currentButton.getIcon()!=Player1.PieceImages[3] && currentButton.getIcon()!=Player1.PieceImages[0]) {
+	       					System.out.println("Player 1's " + Player1.playersTeam.teamPieces[4].name + " attacks!");
+	       					Piece targetPiece;
+	       					for(int i=0; i<5; i++) {
+	       						if(currentButton.getIcon()==Player2.PieceImages[i]) {
+	       							targetPiece = Player2.playersTeam.teamPieces[i];
+	       							int tempHp = targetPiece.getCurrHp();
+	       							Player1.playersTeam.teamPieces[4].attack(targetPiece);
+	       							Player1.playersTeam.teamPieces[4].tookAction++;
+	       							if(targetPiece.currHp<1) {//don't want negative numbers for hp
+	       								targetPiece.currHp=0;
+	       								System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");	
+	       								removeImage(currentButton, frame3);
+	       								if(Player1.playersTeam.teamPieces[4].moved==1) {
+	       									endTurn(numPlayers);
+	       								 if(whosTurn(numPlayers)==2) {
+	       									 Player2.findPieceLocs(tile);
+	       									 Player2.findMove(tile, Player1);
+	       									 Player2.makeMove(tile, turnSeed);
+	       								 }
+	       								}
+	       							}
+	       							else {
+	       							System.out.println("Player 2's " + targetPiece.name + " went from " + tempHp + " hit points to " +targetPiece.getCurrHp() + " hit points!");
+	       							if(Player1.playersTeam.teamPieces[4].moved==1) {
+	       								endTurn(numPlayers);
+	       							 if(whosTurn(numPlayers)==2) {
+	    								 Player2.findPieceLocs(tile);
+	    								 Player2.findMove(tile, Player1);
+	    								 Player2.makeMove(tile, turnSeed);
+	    								 endTurn(numPlayers);
+	    							 }
+	       							}
+	       							}
+	       						}
+	       					}
+	       				}
+	       				else {
+	       					System.out.println("That is an invalid attack, cannot attack your own game pieces");
+	       				}
+	       				}//end of action check
+	       				else{
+	       	   				System.out.println("Only one piece may move and act once each turn");
+	       	   			}
+	       				}//end of range check
+	       				else {
+	       					System.out.println("That is an invalid attack, cannot attack piece further than your piece's range");
+	       				}
+	       			}
+	       			}//end of if it is player 1's turn
+	       			else if(tempPiece.team == 1){
+	       				System.out.println("It is not Player 1's turn");
+	       			}
+	       			else if(tempPiece.team == 2){
+	       				System.out.println("It is not Player 2's turn");
+	       			}
+	       			 
+	       					currentButton=null; //resets the ActionListener
+	       					}
+	       			 }
+	       		 }
+	       				lastButtonPressed=currentButton;
+	        	}
+	        } 
+		 
+		 class tileClicked implements ActionListener{
+        	 JButton currentButton=null;
+        	 Piece tempPiece;
+        	 
+        	 public void actionPerformed (ActionEvent e){
+        		 JButton currentButton= (JButton)e.getSource(); //save which button pressed in variable
+        		 
+        		 //When a player clicks their first button, if it has a piece on it, it will save the coords of that piece and output what it is
+        		 setCoordinates(currentButton, numPlayers, tile);
+        		 if(lastButtonPressed!=null){//if two tiles were clicked
+        			 if(lastButtonPressed !=currentButton){ //if different tiles clicked
+        				 if(lastButtonPressed.getIcon()!=null&&currentButton.getIcon()==null){//if first tile had icon and second was empty
+        					 for (int i=0; i<tile.length; i++) {
+             			 		for(int j=0; j<tile[i].length; j++) {
+             			 			if (currentButton == tile[i][j]) {
+             			 				destinationYCoord = i;
+             			 				destinationXCoord = j;
+             			 			}
+             			 		}
+             			 	}
+        						 Icon tempImg = lastButtonPressed.getIcon(); //holds the image of the last button pressed
+        						 tempPiece = findPiece(tempImg);
+        						//Image img = ImageIO.read(Game.class.getResource("/images/BlueCircle.png")); //will have to change image src to variable so it can work with any token
+      
+        			//When a second tile is clicked, it makes sure it is a valid move for the piece selected
+        			if (whosTurn(numPlayers) == 1) {
+        			if(tempImg==Player1.PieceImages[0])	{//pieces can move 3, 4, 5, or 6 tiles
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[0].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[0].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[0].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[0].move) {
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
+        						swapImage(currentButton, tempImg);
+        						tempPiece.moved++;
+        						if(tempPiece.tookAction==1) {
+        							endTurn(numPlayers); //prints out turn ended & next player
+    								 if(whosTurn(numPlayers)==2) {
+    									 Player2.findPieceLocs(tile);
+    									 Player2.findMove(tile, Player1);
+    									 Player2.makeMove(tile, turnSeed);
+    									 endTurn(numPlayers);
+    								 }
+        						}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
+        			}
+        			if(tempImg==Player1.PieceImages[1]) {
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[1].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[1].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[1].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[1].move) {
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
+        					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
+        						endTurn(numPlayers);
+								 if(whosTurn(numPlayers)==2) {
+									 Player2.findPieceLocs(tile);
+									 Player2.findMove(tile, Player1);
+									 Player2.makeMove(tile, turnSeed);
+									 endTurn(numPlayers);
+								 }
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
+        			}
+        			if(tempImg==Player1.PieceImages[2]) {
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[2].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[2].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[2].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[2].move) {
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
+        					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
+        						endTurn(numPlayers);
+        						 if(whosTurn(numPlayers)==2) {
+    								 Player2.findPieceLocs(tile);
+    								 Player2.findMove(tile, Player1);
+    								 Player2.makeMove(tile, turnSeed);
+    								 endTurn(numPlayers);
+    							 }
+        					}
+        				}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
+        			}			 
+        			if(tempImg==Player1.PieceImages[3]) {
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[3].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[3].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[3].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[3].move) {
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
+        					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
+        						endTurn(numPlayers);
+        						 if(whosTurn(numPlayers)==2) {
+    								 Player2.findPieceLocs(tile);
+    								 Player2.findMove(tile, Player1);
+    								 Player2.makeMove(tile, turnSeed);
+    								 endTurn(numPlayers);
+    							 }
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
+        			}		
+        			if(tempImg==Player1.PieceImages[4]) {
+        				if (destinationYCoord <= pieceYCoord+Player1.playersTeam.teamPieces[4].move && destinationYCoord >= pieceYCoord-Player1.playersTeam.teamPieces[4].move && destinationXCoord <= pieceXCoord+Player1.playersTeam.teamPieces[4].move && destinationXCoord >= pieceXCoord-Player1.playersTeam.teamPieces[4].move) {
+        					if (noOtherActions(tempPiece, Player1) && tempPiece.moved<1) {
+        					swapImage(currentButton, tempImg);
+        					tempPiece.moved++;
+        					if(tempPiece.tookAction==1) {
+        					endTurn(numPlayers);
+							 if(whosTurn(numPlayers)==2) {
+								 Player2.findPieceLocs(tile);
+								 Player2.findMove(tile, Player1);
+								 Player2.makeMove(tile, turnSeed);
+								 endTurn(numPlayers);
+						
+							 }
+							 
+        					}
+        					}//end of action check
+        					else{
+        		   				System.out.println("Only one piece may move and act once each turn");
+        		   			}
+        				}
+        				else {
+        					System.out.println("That is an invalid move, it exceeds that piece's movement range");
+        					//System.out.println(pieceYCoord + "" + pieceXCoord);
+        				}
+        			}
+        			}//end of if it is player 1's turn
+        			else if(tempPiece.team == 1){
+        				System.out.println("It is not Player 1's turn");
+        			}
+        
+        			else if(tempPiece.team==2){
+        				System.out.println("It is not Player 2's turn");
+        			}	
+        					currentButton=null; //resets the ActionListener
+        					}
+        				}	
+        			}// end of if LBR != null	
+        			lastButtonPressed=currentButton; //sets initial value for LBP
+        		} //end of actionPerformed
+        	 } //end of TileClicked
+		 
+		 
+	        class attackPiece implements ActionListener{//sets the action listener of the gameboard to attack pieces
+	        	public void actionPerformed (ActionEvent e) {
+	       			for(int i=0; i<10; i++) {//add the buttons to the frame
+	       	        	for (int j=0; j<10; j++) {
+	       	        		tile[i][j].addActionListener(new attackGamePiece());
+	       	        	}
+	       	        }
+	       			System.out.println("Attack Mode Selected");
+	       		}
+	       	}
+	       
+	       	class movePiece implements ActionListener{//sets the action listener of the gameboard to move pieces
+	       		public void actionPerformed (ActionEvent e) {
+	       			for(int i=0; i<10; i++) {//add the buttons to the frame
+	       	        	for (int j=0; j<10; j++) {
+	       	        		tile[i][j].addActionListener(new tileClicked());
+	       	        	}
+	       	        }
+	       			System.out.println("Move Mode Selected");
+	       		}
+	       	}
+	        
+	        class healPiece implements ActionListener{
+	          	 public void actionPerformed (ActionEvent e){
+	           			for(int i=0; i<10; i++) {//add the buttons to the frame
+	           	        	for (int j=0; j<10; j++) {
+	           	        		tile[i][j].addActionListener(new healGamePiece()); //need to implement healGamePiece
+	           	        	}
+	           	        }
+	           			System.out.println("Heal Mode Selected");
+	          	 }
+	        }
+	         
+	        class cancelAction implements ActionListener{
+	         	 public void actionPerformed (ActionEvent e){
+	         		 
+	         		for(int i=0; i<10; i++) {//add the buttons to the frame
+	       	        	for (int j=0; j<10; j++) {
+	       	        		//remove the action listener, might need to keep track of action listener in a variable
+	       	        	}
+	       	        }
+	         		System.out.println("Action Mode Canceled.  Please select an Action Mode");
+	       		
+	         	 }  
+	       }
+	        
+	        for(int i=0; i<10; i++) {//add the buttons to the frame
+	        	for (int j=0; j<10; j++) {
+	        		tile[i][j]=new JButton();
+	        		frame3.add(tile[i][j]);
+	        		tile[i][j].setBackground(Color.white);
+	        		//tile[i][j].addActionListener(new tileClicked());
+	        	}
+	        }
+	        
+	        move.addActionListener(new movePiece());
+	        attack.addActionListener(new attackPiece());
+	        heal.addActionListener(new healPiece());
+	        cancel.addActionListener(new cancelAction());
+	        
+	        frame3.add(move);
+	        frame3.add(attack);
+	        frame3.add(heal);
+	        frame3.add(cancel);
+	        
+	        frame3.setSize(700,600);
+	        JMenuBar gameMenuBar = new JMenuBar(); //create menu bar
+	        frame3.setJMenuBar(gameMenuBar); //mount it onto frame
+	        JMenu options = new JMenu("Options"); //create "options" option
+	        gameMenuBar.add(options); //mount it onto menu bar
+	        JMenuItem key = new JMenuItem("Key"); //create and name options within "options"
+	        JMenuItem endturn = new JMenuItem("End Turn");
+	        JMenuItem concede = new JMenuItem("Concede");
+	        options.add(key); //put them into "options" within menu bar
+	        options.add(endturn);
+	        options.add(concede);
+	        
+	        class concedeAction implements ActionListener{ //allow "exit" to close program on click
+	    		public void actionPerformed (ActionEvent e) {
+	    			int currTurn=whosTurn(numPlayers);
+	    			removeAllImages(numPlayers, tile, frame3); 
+	    			endTurn(numPlayers); //prints out turn ended & next player
+	        			if(currTurn==1){ //have to update variable so next player can go
+	        				turnSeed=2;
+	        			}
+	        			else {
+	        				turnSeed=1;
+	        			}
+	    		}
+	        }
+	    			
+	        class keyAction implements ActionListener{ //placeholder for key window 
+	        	public void actionPerformed (ActionEvent e) {
+	        		JOptionPane.showMessageDialog(frame3,
+	        			    "Player 1 is blue \n"
+	        			    		+ "Player 2 is red \n"
+	        			    		+ "Player 3 is green \n"
+	        			    		+ "Player 4 is yellow \n"
+	        			    		+ "A Warrior's token is a circle. Range:1, Move:3\n"
+	        			    		+ "A Ranger's token is a square. Range:4, Move:5\n"
+	        			    		+ "A Rogue's token is a triangle. Range:1, Move:6\n"
+	        			    		+ "A healer's token is a star. Range:3, Move:4\n"
+	        			    		+ "A Damage Mage's token is a pentagon. Range:3, Move:4\n",    
+	        			    "Key",
+	        			    JOptionPane.PLAIN_MESSAGE);
+	        	}
+	        }
+	        class endturnAction implements ActionListener{ //placeholder for endturn
+	        	public void actionPerformed (ActionEvent e) {
+	        		endTurn(numPlayers); //prints out turn ended & next player
+	        		 if(whosTurn(numPlayers)==2) {
+	        			 Player2.findPieceLocs(tile);
+	        			 Player2.findMove(tile, Player1);
+	        			 Player2.makeMove(tile, turnSeed);
+	        			 endTurn(numPlayers);
+	        		 }
+	        	}
+	        }
+	  
+	        concede.addActionListener(new concedeAction()); //add action listeners to menu bar
+	        key.addActionListener(new keyAction());
+	        endturn.addActionListener(new endturnAction());
+	        
+	        frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame3.setVisible(true);
+	        
+	        //have to finally create the game pieces based off of previous GUI selections
+	        Player1.createGamePieces(tile, "Blue", 10, 20, 0, 1, 2);
+	        Player2.createGamePieces(tile, "Red", 97, 98, 99, 89, 79); //Player 2's location has been changed so they are opposite player 1 rather than next to them
+		 
+	        if(whosTurn(numPlayers)==2) {
+				 Player2.findPieceLocs(tile);
+				 Player2.findMove(tile, Player1);
+				 Player2.makeMove(tile, turnSeed);
+				 endTurn(numPlayers);
+			 }
+	        
+	        
+	}//end of vs complayer GUI	
 	
     public static void main(String[] args){
     	JFrame frame1= new JFrame();

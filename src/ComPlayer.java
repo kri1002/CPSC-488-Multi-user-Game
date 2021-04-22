@@ -1,5 +1,7 @@
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
 
 public class ComPlayer extends Player{//inherits from player
 	public Swarm moveFinder1;//swarm for piece1
@@ -9,11 +11,13 @@ public class ComPlayer extends Player{//inherits from player
 	public Swarm moveFinder5;//swarm for piece5
 	public int[] pieceXCoords = new int[5];//array for the coords of the pieces
 	public int[] pieceYCoords = new int[5];
+	ImageIcon[] compPieceImages = new ImageIcon[5]; //this array keeps track of the icons of each piece in each team
 	public Piece bestMovePiece;//place to hold the best piece to move
 	public int bestXCoord;//coords of the best place to move
 	public int bestYCoord;
 	public int startXCoord; //coords of piece start location so can keep track to move piece
 	public int startYCoord;
+	Icon tempImg;
 	
 	public ComPlayer(int playerNum) {//same constructor as before
 		super(playerNum);
@@ -27,22 +31,27 @@ public class ComPlayer extends Player{//inherits from player
 				 if (tile[i][j].getIcon() == this.PieceImages[0]) {
 					 pieceXCoords[0] = j;
 					 pieceYCoords[0] = i;
+					 compPieceImages[0]=this.PieceImages[0];
 				 }
 				 else if (tile[i][j].getIcon() == this.PieceImages[1]) {
 					 pieceXCoords[1] = j;
 					 pieceYCoords[1] = i;
+					 compPieceImages[1]=this.PieceImages[1];
 				 }
 				 else if (tile[i][j].getIcon() == this.PieceImages[2]) {
 					 pieceXCoords[2] = j;
 					 pieceYCoords[2] = i;
+					 compPieceImages[2]=this.PieceImages[2];
 				 }
 				 else if (tile[i][j].getIcon() == this.PieceImages[3]) {
 					 pieceXCoords[3] = j;
 					 pieceYCoords[3] = i;
+					 compPieceImages[3]=this.PieceImages[3];
 				 }
 				 else if (tile[i][j].getIcon() == this.PieceImages[4]) {
 					 pieceXCoords[4] = j;
 					 pieceYCoords[4] = i;
+					 compPieceImages[4]=this.PieceImages[4];
 				 }
 			 }
 		}
@@ -51,7 +60,7 @@ public class ComPlayer extends Player{//inherits from player
 	
 	public void makeMove(JButton[][]tile, int turnSeed) {//similar to swapImg in Game.java
 		tile[startYCoord][startXCoord].setIcon(null); //sets tile with original piece null
-		tile[bestYCoord][bestXCoord].setIcon(tile[startYCoord][startXCoord].getIcon()); //move piece icon to best x & y
+		tile[bestYCoord][bestXCoord].setIcon(tempImg); //move piece icon to best x & y
 		tile[startYCoord][startXCoord].revalidate(); //reset & update tiles
 		tile[bestYCoord][bestXCoord].revalidate();
 		
@@ -85,6 +94,7 @@ public class ComPlayer extends Player{//inherits from player
 			bestYCoord = moveFinder1.bestPart.partYCoord;
 			startXCoord = pieceXCoords[0];
 			startYCoord = pieceYCoords[0];
+			tempImg= compPieceImages[0];
 		}
 		if (moveFinder2.bestFitness >= moveFinder1.bestFitness && moveFinder2.bestFitness >= moveFinder3.bestFitness
 				&& moveFinder2.bestFitness >= moveFinder4.bestFitness && moveFinder2.bestFitness >= moveFinder5.bestFitness) {
@@ -93,6 +103,7 @@ public class ComPlayer extends Player{//inherits from player
 			bestYCoord = moveFinder2.bestPart.partYCoord;
 			startXCoord = pieceXCoords[1];
 			startYCoord = pieceYCoords[1];
+			tempImg= compPieceImages[1];
 		}
 		if (moveFinder3.bestFitness >= moveFinder1.bestFitness && moveFinder3.bestFitness >= moveFinder2.bestFitness
 				&& moveFinder3.bestFitness >= moveFinder4.bestFitness && moveFinder3.bestFitness >= moveFinder5.bestFitness) {
@@ -101,6 +112,7 @@ public class ComPlayer extends Player{//inherits from player
 			bestYCoord = moveFinder3.bestPart.partYCoord;
 			startXCoord = pieceXCoords[2];
 			startYCoord = pieceYCoords[2];
+			tempImg= compPieceImages[2];
 		}
 		if (moveFinder4.bestFitness >= moveFinder1.bestFitness && moveFinder4.bestFitness >= moveFinder2.bestFitness
 				&& moveFinder4.bestFitness >= moveFinder3.bestFitness && moveFinder4.bestFitness >= moveFinder5.bestFitness) {
@@ -109,6 +121,7 @@ public class ComPlayer extends Player{//inherits from player
 			bestYCoord = moveFinder4.bestPart.partYCoord;
 			startXCoord = pieceXCoords[3];
 			startYCoord = pieceYCoords[3];
+			tempImg= compPieceImages[3];
 		}
 		if (moveFinder5.bestFitness >= moveFinder1.bestFitness && moveFinder5.bestFitness >= moveFinder2.bestFitness
 				&& moveFinder5.bestFitness >= moveFinder3.bestFitness && moveFinder5.bestFitness >= moveFinder4.bestFitness) {
@@ -117,6 +130,7 @@ public class ComPlayer extends Player{//inherits from player
 			bestYCoord = moveFinder5.bestPart.partYCoord;
 			startXCoord = pieceXCoords[4];
 			startYCoord = pieceXCoords[4];
+			tempImg= compPieceImages[4];
 		}
 	}
 }
