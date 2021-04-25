@@ -4,6 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+//Particle Swarm Optimization Algorithm based on example by Donato Rimenti
+//https://www.baeldung.com/java-multi-swarm-algorithm
 
 public class ComPlayer extends Player{//inherits from player
 	public Swarm moveFinder1;//swarm for piece1
