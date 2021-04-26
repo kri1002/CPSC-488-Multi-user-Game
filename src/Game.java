@@ -4348,6 +4348,7 @@ public class Game extends JPanel{
     				 if (currentButton == tile[i][j]) {
     					 pieceYCoord = i; 
     					 pieceXCoord = j;
+    					//System.out.println(pieceYCoord + "" + pieceXCoord);
     				 }
     			 }
     		 }
@@ -4359,6 +4360,7 @@ public class Game extends JPanel{
     				 if (currentButton == tile[i][j]) {
     					 pieceYCoord = i;
     					 pieceXCoord = j;
+    					//System.out.println(pieceYCoord + "" + pieceXCoord);
     				 }
     			 }
     		 }
@@ -4370,6 +4372,7 @@ public class Game extends JPanel{
     				 if (currentButton == tile[i][j]) {
     					 pieceYCoord = i;
     					 pieceXCoord = j;
+    					//System.out.println(pieceYCoord + "" + pieceXCoord);
     				 }
     			 }
     		 }
@@ -4381,6 +4384,7 @@ public class Game extends JPanel{
     				 if (currentButton == tile[i][j]) {
     					 pieceYCoord = i;
     					 pieceXCoord = j;
+    					//System.out.println(pieceYCoord + "" + pieceXCoord);
     				 }
     			 }
     		 }
@@ -4392,6 +4396,7 @@ public class Game extends JPanel{
     				 if (currentButton == tile[i][j]) {
     					 pieceYCoord = i;
     					 pieceXCoord = j;
+    					//System.out.println(pieceYCoord + "" + pieceXCoord);
     				 }
     			 }
     		 }
@@ -4403,6 +4408,7 @@ public class Game extends JPanel{
     				 if (currentButton == tile[i][j]) {
     					 pieceYCoord = i;
     					 pieceXCoord = j;
+    					//System.out.println(pieceYCoord + "" + pieceXCoord);
     				 }
     			 }
     		 }
@@ -4414,6 +4420,7 @@ public class Game extends JPanel{
     				 if (currentButton == tile[i][j]) {
     					 pieceYCoord = i;
     					 pieceXCoord = j;
+    					//System.out.println(pieceYCoord + "" + pieceXCoord);
     				 }
     			 }
     		 }
@@ -4425,6 +4432,7 @@ public class Game extends JPanel{
     				 if (currentButton == tile[i][j]) {
     					 pieceYCoord = i;
     					 pieceXCoord = j;
+    					//System.out.println(pieceYCoord + "" + pieceXCoord);
     				 }
     			 }
     		 }
@@ -4436,6 +4444,7 @@ public class Game extends JPanel{
     				 if (currentButton == tile[i][j]) {
     					 pieceYCoord = i;
     					 pieceXCoord = j;
+    					//System.out.println(pieceYCoord + "" + pieceXCoord);
     				 }
     			 }
     		 }
@@ -4448,6 +4457,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}
@@ -4459,6 +4469,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}
@@ -4470,6 +4481,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}
@@ -4481,6 +4493,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}
@@ -4492,6 +4505,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}
@@ -4503,6 +4517,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}
@@ -4514,6 +4529,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}
@@ -4525,6 +4541,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}
@@ -4536,6 +4553,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}
@@ -4547,6 +4565,7 @@ public class Game extends JPanel{
 			 			if (currentButton == tile[i][j]) {
 			 				pieceYCoord = i;
 			 				pieceXCoord = j;
+			 				//System.out.println(pieceYCoord + "" + pieceXCoord);
 			 			}
 			 		}
 			 	}

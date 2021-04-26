@@ -126,10 +126,16 @@ public class ComPlayer extends Player{//inherits from player
 		moveFinder4 = new Swarm(this.playersTeam.teamPieces[3], pieceXCoords[3], pieceYCoords[3], opponent, this.PieceImages, this.playersTeam.teamPieces);
 		moveFinder5 = new Swarm(this.playersTeam.teamPieces[4], pieceXCoords[4], pieceYCoords[4], opponent, this.PieceImages, this.playersTeam.teamPieces);
 		moveFinder1.findBestMove(tile, piecesFound[0]);//tell them to find the best move
+		//These are test statements to output the fitness of each move finder
+		//System.out.println(moveFinder1.bestFitness);
 		moveFinder2.findBestMove(tile, piecesFound[1]);
+		//System.out.println(moveFinder2.bestFitness);
 		moveFinder3.findBestMove(tile, piecesFound[2]);
+		//System.out.println(moveFinder3.bestFitness);
 		moveFinder4.findBestMove(tile, piecesFound[3]);
+		//System.out.println(moveFinder4.bestFitness);
 		moveFinder5.findBestMove(tile, piecesFound[4]);
+		//System.out.println(moveFinder5.bestFitness);
 		if (moveFinder1.bestFitness >= moveFinder2.bestFitness && moveFinder1.bestFitness >= moveFinder3.bestFitness
 				&& moveFinder1.bestFitness >= moveFinder4.bestFitness && moveFinder1.bestFitness >= moveFinder5.bestFitness) {
 			//if piece 1 has the best move to make^

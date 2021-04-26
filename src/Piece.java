@@ -47,6 +47,24 @@ public abstract class Piece { //generic game piece class with stats all pieces w
 		else {
 			targetPiece.currHp = targetPiece.currHp - (this.attack + varRand);//else deal normal damage
 		}
+		/*System.out.println("Attacker: ");
+		System.out.println("Name: " + this.name);
+		System.out.println("Team: " + this.team);
+		System.out.println("HP: " + this.getCurrHp());
+		System.out.println("Attack: " + this.getAttackStat());
+		System.out.println("Variance: " + this.getVarianceStat());
+		System.out.println("Range: " + this.getRangeStat());
+		System.out.println("Crit: " + this.getCritRangeStat());
+		System.out.println("Move: " + this.getMovementStat());
+		System.out.println("Target: ");
+		System.out.println("Name: " + targetPiece.name);
+		System.out.println("Team: " + targetPiece.team);
+		System.out.println("HP: " + targetPiece.getCurrHp());
+		System.out.println("Attack: " + targetPiece.getAttackStat());
+		System.out.println("Variance: " + targetPiece.getVarianceStat());
+		System.out.println("Range: " + targetPiece.getRangeStat());
+		System.out.println("Crit: " + targetPiece.getCritRangeStat());
+		System.out.println("Move: " + targetPiece.getMovementStat());*/
 	}
 	
 	void heal(Piece targetPiece) {
